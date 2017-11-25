@@ -7,6 +7,7 @@ import { MessageBoardPage } from '../pages/message-board/message-board';
 import { ChoresPage } from '../pages/chores/chores';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { LaundryPage } from '../pages/laundry/laundry';
+import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -19,6 +20,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChoresPage,
     ShoppingListPage,
     LaundryPage,
+    SettingsPage,    
     TabsPage
   ],
   imports: [
@@ -35,6 +37,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChoresPage,
     ShoppingListPage,
     LaundryPage,
+    SettingsPage,    
     TabsPage
   ],
   providers: [
