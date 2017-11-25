@@ -1,0 +1,8 @@
+{
+  "name": "housepal",
+  "app_id": "cb641a4b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
