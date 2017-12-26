@@ -3,17 +3,17 @@ import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 
 @Component({
-  selector: 'page-shopping-list',
-  templateUrl: 'shopping-list.html'
+    selector: 'page-shopping-list',
+    templateUrl: 'shopping-list.html'
 })
 export class ShoppingListPage {
 
-  constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController) {
 
-  }
+    }
 
-  navPageSettings() {
-    this.navCtrl.push(SettingsPage);
-  }
+    navPageSettings() {
+        this.navCtrl.push(SettingsPage);
+    }
 
 }

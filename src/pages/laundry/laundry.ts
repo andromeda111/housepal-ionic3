@@ -3,17 +3,17 @@ import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 
 @Component({
-  selector: 'page-laundry',
-  templateUrl: 'laundry.html'
+    selector: 'page-laundry',
+    templateUrl: 'laundry.html'
 })
 export class LaundryPage {
 
-  constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController) {
 
-  }
+    }
 
-  navPageSettings() {
-    this.navCtrl.push(SettingsPage);
-  }
+    navPageSettings() {
+      this.navCtrl.push(SettingsPage);
+    }
 
 }

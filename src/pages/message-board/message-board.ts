@@ -3,17 +3,17 @@ import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 
 @Component({
-  selector: 'page-message-board',
-  templateUrl: 'message-board.html'
+    selector: 'page-message-board',
+    templateUrl: 'message-board.html'
 })
 export class MessageBoardPage {
 
-  constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController) {
 
-  }
+    }
 
-  navPageSettings() {
-    this.navCtrl.push(SettingsPage);
-  }
+    navPageSettings() {
+      this.navCtrl.push(SettingsPage);
+    }
 
 }

@@ -14,36 +14,36 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    MessageBoardPage,
-    ChoresPage,
-    ShoppingListPage,
-    LaundryPage,
-    SettingsPage,    
-    TabsPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp, {
-      tabsHighlight: true,
-      tabsPlacement: 'top'
-    })
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    MessageBoardPage,
-    ChoresPage,
-    ShoppingListPage,
-    LaundryPage,
-    SettingsPage,    
-    TabsPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+    declarations: [
+        MyApp,
+        MessageBoardPage,
+        ChoresPage,
+        ShoppingListPage,
+        LaundryPage,
+        SettingsPage,    
+        TabsPage
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp, {
+            tabsHighlight: true,
+            tabsPlacement: 'top'
+        })
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        MessageBoardPage,
+        ChoresPage,
+        ShoppingListPage,
+        LaundryPage,
+        SettingsPage,    
+        TabsPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: ErrorHandler, useClass: IonicErrorHandler}
+    ]
 })
 export class AppModule {}
