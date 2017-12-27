@@ -1,1 +1,12 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="nav" side="right">
+    <ion-header>
+        <h1>House Name</h1>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button ion-button>Test</button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #nav></ion-nav>
