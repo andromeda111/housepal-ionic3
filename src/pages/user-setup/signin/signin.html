@@ -4,10 +4,27 @@
 <ion-content padding>
     signin Page
 
-    <button ion-button icon-right (click)="signin()">
-        Sign In
-        <ion-icon name="log-in"></ion-icon>
-    </button>
+    <form #formSignin="ngForm" (ngSubmit)="signin(formSignin)">
+        <ion-list >
+            <ion-item>
+                <ion-label fixed>Email</ion-label>
+                <ion-input
+                    type="email"
+                    ngModel
+                    name="email"
+                    required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>Password</ion-label>
+                <ion-input
+                    type="password"
+                    ngModel
+                    name="password"
+                    required></ion-input>
+            </ion-item>
+        </ion-list>
+        <button type="submit" ion-button block>Sign In</button>
+    </form>
 
     <button ion-button clear color="secondary" (click)="goToSignup()">Sign Up</button>
 </ion-content>
