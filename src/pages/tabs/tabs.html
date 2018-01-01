@@ -1,4 +1,10 @@
-<ion-tabs>
+<ion-menu [content]="nav">
+    <ion-content>
+        <page-settings></page-settings>
+    </ion-content>
+</ion-menu>
+
+<ion-tabs #nav>
   
     <ion-tab [root]="tab1Root" tabTitle="Message Board" tabIcon="chatboxes"></ion-tab>
     <ion-tab [root]="tab2Root" tabTitle="Chores" tabIcon="list-box"></ion-tab>

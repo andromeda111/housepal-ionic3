@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-    selector: 'page-sign-in',
-    templateUrl: 'sign-in.html'
+    selector: 'page-signin',
+    templateUrl: 'signin.html'
 })
-export class SignInPage {
+export class SigninPage {
 
     constructor(private authService: AuthService) {}
 
-    public signIn() {
+    public signin() {
         this.authService.signin('a','b')
     }
 

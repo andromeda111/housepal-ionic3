@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { SignInPage } from '../pages/user-setup/sign-in/sign-in';
-import { SignUpPage } from '../pages/user-setup/sign-up/sign-up';
+import { SigninPage } from '../pages/user-setup/signin/signin';
+import { SignUpPage } from '../pages/user-setup/signup/signup';
 
 @Component({
     templateUrl: 'app.html'
 })
 export class MyApp {
-    rootPage: any = TabsPage;
-    signinPage: any = SignInPage;
-    signUpPage: any = SignUpPage;    
+    rootPage: any = SignUpPage;
+    signinPage: any = SigninPage;
+    // signUpPage: any = SignUpPage;    
     isAuthenticated: boolean = false;
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -37,7 +37,7 @@ export class MyApp {
             } else {
                 console.log('not logged in');
               this.isAuthenticated = false;
-              this.rootPage = SignUpPage;
+              this.rootPage = SigninPage;
             }
           })
     }

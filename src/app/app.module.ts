@@ -10,11 +10,12 @@ import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { LaundryPage } from '../pages/laundry/laundry';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
-import { SignInPage } from '../pages/user-setup/sign-in/sign-in';
-import { SignUpPage } from '../pages/user-setup/sign-up/sign-up';
+import { SigninPage } from '../pages/user-setup/signin/signin';
+import { SignupPage } from '../pages/user-setup/signup/signup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AuthService } from '../services/auth.service';
 
 @NgModule({
     declarations: [
@@ -25,8 +26,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
         LaundryPage,   
         TabsPage,
         SettingsPage,
-        SignInPage,
-        SignUpPage
+        SigninPage,
+        SignupPage
     ],
     imports: [
         BrowserModule,
@@ -45,12 +46,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
         LaundryPage,  
         TabsPage,
         SettingsPage,
-        SignInPage,
-        SignUpPage
+        SigninPage,
+        SignupPage
     ],
     providers: [
         StatusBar,
         SplashScreen,
+        AuthService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })
