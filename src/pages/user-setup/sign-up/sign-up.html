@@ -1,0 +1,33 @@
+<ion-header>
+</ion-header>
+
+<ion-content padding>
+    Sign Up Page
+
+    <form #formSignUp="ngForm" (ngSubmit)="submitSignUp(formSignUp)">
+        <ion-list >
+            <ion-item>
+                <ion-label fixed>Email</ion-label>
+                <ion-input
+                    type="email"
+                    ngModel
+                    name="email"
+                    required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>Password</ion-label>
+                <ion-input
+                    type="password"
+                    ngModel
+                    name="password"
+                    required></ion-input>
+            </ion-item>
+        </ion-list>
+        <button type="submit" ion-button block>Sign up</button>
+    </form>
+
+
+    Already have an account?
+    <button ion-button clear color="secondary" (click)="goToSignIn()">Sign In</button>
+</ion-content>
+    
