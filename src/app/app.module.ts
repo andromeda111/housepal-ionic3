@@ -14,7 +14,7 @@ import { ChoresPage } from '../pages/chores/chores';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { LaundryPage } from '../pages/laundry/laundry';
 import { TabsPage } from '../pages/tabs/tabs';
-import { SettingsPage } from '../pages/settings/settings';
+import { SideMenuPage } from '../pages/side-menu/side-menu';
 import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
 
@@ -31,7 +31,7 @@ import { AuthService } from '../services/auth.service';
         ShoppingListPage,
         LaundryPage,   
         TabsPage,
-        SettingsPage,
+        SideMenuPage,
         SigninPage,
         SignupPage
     ],
@@ -51,7 +51,7 @@ import { AuthService } from '../services/auth.service';
         ShoppingListPage,
         LaundryPage,  
         TabsPage,
-        SettingsPage,
+        SideMenuPage,
         SigninPage,
         SignupPage
     ],

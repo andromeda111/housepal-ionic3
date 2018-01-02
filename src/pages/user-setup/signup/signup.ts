@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController } from 'ionic-angular/navigation/nav-controller';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth.service';
 import { SigninPage } from '../signin/signin';
 
+@IonicPage()
 @Component({
     selector: 'page-signup',
     templateUrl: 'signup.html'
