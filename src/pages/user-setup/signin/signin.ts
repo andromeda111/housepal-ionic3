@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { SignupPage } from '../signup/signup';
 import { NgForm } from '@angular/forms';
+import { NavController } from 'ionic-angular/navigation/nav-controller';
+import { AuthService } from '../../../services/auth.service';
+import { SignupPage } from '../signup/signup';
 
 @Component({
     selector: 'page-signin',

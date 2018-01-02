@@ -1,9 +1,14 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
+// Ionic
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+// App
 import { MyApp } from './app.component';
 
+// Pages
 import { MessageBoardPage } from '../pages/message-board/message-board';
 import { ChoresPage } from '../pages/chores/chores';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
@@ -13,8 +18,9 @@ import { SettingsPage } from '../pages/settings/settings';
 import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+// Components
+
+// Services
 import { AuthService } from '../services/auth.service';
 
 @NgModule({

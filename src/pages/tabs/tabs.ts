@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { MessageBoardPage } from '../message-board/message-board';
 import { ChoresPage } from '../chores/chores';
 import { ShoppingListPage } from '../shopping-list/shopping-list';

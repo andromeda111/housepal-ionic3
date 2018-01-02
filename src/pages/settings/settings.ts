@@ -10,8 +10,6 @@ import { SigninPage } from '../user-setup/signin/signin';
 })
 export class SettingsPage {
 
-    private signinPage = SigninPage;
-
     constructor(private authService: AuthService,
                 private menuCtrl: MenuController,
                 private nav: NavController) {}

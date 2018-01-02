@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { AuthService } from '../../../services/auth.service';
-import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { SigninPage } from '../signin/signin';
 
 @Component({
