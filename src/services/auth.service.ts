@@ -15,6 +15,7 @@ export class AuthService {
 
     signin(email: string, password: string) {
         return this.http.post('http://localhost:9000/users/signin', {email, password}).subscribe(res => {
+            console.log(res);
             this.userToken = res;
         })        
     }

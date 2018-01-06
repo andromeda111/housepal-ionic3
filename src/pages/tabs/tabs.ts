@@ -7,8 +7,7 @@ import { LaundryPage } from '../laundry/laundry';
 
 @IonicPage()
 @Component({
-    templateUrl: 'tabs.html',
-    styles: [`.tab-hidden { color: blue; }`]
+    templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
