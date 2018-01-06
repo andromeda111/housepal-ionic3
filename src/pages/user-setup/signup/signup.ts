@@ -16,7 +16,7 @@ export class SignupPage {
 
     public signup(form: NgForm) {
         console.log(form.value);
-        this.authService.signup(form.value.email, form.value.password)
+        this.authService.signup('john', form.value.email, form.value.password)
     }
 
     goToSignin() {
