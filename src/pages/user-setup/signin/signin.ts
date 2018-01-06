@@ -23,8 +23,4 @@ export class SigninPage {
         this.nav.setRoot(SignupPage, {}, {animate: true, direction: 'forward'});
     }
 
-    verifyLogin() {
-        this.authService.verify()
-    }
-
 }

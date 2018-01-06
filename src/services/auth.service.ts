@@ -5,32 +5,55 @@ import firebase from "firebase";
 @Injectable()
 export class AuthService {
 
-    private userToken;
+    private userId: any;
+    private userToken: any;
 
     constructor(public http: HttpClient) {}
     
     signup(name: string, email: string, password: string) {
-        return this.http.post('http://localhost:9000/users/create', {name, email, password}).subscribe(res => console.log(res))
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => {
+                return Promise.all([user.uid, user.getIdToken()]); 
+            })
+            .then(userData => {
+                this.userId = userData[0];
+                this.userToken = userData[1];      
+            })
+            .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(error);
+            });
     }
 
     signin(email: string, password: string) {
-        return this.http.post('http://localhost:9000/users/signin', {email, password}).subscribe(res => {
-            console.log(res);
-            this.userToken = res;
-        })        
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => {
+                return Promise.all([user.uid, user.getIdToken()]); 
+            })
+            .then(userData => {
+                this.userId = userData[0];
+                this.userToken = userData[1];      
+            })
+           .catch(function(error) {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                console.log(error);
+          });
     }
 
     logout() {
         firebase.auth().signOut();
+        this.userId = null;
+        this.userToken = null;
     }
 
     getActiveUser() {
         return firebase.auth().currentUser;
     }
 
-    verify() {
-        console.log(this.userToken);
-        return this.http.post('http://localhost:9000/users/verify', {token: this.userToken.token}).subscribe(res => {
+    verifyAuthorization() {
+        return this.http.post('http://localhost:9000/users/verify', {token: this.userToken}).subscribe(res => {
             console.log(res);        
         })
     }

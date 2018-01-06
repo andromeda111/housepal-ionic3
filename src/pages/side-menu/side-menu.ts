@@ -13,10 +13,14 @@ export class SideMenuPage {
     constructor(private authService: AuthService,
                 private menuCtrl: MenuController,
                 private nav: NavController) {}
+                
     onLogout() {
         this.authService.logout();
         this.menuCtrl.close();
         this.nav.setRoot(SigninPage);
       }
 
+    verifyLogin() {
+        this.authService.verifyAuthorization()
+    }
 }
