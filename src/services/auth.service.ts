@@ -49,8 +49,14 @@ export class AuthService {
         this.userToken = '';
     }
 
-    getToken() {
-        return this.userToken;
+    getTokenForIntercept() {
+
+        if (this.userToken) {
+            return this.userToken;
+        } else {
+            // TODO: Add popup notifying user to sign out and sign in again. Redirect root to Signin Page.
+            return;
+        }
     }
 
     // Service methods for development. Delete later when not needed.
