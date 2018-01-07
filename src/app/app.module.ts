@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Ionic
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,6 +23,7 @@ import { SignupPage } from '../pages/user-setup/signup/signup';
 
 // Services
 import { AuthService } from '../services/auth.service';
+import { AuthInterceptor } from "../services/auth-interceptor.service";
 
 @NgModule({
     declarations: [
@@ -61,6 +62,11 @@ import { AuthService } from '../services/auth.service';
         StatusBar,
         SplashScreen,
         AuthService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

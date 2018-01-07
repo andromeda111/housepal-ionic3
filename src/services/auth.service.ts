@@ -5,8 +5,9 @@ import firebase from "firebase";
 @Injectable()
 export class AuthService {
 
-    private userId: any;
-    private userToken: any;
+    // TODO: Create User interfaces
+    private userId: string;
+    private userToken: string;
 
     constructor(public http: HttpClient) {}
     
@@ -44,9 +45,15 @@ export class AuthService {
 
     logout() {
         firebase.auth().signOut();
-        this.userId = null;
-        this.userToken = null;
+        this.userId =  '';
+        this.userToken = '';
     }
+
+    getToken() {
+        return this.userToken;
+    }
+
+    // Service methods for development. Delete later when not needed.
 
     getActiveUser() {
         return firebase.auth().currentUser;
