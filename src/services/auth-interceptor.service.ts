@@ -24,7 +24,6 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req);
         } else {
             // Catch Case: Token Undefined, login somehow in bad state and user needs to sign in again.
-            // TODO: Move this catch to AuthService .getTokenForIntercept() method
             alert('Please Sign Out and Sign In Again.')
             return next.handle(req);
         }

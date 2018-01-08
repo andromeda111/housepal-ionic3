@@ -6,6 +6,8 @@ import firebase from 'firebase';
 // Pages
 import { TabsPage } from '../pages/tabs/tabs';
 import { SigninPage } from '../pages/user-setup/signin/signin';
+// Services
+import { AuthService } from '../services/auth.service';
 
 @Component({
     templateUrl: 'app.html'
@@ -16,7 +18,8 @@ export class MyApp {
 
     constructor(private platform: Platform, 
                 private statusBar: StatusBar,
-                private splashScreen: SplashScreen) {
+                private splashScreen: SplashScreen,
+                private authService: AuthService) {
 
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -35,12 +38,13 @@ export class MyApp {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log('logged in');
-              this.isAuthenticated = true;
-              this.rootPage = TabsPage;
+                this.authService.getActiveUser();
+                this.isAuthenticated = true;
+                this.rootPage = TabsPage;
             } else {
                 console.log('logged out');
-              this.isAuthenticated = false;
-              this.rootPage = SigninPage;
+                this.isAuthenticated = false;
+                this.rootPage = SigninPage;
             }
           })
     }

@@ -50,19 +50,16 @@ export class AuthService {
     }
 
     getTokenForIntercept() {
-
-        if (this.userToken) {
-            return this.userToken;
-        } else {
-            // TODO: Add popup notifying user to sign out and sign in again. Redirect root to Signin Page.
-            return;
-        }
+        return this.userToken;
     }
 
-    // Service methods for development. Delete later when not needed.
-
     getActiveUser() {
-        return firebase.auth().currentUser;
+        let user = firebase.auth().currentUser;
+        
+        this.userId = user.uid;
+        user.getIdToken().then(token => this.userToken = token);
+    
+        return user;
     }
 
     verifyAuthorization() {
