@@ -18,13 +18,23 @@ export class AuthService {
             })
             .then(userData => {
                 this.userId = userData[0];
-                this.userToken = userData[1];      
+                this.userToken = userData[1];
+
+                let newUser = { uid: this.userId, name, email, h_pw: password };
+
+                this.http.post('http://localhost:9000/users/signup', newUser).subscribe(res => {
+                    console.log(res);        
+                })
             })
             .catch(function(error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 console.log(error);
             });
+    }
+
+    postNewUser() {
+
     }
 
     signin(email: string, password: string) {

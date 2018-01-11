@@ -7,6 +7,14 @@
     <form #formSignup="ngForm" (ngSubmit)="signup(formSignup)">
         <ion-list >
             <ion-item>
+                <ion-label fixed>First Name</ion-label>
+                <ion-input
+                    type="text"
+                    ngModel
+                    name="name"
+                    required></ion-input>
+            </ion-item>
+            <ion-item>
                 <ion-label fixed>Email</ion-label>
                 <ion-input
                     type="email"
