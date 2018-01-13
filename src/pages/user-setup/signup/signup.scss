@@ -1,0 +1,33 @@
+.page-signup {
+    background: linear-gradient(to bottom right, #2B618C,#3A85BF,#1BBCB1);
+
+    .signup-form-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3rem;
+
+        h1 {
+            font-size: 2.25rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+    
+        button {
+            margin: 1rem 0;
+            text-transform: none;
+        }
+
+        ion-list {
+            margin-bottom: 2rem;
+        }
+    
+        .logo {
+            max-width: 100%;
+            margin-bottom: 6rem;
+        }
+    }
+
+}

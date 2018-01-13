@@ -1,41 +1,44 @@
-<ion-header>
-</ion-header>
+<ion-content padding class="page-signup">
+    
+    <div class="signup-form-container">
 
-<ion-content padding>
-    Sign Up Page
+        <div class="logo">
+            <img src="assets/imgs/housepal-logo.png" alt="">
+        </div>
+    
+        <form #formSignup="ngForm" (ngSubmit)="signup(formSignup)">
+            <h1>Sign Up</h1>
+            <ion-list >
+                <ion-item>
+                    <ion-label fixed>First Name</ion-label>
+                    <ion-input
+                        type="text"
+                        ngModel
+                        name="name"
+                        required></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label fixed>Email</ion-label>
+                    <ion-input
+                        type="email"
+                        ngModel
+                        name="email"
+                        required></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label fixed>Password</ion-label>
+                    <ion-input
+                        type="password"
+                        ngModel
+                        name="password"
+                        required></ion-input>
+                </ion-item>
+            </ion-list>
+            <button type="submit" ion-button block color="primary">Sign Up</button>
+            <button ion-button block outline color="light" (click)="goToSignin()">Already have an account?</button>
+        </form>
 
-    <form #formSignup="ngForm" (ngSubmit)="signup(formSignup)">
-        <ion-list >
-            <ion-item>
-                <ion-label fixed>First Name</ion-label>
-                <ion-input
-                    type="text"
-                    ngModel
-                    name="name"
-                    required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label fixed>Email</ion-label>
-                <ion-input
-                    type="email"
-                    ngModel
-                    name="email"
-                    required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label fixed>Password</ion-label>
-                <ion-input
-                    type="password"
-                    ngModel
-                    name="password"
-                    required></ion-input>
-            </ion-item>
-        </ion-list>
-        <button type="submit" ion-button block>Sign up</button>
-    </form>
+    </div>
 
-
-    Already have an account?
-    <button ion-button clear color="secondary" (click)="goToSignin()">Sign In</button>
 </ion-content>
     
