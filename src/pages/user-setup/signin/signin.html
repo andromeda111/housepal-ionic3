@@ -1,29 +1,39 @@
-<ion-content padding>
-    signin Page
+<ion-content padding class="page-signin">
 
-    <form #formSignin="ngForm" (ngSubmit)="signin(formSignin)">
-        <ion-list >
-            <ion-item>
-                <ion-label fixed>Email</ion-label>
-                <ion-input
-                    type="email"
-                    ngModel
-                    name="email"
-                    required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label fixed>Password</ion-label>
-                <ion-input
-                    type="password"
-                    ngModel
-                    name="password"
-                    required></ion-input>
-            </ion-item>
-        </ion-list>
-        <button type="submit" ion-button block>Sign In</button>
-    </form>
+    <div class="signin-form-container">
+        
+        <div class="logo">
+            <img src="assets/imgs/housepal-logo.png" alt="">
+        </div>
+    
+        <form #formSignin="ngForm" class="form-signin" (ngSubmit)="signin(formSignin)">
+            <h1>Sign In</h1>
+            <ion-list >
+                <ion-item>
+                    <ion-label fixed>Email</ion-label>
+                    <ion-input
+                        type="email"
+                        ngModel
+                        name="email"
+                        required></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label fixed>Password</ion-label>
+                    <ion-input
+                        type="password"
+                        ngModel
+                        name="password"
+                        required></ion-input>
+                </ion-item>
+            </ion-list>
 
-    <button ion-button clear color="secondary" (click)="goToSignup()">Sign Up</button>
+            <button type="submit" ion-button block color="primary">Sign In</button>
+            <button ion-button block outline color="light" (click)="goToSignup()">Sign Up</button>
+        
+        </form>
+        
+
+    </div>
     
 </ion-content>
     
