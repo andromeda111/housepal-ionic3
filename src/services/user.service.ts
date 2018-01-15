@@ -26,5 +26,9 @@ export class UserService {
                 resolve();
             });
         });
-      }
+    }
+
+    public initCurrentUser() {
+        return this.http.get('https://housepal-server.herokuapp.com/users/current');
+    }
 }

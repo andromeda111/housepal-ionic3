@@ -44,24 +44,27 @@ export class MyApp {
                 console.log('auth state user', user);
                 
                 this.isAuthenticated = true;
-                this.setActiveUser().then(()=> {
+
+                this.authService.setUserIdAndToken().then(()=> {
+
+                    this.userService.initCurrentUser().subscribe(userData => {
+                        console.log('subscribing style', userData[0]);
+                        
+                        // Check if user is assigned to a House
+                        // If the user is not assigned to a house, direct them to House Setup.
+                        if (!userData[0].house_id) {
+                            console.log('no house');
+                            return;
+                        }
+                    
+                        this.rootPage = TabsPage;
+        
+                        console.log('fin set');
+
+                    })
 
 
-                    console.log('then do stuff');
-
-                    // Check if user is assigned to a House
-                    let userHouseId = this.userService.userHouseId;
-                    console.log('app user', userHouseId);
-    
-                    // If the user is not assigned to a house, direct them to House Setup.
-                    if (!userHouseId) {
-                        console.log('no house');
-                        return;
-                    }
-                
-                    this.rootPage = TabsPage;
-    
-                    console.log('fin set');
+     
     
 
 
@@ -78,11 +81,11 @@ export class MyApp {
         })
     }
     
-    private async setActiveUser() {
-        await this.authService.setUserIdAndToken()
-        await this.userService.setCurrentUser()
-        return;
-    }
+    // private async setActiveUser() {
+    //     await this.authService.setUserIdAndToken()
+    //     // await this.userService.setCurrentUser()
+    //     return;
+    // }
 
     
 }
