@@ -15,7 +15,6 @@ export class SigninPage {
                 private nav: NavController) {}
 
     public signin(form: NgForm) {
-        console.log(form.value);
         this.authService.signin(form.value.email, form.value.password)
     }
 

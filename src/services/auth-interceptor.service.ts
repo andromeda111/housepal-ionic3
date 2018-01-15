@@ -13,8 +13,9 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private injector: Injector) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token = this.getAuthService().getTokenForIntercept();
-
+        let token: string = this.getAuthService().getUserToken;
+        console.log('will this finish? ', token);
+        
         if (token) {
             req = req.clone({
                 setHeaders: {
@@ -25,6 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
         } else {
             // Catch Case: Token Undefined, login somehow in bad state and user needs to sign in again.
             alert('Please Sign Out and Sign In Again.')
+            this.getAuthService().logout();
             return next.handle(req);
         }
     }

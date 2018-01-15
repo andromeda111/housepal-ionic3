@@ -24,6 +24,7 @@ import { SignupPage } from '../pages/user-setup/signup/signup';
 // Services
 import { AuthService } from '../services/auth.service';
 import { AuthInterceptor } from "../services/auth-interceptor.service";
+import { UserService } from '../services/user.service';
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import { AuthInterceptor } from "../services/auth-interceptor.service";
         StatusBar,
         SplashScreen,
         AuthService,
+        UserService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
