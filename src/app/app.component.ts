@@ -15,7 +15,10 @@ import { Observable } from 'rxjs';
     templateUrl: 'app.html'
 })
 export class MyApp {
+
     public rootPage: any = SigninPage;
+    
+    private loading = false;
     private isAuthenticated: boolean = false;
 
     constructor(private platform: Platform, 
@@ -41,51 +44,37 @@ export class MyApp {
         firebase.auth().onAuthStateChanged(user => {
 
             if (user) {
-                console.log('auth state user', user);
-                
+                console.log('Auth State Logged In', user);
                 this.isAuthenticated = true;
-
-                this.authService.setUserIdAndToken().then(()=> {
-
-                    this.userService.initCurrentUser().subscribe(userData => {
-                        console.log('subscribing style', userData[0]);
-                        
-                        // Check if user is assigned to a House
-                        // If the user is not assigned to a house, direct them to House Setup.
-                        if (!userData[0].house_id) {
-                            console.log('no house');
-                            return;
-                        }
-                    
-                        this.rootPage = TabsPage;
-        
-                        console.log('fin set');
-
-                    })
-
-
-     
-    
-
-
-                })
-
-
-
+                this.setUserAndNavStart()
             } else {
                 console.log('logged out');
                 this.isAuthenticated = false;
+                this.authService.clearUserState();
                 this.rootPage = SigninPage;
             }
 
         })
     }
-    
-    // private async setActiveUser() {
-    //     await this.authService.setUserIdAndToken()
-    //     // await this.userService.setCurrentUser()
-    //     return;
-    // }
+ 
+    private async setUserAndNavStart() {
+       
+        this.loading = true;   
 
+        await this.authService.initiateCurrentUser()
+        await this.userService.setCurrentUser()
+
+        let house = this.userService.userHouseId;
+        
+        if (house) {
+            this.rootPage = TabsPage;
+            this.loading = false;
+        } else {
+            console.log('NO HOUSE');
+            this.loading = false;
+        }
+
+        return;
+    }
     
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import firebase from "firebase";
-import { ReturnStatement } from '@angular/compiler/src/output/output_ast';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +14,10 @@ export class AuthService {
     }
 
     constructor(public http: HttpClient) {}
-    
+
+     /****************************
+        Signup, Signin, Logout
+    *****************************/
     signup(name: string, email: string, password: string) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
@@ -46,11 +48,13 @@ export class AuthService {
             })
             .then(userData => {
                 // If userId and userToken have already been accurately set, return from promise.
-                if (this.userId && this.userId === userData[0] && this.userToken && this.userToken === userData[1]) {      
+                if (this.userId && this.userId === userData[0] && this.userToken && this.userToken === userData[1]) {  
+                    // this.initiateAuthAndUserState()    
                     return;
                 } else {
                     this.userId = userData[0];
-                    this.userToken = userData[1];            
+                    this.userToken = userData[1]; 
+                    // this.initiateAuthAndUserState()                              
                     return;
                 }
             })
@@ -63,30 +67,54 @@ export class AuthService {
 
     logout() {
         firebase.auth().signOut();
+        this.clearUserState();
+    }
+
+    public clearUserState() {
         this.userId =  '';
         this.userToken = '';
     }
 
-    public async setUserIdAndToken() {
-        if (!this.userToken) {
-            await this.firebaseGetCurrentUser();
-        }
+    /**********************************************
+        Initiate User ID and Auth Token
+    ***********************************************/
+    // We know we have an active user that has logged in.
+    // Now we need to make sure their ID and Token have been set.
 
-        return this.userToken;
+    public async initiateCurrentUser() {
+        await this.checkUserTokenIsSet();
+
+        return;       
     }
 
-    // Firebase: Get current user and set this.userId and this.userToken
+    public async checkUserTokenIsSet() {
+        if (!this.userToken) {
+            await this.firebaseGetCurrentUser(); 
+        }
+
+        return;
+    }
+
     private firebaseGetCurrentUser() {
         let user = firebase.auth().currentUser;
         
+        // Set this.userId and this.userToken
         this.userId = user.uid;
         user.getIdToken().then(token => this.userToken = token);
+
+        return;
     }
 
+
+
+    /*****************************************
+        Development Methods: DELETE LATER
+    ******************************************/
     // Dev - can delete later
     verifyAuthorization() {
         return this.http.post('https://housepal-server.herokuapp.com/users/verify', {token: this.userToken}).subscribe(res => {
             console.log(res);        
         })
     }
+
 }

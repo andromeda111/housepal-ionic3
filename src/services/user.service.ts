@@ -17,18 +17,20 @@ export class UserService {
 
     constructor(public http: HttpClient) {}
 
-    public setCurrentUser() {  
-        return new Promise(resolve => {
+    public async setCurrentUser() {  
+
+        let getCurrentUserData = new Promise(resolve => {      
             this.http.get('https://housepal-server.herokuapp.com/users/current').subscribe(result => {
-                this.activeUser = result[0];
-                console.log('activeUser set');
-       
-                resolve();
-            });
-        });
+                const userData = result[0];
+                resolve(userData);
+            })
+        }).catch(err => console.log(err));
+
+        await getCurrentUserData.then(userData => {
+            this.activeUser = userData;
+        })
+
+        return;
     }
 
-    public initCurrentUser() {
-        return this.http.get('https://housepal-server.herokuapp.com/users/current');
-    }
 }

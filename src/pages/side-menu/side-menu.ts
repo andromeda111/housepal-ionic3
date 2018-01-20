@@ -23,4 +23,8 @@ export class SideMenuPage {
     verifyLogin() {
         this.authService.verifyAuthorization()
     }
+
+    clearAuth() {
+        this.authService.clearUserState()
+    }
 }
