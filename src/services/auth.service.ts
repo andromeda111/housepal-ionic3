@@ -8,9 +8,18 @@ export class AuthService {
     // TODO: Create User interfaces
     private userId: string;
     private userToken: string;
+    private _isFirstSignin: boolean = false;
 
     public get getUserToken() {
         return this.userToken;
+    }
+
+    public get isFirstSignin() {
+        return this._isFirstSignin;
+    }
+
+    public set isFirstSignin(val: boolean) {
+        this._isFirstSignin = val;
     }
 
     constructor(public http: HttpClient) {}
@@ -21,44 +30,41 @@ export class AuthService {
     signup(name: string, email: string, password: string) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
-                return Promise.all([user.uid, user.getIdToken()]); 
-            })
-            .then(userData => {
-                this.userId = userData[0];
-                this.userToken = userData[1];
-
-                let newUser = { uid: this.userId, name, email, h_pw: password };
-
+                const userData = user.toJSON();
+                // First Signin: Set User ID and Auth Token.
+                this.isFirstSignin = true;
+                this.userId = userData.uid;
+                this.userToken = userData.stsTokenManager.accessToken;  
+                
+                // Post New User to Database.
+                const newUser = { uid: this.userId, name, email, h_pw: password };
                 this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser).subscribe(res => {
-                    console.log(res);        
+                    console.log(res);   
+
+                    // ToDo: What if this fails?
                 })
-                return;
+
+                return ;
             })
-            .catch(function(error) {
+            .catch(error => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 console.log(error);
-            });
+            })
+            
     }
 
     signin(email: string, password: string) {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => {
-                return Promise.all([user.uid, user.getIdToken()]); 
+                const userData = user.toJSON();
+                // Existing User: Set User ID and Auth Token
+                this.isFirstSignin = false;
+                this.userId = userData.uid;
+                this.userToken = userData.stsTokenManager.accessToken;
+                return;              
             })
-            .then(userData => {
-                // If userId and userToken have already been accurately set, return from promise.
-                if (this.userId && this.userId === userData[0] && this.userToken && this.userToken === userData[1]) {  
-                    // this.initiateAuthAndUserState()    
-                    return;
-                } else {
-                    this.userId = userData[0];
-                    this.userToken = userData[1]; 
-                    // this.initiateAuthAndUserState()                              
-                    return;
-                }
-            })
-           .catch(function(error) {
+           .catch(error => {
                 let errorCode = error.code;
                 let errorMessage = error.message;
                 console.log(error);
@@ -73,6 +79,7 @@ export class AuthService {
     public clearUserState() {
         this.userId =  '';
         this.userToken = '';
+        this.isFirstSignin = false;
     }
 
     /**********************************************
@@ -81,29 +88,19 @@ export class AuthService {
     // We know we have an active user that has logged in.
     // Now we need to make sure their ID and Token have been set.
 
-    public async initiateCurrentUser() {
-        await this.checkUserTokenIsSet();
-
-        return;       
-    }
-
-    public async checkUserTokenIsSet() {
-        if (!this.userToken) {
-            await this.firebaseGetCurrentUser(); 
+     public checkUserTokenIsSet() {
+        if (this.userToken) {
+            return;
         }
 
-        return;
-    }
-
-    private firebaseGetCurrentUser() {
-        let user = firebase.auth().currentUser;
-        
+        const user = firebase.auth().currentUser;
         // Set this.userId and this.userToken
         this.userId = user.uid;
         user.getIdToken().then(token => this.userToken = token);
 
         return;
     }
+
 
 
 

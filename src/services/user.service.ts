@@ -17,7 +17,7 @@ export class UserService {
 
     constructor(public http: HttpClient) {}
 
-    public async setCurrentUser() {  
+    public setCurrentUser() {  
 
         let getCurrentUserData = new Promise(resolve => {      
             this.http.get('https://housepal-server.herokuapp.com/users/current').subscribe(result => {
@@ -26,11 +26,9 @@ export class UserService {
             })
         }).catch(err => console.log(err));
 
-        await getCurrentUserData.then(userData => {
+        return getCurrentUserData.then(userData => {
             this.activeUser = userData;
         })
-
-        return;
     }
 
 }

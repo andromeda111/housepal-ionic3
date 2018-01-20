@@ -46,7 +46,7 @@ export class MyApp {
             if (user) {
                 console.log('Auth State Logged In', user);
                 this.isAuthenticated = true;
-                this.setUserAndNavStart()
+                this.setUserAndNavStart();
             } else {
                 console.log('logged out');
                 this.isAuthenticated = false;
@@ -61,20 +61,32 @@ export class MyApp {
        
         this.loading = true;   
 
-        await this.authService.initiateCurrentUser()
-        await this.userService.setCurrentUser()
+        // If this is a new User, direct to House Setup page.
+        if (this.authService.isFirstSignin) {
+            console.log('New User: Nav to House Setup');
+            this.authService.isFirstSignin = false;
+            this.loading = false;            
+            return;
+        } 
 
-        let house = this.userService.userHouseId;
-        
-        if (house) {
+        // Established User is logging in.
+        // Check that User Id and Token are set.
+        // Get the User from the database.
+        // Nav to their House, or, if undefined, nav to House Setup.
+        await this.authService.checkUserTokenIsSet();
+        await this.userService.setCurrentUser();
+
+        const houseId = this.userService.userHouseId;
+    
+        if (houseId) {
             this.rootPage = TabsPage;
             this.loading = false;
         } else {
-            console.log('NO HOUSE');
+            console.log('No House: Nav to House Setup');
             this.loading = false;
         }
 
-        return;
+        return; 
     }
     
 }
