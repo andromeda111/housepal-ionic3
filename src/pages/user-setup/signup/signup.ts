@@ -15,7 +15,7 @@ export class SignupPage {
                 private nav: NavController) {}
 
     public signup(form: NgForm) {
-        this.authService.signup(form.value.name, form.value.email, form.value.password)
+        this.authService.signup(form.value.name, form.value.email, form.value.password).then(res => console.log('fin', res))
     }
 
     goToSignin() {
