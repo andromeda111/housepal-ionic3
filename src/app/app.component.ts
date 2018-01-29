@@ -61,14 +61,6 @@ export class MyApp {
        
         this.loading = true;   
 
-        // If this is a new User, direct to House Setup page.
-        if (this.authService.isFirstSignin) {
-            console.log('New User: Nav to House Setup');
-            this.authService.isFirstSignin = false;
-            this.loading = false;            
-            return;
-        } 
-
         // Established User is logging in.
         // Check that User Id and Token are set.
         // Get the User from the database.

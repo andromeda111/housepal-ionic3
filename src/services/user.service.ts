@@ -20,7 +20,7 @@ export class UserService {
     public setCurrentUser() {  
 
         let getCurrentUserData = new Promise(resolve => {      
-            this.http.get('https://housepal-server.herokuapp.com/users/current').subscribe(result => {
+            this.http.get('https://housepal-server.herokuapp.com/users/signin').subscribe(result => {
                 const userData = result[0];
                 resolve(userData);
             })
