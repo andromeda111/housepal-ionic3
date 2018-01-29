@@ -17,9 +17,6 @@ import { Observable } from 'rxjs';
 export class MyApp {
 
     public rootPage: any = SigninPage;
-    
-    private loading = false;
-    private isAuthenticated: boolean = false;
 
     constructor(private platform: Platform, 
                 private statusBar: StatusBar,
@@ -45,11 +42,9 @@ export class MyApp {
 
             if (user) {
                 console.log('Auth State Logged In', user);
-                this.isAuthenticated = true;
                 this.setUserAndNavStart();
             } else {
                 console.log('logged out');
-                this.isAuthenticated = false;
                 this.authService.clearUserState();
                 this.rootPage = SigninPage;
             }
@@ -57,28 +52,21 @@ export class MyApp {
         })
     }
  
-    private async setUserAndNavStart() {
-       
-        this.loading = true;   
+    private setUserAndNavStart() {
 
-        // Established User is logging in.
-        // Check that User Id and Token are set.
-        // Get the User from the database.
-        // Nav to their House, or, if undefined, nav to House Setup.
-        await this.authService.checkUserTokenIsSet();
-        await this.userService.setCurrentUser();
+        // Edge case: App is closed and cleared, but re-opening app inits token. But, token and user not set
+        // check if token is set : set token
+        // check if user is set : set user (getCurrentUser)
 
+        // Nav to appropriate place
         const houseId = this.userService.userHouseId;
     
         if (houseId) {
             this.rootPage = TabsPage;
-            this.loading = false;
         } else {
             console.log('No House: Nav to House Setup');
-            this.loading = false;
         }
 
-        return; 
     }
     
 }

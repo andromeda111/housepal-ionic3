@@ -6,12 +6,18 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AuthService {
 
-    // TODO: Create User interfaces
-    private userId: string;
+    // TODO: Create interfaces
+
+    public currentUser: any = {};
+
     private userToken: string;
+    private authenticated: boolean = false;
 
     public get getUserToken() {
         return this.userToken;
+    }
+    public get isAuthenticated() {
+        return this.authenticated;
     }
 
     constructor(public http: HttpClient) {}
@@ -19,70 +25,66 @@ export class AuthService {
      /****************************
         Signup, Signin, Logout
     *****************************/
-    async signup(name: string, email: string, password: string) {
+    public async signup(name: string, email: string, password: string) {
 
         const newUser = { name, email, password };
+        let userData: any = {};
 
         // Post new user to Database
         await new Promise((resolve, reject) => {
             this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
                 .subscribe((result: any) => { 
-                    // postToDatabaseComplete = true;
-                    this.userId = result.user.uid
-                    console.log('success from database', result);
-                    resolve(result);
+                    console.log('Successfully created new user: ', result);
+                    userData = result;
+                    resolve();
                 }, 
-                error => reject(error));
-        }).catch(error => console.log('ERROR, BRUH', error))
+                error => reject(error))
+        }).catch(error => console.log('Error creating new user: ', error))
 
-        this.signin(email, password);
+        this.signin(email, password, userData.user);
     }
 
-    async signin(email: string, password: string) {
+    public async signin(email: string, password: string, newUserData?: any) { 
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(user => {
-                const userData = user.toJSON();
-                // Existing User: Set User ID and Auth Token
-                this.userId = userData.uid;
-                this.userToken = userData.stsTokenManager.accessToken;
-                return;              
+        await new Promise((resolve, reject) => {
+            // If there is newUserData coming from Signup, resolve to next step.
+            newUserData ? resolve(newUserData) : 
+            // Otherwise, start Signin through Database to get userData.
+            this.http.post('https://housepal-server.herokuapp.com/users/signin', {email, password})
+                .subscribe((result: any) => {
+                    // Result = Array containing User object
+                    result.length ? resolve(result[0]) : reject('Signin to Database Failed');
+                }, 
+                error => reject(error))
+            }).then(userData => {
+                // Sign in to Firebase Auth
+                return firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(result => {
+                        // Authentication succcessful: Set this.currentUser, this.userToken, and this.authenticated.
+                        const firebaseUser = result.toJSON();
+                        this.currentUser = userData;          
+                        this.userToken = firebaseUser.stsTokenManager.accessToken;
+                        this.authenticated = true;
+                    })
+                    .catch(error => {
+                        console.log('Error signing in to Firebase Auth', error);
+                        return error;
+                    });
             })
-           .catch(error => {
-                let errorCode = error.code;
-                let errorMessage = error.message;
-                console.log(error);
-          });
+            .catch(error => console.log('Error with Signin. Please Try Again:', error));
     }
 
-    logout() {
+    public logout() {
         firebase.auth().signOut();
         this.clearUserState();
     }
 
     public clearUserState() {
-        this.userId =  '';
+        this.currentUser = {};
         this.userToken = '';
+        this.authenticated = false;        
     }
 
-    /**********************************************
-        Initiate User ID and Auth Token
-    ***********************************************/
-    // We know we have an active user that has logged in.
-    // Now we need to make sure their ID and Token have been set.
-
-     public checkUserTokenIsSet() {
-        if (this.userToken) {
-            return;
-        }
-
-        const user = firebase.auth().currentUser;
-        // Set this.userId and this.userToken
-        this.userId = user.uid;
-        user.getIdToken().then(token => this.userToken = token);
-
-        return;
-    }
 
 
 
