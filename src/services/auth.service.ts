@@ -25,13 +25,12 @@ export class AuthService {
      /****************************
         Signup, Signin, Logout
     *****************************/
-    public async signup(name: string, email: string, password: string) {
-
+    public signup(name: string, email: string, password: string) {
         const newUser = { name, email, password };
         let userData: any = {};
 
         // Post new user to Database
-        await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
                 .subscribe((result: any) => { 
                     console.log('Successfully created new user: ', result);
@@ -39,14 +38,15 @@ export class AuthService {
                     resolve();
                 }, 
                 error => reject(error))
-        }).catch(error => console.log('Error creating new user: ', error))
-
-        this.signin(email, password, userData.user);
+        }).then(() => {
+            this.signin(email, password, userData.user);
+        }).catch(error => {
+            console.error('Error creating new user: ', error)
+        })
     }
 
-    public async signin(email: string, password: string, newUserData?: any) { 
-
-        await new Promise((resolve, reject) => {
+    public signin(email: string, password: string, newUserData?: any) { 
+        return new Promise((resolve, reject) => {
             // If there is newUserData coming from Signup, resolve to next step.
             newUserData ? resolve(newUserData) : 
             // Otherwise, start Signin through Database to get userData.
@@ -67,11 +67,14 @@ export class AuthService {
                         this.authenticated = true;
                     })
                     .catch(error => {
-                        console.log('Error signing in to Firebase Auth', error);
+                        console.error('Error signing in to Firebase Auth', error);
                         return error;
                     });
             })
-            .catch(error => console.log('Error with Signin. Please Try Again:', error));
+            .catch(error => {
+                console.error('Error with Signin. Please Try Again:', error)
+                return error;
+            });
     }
 
     public logout() {
