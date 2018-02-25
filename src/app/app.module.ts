@@ -18,12 +18,13 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SideMenuPage } from '../pages/side-menu/side-menu';
 import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
+import { HouseSetupPage } from '../pages/house-setup/house-setup';
 
 // Components
 
 // Services
 import { AuthService } from '../services/auth.service';
-import { AuthInterceptor } from "../services/auth-interceptor.service";
+import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { UserService } from '../services/user.service';
 
 @NgModule({
@@ -32,11 +33,12 @@ import { UserService } from '../services/user.service';
         MessageBoardPage,
         ChoresPage,
         ShoppingListPage,
-        LaundryPage,   
+        LaundryPage,
         TabsPage,
         SideMenuPage,
         SigninPage,
-        SignupPage
+        SignupPage,
+        HouseSetupPage
     ],
     imports: [
         BrowserModule,
@@ -53,11 +55,12 @@ import { UserService } from '../services/user.service';
         MessageBoardPage,
         ChoresPage,
         ShoppingListPage,
-        LaundryPage,  
+        LaundryPage,
         TabsPage,
         SideMenuPage,
         SigninPage,
-        SignupPage
+        SignupPage,
+        HouseSetupPage
     ],
     providers: [
         StatusBar,
@@ -69,7 +72,7 @@ import { UserService } from '../services/user.service';
             useClass: AuthInterceptor,
             multi: true
         },
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        { provide: ErrorHandler, useClass: IonicErrorHandler }
     ]
 })
 export class AppModule {}

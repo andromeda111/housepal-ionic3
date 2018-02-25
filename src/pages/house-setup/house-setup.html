@@ -1,0 +1,52 @@
+<ion-content padding class="page-house-setup">
+
+    <!-- Landing -->
+    <div class="house-setup-landing-container">
+        <img src="assets/imgs/housepal-logo.png">
+
+        <!-- Intro & Options -->
+        <section class="section-landing" *ngIf="showSection === 'landing'">
+
+            <div class="description">
+                <h3>Welcome!</h3>
+                <p>You are currently not part of a house group. Would you like to join an existing house, or start your own
+                    house group?</p>
+            </div>
+
+            <button ion-button block color="primary" (click)="selectOption('join')">Join Existing House</button>
+            <button ion-button block color="secondary" (click)="selectOption('create')">Create New House</button>
+
+        </section>
+
+        <!-- Join Existing House -->
+        <section class="section-join" *ngIf="showSection === 'join'">
+            <form #formJoinHouse="ngForm" (ngSubmit)="joinHouse(formJoinHouse)">
+                <h1>Join Existing House</h1>
+                <ion-list>
+                    <ion-item>
+                        <ion-label>House Name</ion-label>
+                        <ion-input type="text" ngModel name="name" placeholder="House Name" required></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>House Code</ion-label>
+                        <ion-input type="text" ngModel name="password" placeholder="4-digit Share Code" required></ion-input>
+                    </ion-item>
+                </ion-list>
+
+                <button type="submit" ion-button block color="primary">Sign In</button>
+                <button ion-button block outline color="light" (click)="selectOption">Go Back</button>
+
+            </form>
+
+            <div class="footnote">put where to find name and share code here</div>
+        </section>
+
+        <!-- Create New House -->
+        <section class="section-create" *ngIf="showSection === 'create'">
+
+        </section>
+
+
+    </div>
+
+</ion-content>

@@ -1,0 +1,54 @@
+.page-house-setup {
+    background: linear-gradient(to bottom right, #2b618c, #3a85bf, #1bbcb1);
+
+    .house-setup-landing-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3rem;
+
+        .section-landing {
+            display: flex;
+            flex-direction: column;
+
+            .description {
+                color: $text-white;
+                text-align: center;
+            }
+        }
+
+        .section-join {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            .footnote {
+                position: absolute;
+                font-style: italic;
+                margin-top: 48px;
+                color: $text-white;
+            }
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            text-transform: none;
+        }
+
+        ion-list {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            max-width: 100%;
+            margin-bottom: 6rem;
+        }
+    }
+}
