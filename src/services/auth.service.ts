@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import firebase from "firebase";
+import firebase from 'firebase';
 import 'rxjs/add/operator/catch';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-
     // TODO: Create interfaces
 
     public currentUser: any = {};
@@ -20,9 +20,9 @@ export class AuthService {
         return this.authenticated;
     }
 
-    constructor(public http: HttpClient) {}
+    constructor(public http: HttpClient, private userService: UserService) {}
 
-     /****************************
+    /****************************
         Signup, Signin, Logout
     *****************************/
     public signup(name: string, email: string, password: string) {
@@ -31,38 +31,47 @@ export class AuthService {
 
         // Post new user to Database
         return new Promise((resolve, reject) => {
-            this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
-                .subscribe((result: any) => { 
+            this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser).subscribe(
+                (result: any) => {
                     console.log('Successfully created new user: ', result);
                     userData = result;
                     resolve();
-                }, 
-                error => reject(error))
-        }).then(() => {
-            this.signin(email, password, userData.user);
-        }).catch(error => {
-            console.error('Error creating new user: ', error)
+                },
+                error => reject(error)
+            );
         })
+            .then(() => {
+                this.signin(email, password, userData.user);
+            })
+            .catch(error => {
+                console.error('Error creating new user: ', error);
+            });
     }
 
-    public signin(email: string, password: string, newUserData?: any) { 
+    public signin(email: string, password: string, newUserData?: any) {
         return new Promise((resolve, reject) => {
             // If there is newUserData coming from Signup, resolve to next step.
-            newUserData ? resolve(newUserData) : 
-            // Otherwise, start Signin through Database to get userData.
-            this.http.post('https://housepal-server.herokuapp.com/users/signin', {email, password})
-                .subscribe((result: any) => {
-                    // Result = Array containing User object
-                    result.length ? resolve(result[0]) : reject('Signin to Database Failed');
-                }, 
-                error => reject(error))
-            }).then(userData => {
+            newUserData
+                ? resolve(newUserData)
+                : // Otherwise, start Signin through Database to get userData.
+                  this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password }).subscribe(
+                      (result: any) => {
+                          // Result = Array containing User object
+                          result.length ? resolve(result[0]) : reject('Signin to Database Failed');
+                      },
+                      error => reject(error)
+                  );
+        })
+            .then(userData => {
                 // Sign in to Firebase Auth
-                return firebase.auth().signInWithEmailAndPassword(email, password)
+                return firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email, password)
                     .then(result => {
                         // Authentication succcessful: Set this.currentUser, this.userToken, and this.authenticated.
                         const firebaseUser = result.toJSON();
-                        this.currentUser = userData;          
+                        this.currentUser = userData; // TODO: Can remove this? User Service works here!
+                        this.userService.setActiveUser(userData);
                         this.userToken = firebaseUser.stsTokenManager.accessToken;
                         this.authenticated = true;
                     })
@@ -72,7 +81,7 @@ export class AuthService {
                     });
             })
             .catch(error => {
-                console.error('Error with Signin. Please Try Again:', error)
+                console.error('Error with Signin. Please Try Again:', error);
                 return error;
             });
     }
@@ -85,21 +94,16 @@ export class AuthService {
     public clearUserState() {
         this.currentUser = {};
         this.userToken = '';
-        this.authenticated = false;        
+        this.authenticated = false;
     }
-
-
-
-
 
     /*****************************************
         Development Methods: DELETE LATER
     ******************************************/
     // Dev - can delete later
     verifyAuthorization() {
-        return this.http.post('https://housepal-server.herokuapp.com/users/verify', {token: this.userToken}).subscribe(res => {
-            console.log(res);        
-        })
+        return this.http.post('https://housepal-server.herokuapp.com/users/verify', { token: this.userToken }).subscribe(res => {
+            console.log(res);
+        });
     }
-
 }

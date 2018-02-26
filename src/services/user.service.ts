@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserService {
-
     public activeUser: any = {};
 
     public get getActiveUser() {
@@ -17,18 +16,25 @@ export class UserService {
 
     constructor(public http: HttpClient) {}
 
-    public setCurrentUser() {  
+    // public setCurrentUser() {
+    //     let getCurrentUserData = new Promise(resolve => {
+    //         this.http.get('https://housepal-server.herokuapp.com/users/signin').subscribe(result => {
+    //             const userData = result[0];
+    //             resolve(userData);
+    //         });
+    //     }).catch(err => console.log(err));
 
-        let getCurrentUserData = new Promise(resolve => {      
-            this.http.get('https://housepal-server.herokuapp.com/users/signin').subscribe(result => {
-                const userData = result[0];
-                resolve(userData);
-            })
-        }).catch(err => console.log(err));
+    //     return getCurrentUserData.then(userData => {
+    //         this.activeUser = userData;
+    //     });
+    // }
 
-        return getCurrentUserData.then(userData => {
-            this.activeUser = userData;
-        })
+    public setActiveUser(userData) {
+        this.activeUser = userData;
+        // TODO: Need to save active user in localstorage? Or check on signin if user data exists during onAuthStateChange check.
     }
 
+    public setHouseID(id) {
+        this.activeUser.house_id = id;
+    }
 }
