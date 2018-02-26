@@ -7,48 +7,48 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 0 3rem;
-
-        .section-landing {
-            display: flex;
-            flex-direction: column;
-
-            .description {
-                color: $text-white;
-                text-align: center;
-            }
-        }
-
-        .section-join {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-
-            .footnote {
-                position: absolute;
-                font-style: italic;
-                margin-top: 48px;
-                color: $text-white;
-            }
-        }
-
-        h1 {
-            font-size: 2.25rem;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        button {
-            text-transform: none;
-        }
-
-        ion-list {
-            margin-bottom: 2rem;
-        }
+        padding: 0 2.5rem;
 
         .logo {
             max-width: 100%;
             margin-bottom: 6rem;
+        }
+
+        .section-landing,
+        .section-join,
+        .section-create {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            button {
+                text-transform: none;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+                color: $text-white;
+                margin: 2rem 0;
+            }
+
+            ion-list {
+                margin-bottom: 2rem;
+            }
+
+            p {
+                margin: 0;
+            }
+
+            .description {
+                color: $text-white;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
         }
     }
 }

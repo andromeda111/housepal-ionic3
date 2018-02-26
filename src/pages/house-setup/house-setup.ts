@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonicPage, NavController } from 'ionic-angular';
+import { HouseService } from '../../services/house.service';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 export class HouseSetupPage {
     public showSection: string = 'landing';
 
-    constructor(private nav: NavController) {}
+    constructor(private nav: NavController, private houseService: HouseService) {}
 
     selectOption(option) {
         switch (option) {
@@ -26,11 +27,11 @@ export class HouseSetupPage {
         }
     }
 
-    joinHouse(form: NgForm) {
-        // this.authService.signin(form.value.email, form.value.password)
+    createHouse(form: NgForm) {
+        this.houseService.createHouse(form.value.houseName, form.value.houseCode);
     }
 
-    goToSignup() {
-        // this.nav.setRoot(SignupPage, {}, {animate: true, direction: 'forward'});
+    joinHouse(form: NgForm) {
+        this.houseService.joinHouse(form.value.houseName, form.value.houseCode);
     }
 }

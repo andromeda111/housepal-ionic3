@@ -7,11 +7,10 @@
         <!-- Intro & Options -->
         <section class="section-landing" *ngIf="showSection === 'landing'">
 
-            <div class="description">
-                <h3>Welcome!</h3>
-                <p>You are currently not part of a house group. Would you like to join an existing house, or start your own
-                    house group?</p>
-            </div>
+            <h1>Welcome!</h1>
+            <p class="description">You are currently not part of a house group. Would you like to join an existing house, or start your own house
+                group?
+            </p>
 
             <button ion-button block color="primary" (click)="selectOption('join')">Join Existing House</button>
             <button ion-button block color="secondary" (click)="selectOption('create')">Create New House</button>
@@ -21,31 +20,52 @@
         <!-- Join Existing House -->
         <section class="section-join" *ngIf="showSection === 'join'">
             <form #formJoinHouse="ngForm" (ngSubmit)="joinHouse(formJoinHouse)">
+
                 <h1>Join Existing House</h1>
+                <p class="description">put where to find name and share code here</p>
+
                 <ion-list>
                     <ion-item>
-                        <ion-label>House Name</ion-label>
-                        <ion-input type="text" ngModel name="name" placeholder="House Name" required></ion-input>
+                        <ion-label floating>House Name (ex. The Bat Cave)</ion-label>
+                        <ion-input type="text" ngModel name="houseName" required></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label>House Code</ion-label>
-                        <ion-input type="text" ngModel name="password" placeholder="4-digit Share Code" required></ion-input>
+                        <ion-label floating>House Code (ex. icecream)</ion-label>
+                        <ion-input type="text" ngModel name="houseCode" required></ion-input>
                     </ion-item>
                 </ion-list>
 
-                <button type="submit" ion-button block color="primary">Sign In</button>
-                <button ion-button block outline color="light" (click)="selectOption">Go Back</button>
+                <button type="submit" ion-button block color="primary">Join</button>
+                <button type="button" ion-button block outline color="light" (click)="selectOption('landing')">Go Back</button>
 
             </form>
-
-            <div class="footnote">put where to find name and share code here</div>
         </section>
 
         <!-- Create New House -->
         <section class="section-create" *ngIf="showSection === 'create'">
+            <form #formCreateHouse="ngForm" (ngSubmit)="createHouse(formCreateHouse)">
 
+                <h1>Create New House</h1>
+                <p class="description">Create a name for your house and a simple code. Share this code with your roommates so they can join the
+                    house.
+                </p>
+
+                <ion-list>
+                    <ion-item>
+                        <ion-label floating>House Name (ex. The Bat Cave)</ion-label>
+                        <ion-input type="text" ngModel name="houseName" required></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>House Code (ex. icecream)</ion-label>
+                        <ion-input type="text" ngModel name="houseCode" required></ion-input>
+                    </ion-item>
+                </ion-list>
+
+                <button type="submit" ion-button block color="primary">Create</button>
+                <button type="button" ion-button block outline color="light" (click)="selectOption('landing')">Go Back</button>
+
+            </form>
         </section>
-
 
     </div>
 

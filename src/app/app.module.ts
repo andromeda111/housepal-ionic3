@@ -26,6 +26,7 @@ import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { AuthService } from '../services/auth.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { UserService } from '../services/user.service';
+import { HouseService } from '../services/house.service';
 
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { UserService } from '../services/user.service';
         SplashScreen,
         AuthService,
         UserService,
+        HouseService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
