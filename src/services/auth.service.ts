@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import firebase from 'firebase';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/filter';
 import { UserService } from './user.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +22,7 @@ export class AuthService {
         return this.authenticated;
     }
 
-    constructor(public http: HttpClient, private userService: UserService) {}
+    constructor(public http: HttpClient, private userService: UserService) { }
 
     /****************************
         Signup, Signin, Logout
@@ -54,13 +56,13 @@ export class AuthService {
             newUserData
                 ? resolve(newUserData)
                 : // Otherwise, start Signin through Database to get userData.
-                  this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password }).subscribe(
-                      (result: any) => {
-                          // Result = Array containing User object
-                          result.length ? resolve(result[0]) : reject('Signin to Database Failed');
-                      },
-                      error => reject(error)
-                  );
+                this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password }).subscribe(
+                    (result: any) => {
+                        // Result = Array containing User object
+                        result.length ? resolve(result[0]) : reject('Signin to Database Failed');
+                    },
+                    error => reject(error)
+                );
         })
             .then(userData => {
                 // Sign in to Firebase Auth
@@ -86,6 +88,31 @@ export class AuthService {
             });
     }
 
+    public getCurrentUserData() {
+        return this.http.get('https://housepal-server.herokuapp.com/users/current')
+            .filter(res => res !== undefined)
+            .do(res => {
+                console.log('current: ', res[0]);
+                this.currentUser = res[0];
+                this.userService.setActiveUser(res[0]);
+            })
+    }
+
+    public verifyLoginAndUserState(user) {
+        this.authenticated = true;
+
+        if (!this.userToken) {
+            this.userToken = user.toJSON().stsTokenManager.accessToken;
+            this.refreshAuthToken();
+        }
+
+        if (Object.keys(this.currentUser).length === 0) {
+            return this.getCurrentUserData();
+        } else {
+            return Observable.of(undefined);
+        }
+    }
+
     public logout() {
         firebase.auth().signOut();
         this.clearUserState();
@@ -96,6 +123,15 @@ export class AuthService {
         this.userToken = '';
         this.authenticated = false;
     }
+
+
+    private refreshAuthToken() {
+        firebase.auth().currentUser.getIdToken()
+            .then(token => {
+                this.userToken = token;
+            });
+    }
+
 
     /*****************************************
         Development Methods: DELETE LATER

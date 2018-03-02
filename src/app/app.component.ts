@@ -43,7 +43,10 @@ export class MyApp {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log('Auth State Logged In', user);
-                this.setUserAndNavStart();
+                this.authService.verifyLoginAndUserState(user)
+                    .do(() => this.setStartPage())
+                    .subscribe();
+                // this.checkCurrentUserData();
             } else {
                 console.log('logged out');
                 this.authService.clearUserState();
@@ -52,13 +55,10 @@ export class MyApp {
         });
     }
 
-    private setUserAndNavStart() {
-        // Edge case: App is closed and cleared, but re-opening app inits token. But, token and user not set
-        // check if token is set : set token
-        // check if user is set : set user (getCurrentUser)
-
+    private setStartPage() {
         // Nav to appropriate place
         const houseId = this.userService.userHouseId;
+        console.log(this.userService.getActiveUser);
 
         if (houseId) {
             this.rootPage = TabsPage;
