@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/throw';
@@ -27,25 +27,7 @@ export class AuthService {
     }
 
     constructor(public http: HttpClient,
-        private userService: UserService,
-        private firebase: AngularFireAuth) {
-
-        // this.firebase Check Authorization
-        this.firebase.authState.subscribe(user => {
-            if (user) {
-                console.log('Auth State Logged In', user);
-                this.verifyLoginAndUserState(user)
-                    // .do(() => this.setStartPage())
-                    .subscribe();
-                // this.checkCurrentUserData();
-            } else {
-                console.log('logged out');
-                this.clearUserState();
-                // this.rootPage = SigninPage;
-            }
-        });
-
-    }
+        private userService: UserService) { }
 
     /****************************
         Signup, Signin, Logout
@@ -69,12 +51,12 @@ export class AuthService {
     }
 
     public firebaseSignin(email, password, userData) {
-        return Observable.from(this.firebase.auth.signInWithEmailAndPassword(email, password))
+        return Observable.from(firebase.auth().signInWithEmailAndPassword(email, password))
             .catch(err => {
-                console.error('Error signing in to this.firebase Auth: ', err);
+                console.error('Error signing in to firebase Auth: ', err);
                 return Observable.throw(err)
             }).do(result => {
-                // Authentication succcessful: Set this.currentUser, this.userToken, and this.authenticated.
+                // Authentication succcessful: Set this.currentUser, this.userToken, and this.auth()enticated.
                 const firebaseUser = result.toJSON();
                 this.currentUser = userData; // TODO: Can remove this? User Service works here!
                 this.userService.setActiveUser(userData);
@@ -109,7 +91,7 @@ export class AuthService {
     }
 
     public logout() {
-        this.firebase.auth.signOut();
+        firebase.auth().signOut();
         this.clearUserState();
     }
 
@@ -121,7 +103,7 @@ export class AuthService {
 
 
     private refreshAuthToken() {
-        this.firebase.auth.currentUser.getIdToken()
+        firebase.auth().currentUser.getIdToken()
             .then(token => {
                 this.userToken = token;
             });
