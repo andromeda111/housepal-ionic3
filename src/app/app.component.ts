@@ -55,6 +55,7 @@ export class MyApp {
         //     });
     }
 
+    
     private setStartPage() {
         // Nav to appropriate place
         const houseId = this.userService.userHouseId;
