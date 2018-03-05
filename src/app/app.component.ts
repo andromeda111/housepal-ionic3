@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 // Pages
 import { TabsPage } from '../pages/tabs/tabs';
 import { SigninPage } from '../pages/user-setup/signin/signin';
@@ -33,26 +33,26 @@ export class MyApp {
             splashScreen.hide();
         });
 
-        // Firebase Authentication Initialization
-        firebase.initializeApp({
-            apiKey: 'AIzaSyDRabPL_UaXgWdIIx-rgTpoP7s1Tay3gGM',
-            authDomain: 'housepal-v2.firebaseapp.com'
-        });
+        // // Firebase Authentication Initialization
+        // firebase.initializeApp({
+        //     apiKey: 'AIzaSyDRabPL_UaXgWdIIx-rgTpoP7s1Tay3gGM',
+        //     authDomain: 'housepal-v2.firebaseapp.com'
+        // });
 
-        // Firebase Check Authorization
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                console.log('Auth State Logged In', user);
-                this.authService.verifyLoginAndUserState(user)
-                    .do(() => this.setStartPage())
-                    .subscribe();
-                // this.checkCurrentUserData();
-            } else {
-                console.log('logged out');
-                this.authService.clearUserState();
-                this.rootPage = SigninPage;
-            }
-        });
+        //     // Firebase Check Authorization
+        //     firebase.auth().onAuthStateChanged(user => {
+        //         if (user) {
+        //             console.log('Auth State Logged In', user);
+        //             this.authService.verifyLoginAndUserState(user)
+        //                 .do(() => this.setStartPage())
+        //                 .subscribe();
+        //             // this.checkCurrentUserData();
+        //         } else {
+        //             console.log('logged out');
+        //             this.authService.clearUserState();
+        //             this.rootPage = SigninPage;
+        //         }
+        //     });
     }
 
     private setStartPage() {
