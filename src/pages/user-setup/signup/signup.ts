@@ -12,13 +12,13 @@ import { SigninPage } from '../signin/signin';
 export class SignupPage {
 
     constructor(private authService: AuthService,
-                private nav: NavController) {}
+        private nav: NavController) { }
 
     public signup(form: NgForm) {
-        this.authService.signup(form.value.name, form.value.email, form.value.password).then(res => console.log('fin', res))
+        this.authService.signup(form.value.name, form.value.email, form.value.password).subscribe();
     }
 
     goToSignin() {
-        this.nav.setRoot(SigninPage, {}, {animate: true, direction: 'forward'});
+        this.nav.setRoot(SigninPage, {}, { animate: true, direction: 'forward' });
     }
 }
