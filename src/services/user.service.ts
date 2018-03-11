@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 
@@ -21,7 +20,6 @@ export class UserService {
 
     set activeUser(userData) { // Add interface
         this._activeUser = userData;
-        // TODO: Need to save active user in localstorage? Or check on signin if user data exists during onAuthStateChange check.
     }
 
     // User House ID - Get and Set

@@ -8,38 +8,36 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 // App
 import { MyApp } from './app.component';
-
 // Pages
-import { MessageBoardPage } from '../pages/message-board/message-board';
 import { ChoresPage } from '../pages/chores/chores';
-import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
+import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { LaundryPage } from '../pages/laundry/laundry';
-import { TabsPage } from '../pages/tabs/tabs';
+import { MessageBoardPage } from '../pages/message-board/message-board';
+import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { SideMenuPage } from '../pages/side-menu/side-menu';
 import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
-import { HouseSetupPage } from '../pages/house-setup/house-setup';
-
+import { TabsPage } from '../pages/tabs/tabs';
+// Services
+import { AuthInterceptor } from '../services/auth-interceptor.service';
+import { AuthService } from '../services/auth.service';
+import { HouseService } from '../services/house.service';
+import { UserService } from '../services/user.service';
 // Components
 
-// Services
-import { AuthService } from '../services/auth.service';
-import { AuthInterceptor } from '../services/auth-interceptor.service';
-import { UserService } from '../services/user.service';
-import { HouseService } from '../services/house.service';
 
 @NgModule({
     declarations: [
         MyApp,
-        MessageBoardPage,
         ChoresPage,
-        ShoppingListPage,
+        HouseSetupPage,
         LaundryPage,
-        TabsPage,
+        MessageBoardPage,
+        ShoppingListPage,
         SideMenuPage,
         SigninPage,
         SignupPage,
-        HouseSetupPage
+        TabsPage
     ],
     imports: [
         BrowserModule,
@@ -53,22 +51,22 @@ import { HouseService } from '../services/house.service';
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        MessageBoardPage,
         ChoresPage,
-        ShoppingListPage,
+        HouseSetupPage,
         LaundryPage,
-        TabsPage,
+        MessageBoardPage,
+        ShoppingListPage,
         SideMenuPage,
         SigninPage,
         SignupPage,
-        HouseSetupPage
+        TabsPage
     ],
     providers: [
         StatusBar,
         SplashScreen,
         AuthService,
-        UserService,
         HouseService,
+        UserService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
