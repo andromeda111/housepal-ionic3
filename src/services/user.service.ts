@@ -36,8 +36,8 @@ export class UserService {
                 return Observable.throw(err);
             })
             .do(res => {
-                console.log('current: ', res[0]);
-                this._activeUser = res[0];
+                console.log('current: ', res);
+                this._activeUser = res;
                 // logout?
             });
     }

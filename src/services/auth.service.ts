@@ -79,16 +79,14 @@ export class AuthService {
     }
 
     logout() {
-        firebase.auth().signOut();
-        this.clearUserState();
-    }
+        if (this.authenticated) {
+            firebase.auth().signOut();
+        }
 
-    clearUserState() {
         this.currentUser = {}; // not needed? clear now in user service?
         this._userAuthToken = '';
         this.authenticated = false;
     }
-
 
     private refreshAuthToken() {
         firebase.auth().currentUser.getIdToken()

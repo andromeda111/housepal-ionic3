@@ -51,7 +51,7 @@ export class MyApp {
                 // this.checkCurrentUserData();
             } else {
                 console.log('logged out');
-                this.authService.clearUserState();
+                this.authService.logout();
                 this.rootPage = SigninPage;
             }
         });
