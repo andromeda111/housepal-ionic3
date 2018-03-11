@@ -48,7 +48,6 @@ export class MyApp {
                 this.authService.verifyLoginAndUserState(user)
                     .do(() => this.setStartPage())
                     .subscribe();
-                // this.checkCurrentUserData();
             } else {
                 console.log('logged out');
                 this.authService.logout();

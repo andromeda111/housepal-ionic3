@@ -34,6 +34,7 @@ export class HouseSetupPage {
         this.houseService
             .createHouse(form.value.houseName, form.value.houseCode)
             .do((res: any) => {
+                console.log(res);
                 this.userService.userHouseID = res.houseID;
             })
             .subscribe(res => {
