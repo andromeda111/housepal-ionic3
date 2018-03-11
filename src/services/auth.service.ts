@@ -14,25 +14,24 @@ import { UserService } from './user.service';
 export class AuthService {
     // TODO: Create interfaces
 
-    public currentUser: any = {};
+    currentUser: any = {};
 
     private userToken: string;
     private authenticated: boolean = false;
 
-    public get getUserToken() {
+    get getUserToken() {
         return this.userToken;
     }
-    public get isAuthenticated() {
+    get isAuthenticated() {
         return this.authenticated;
     }
 
-    constructor(public http: HttpClient,
-        private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService) { }
 
     /****************************
         Signup, Signin, Logout
     *****************************/
-    public signup(name: string, email: string, password: string) {
+    signup(name: string, email: string, password: string) {
         const newUser = { name, email, password };
 
         return this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
@@ -42,7 +41,7 @@ export class AuthService {
             }).switchMap(newUserData => this.firebaseSignin(email, password, newUserData.user));
     }
 
-    public signin(email: string, password: string) {
+    signin(email: string, password: string) {
         return this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password })
             .catch(err => {
                 console.error('Signin to Database Failed: ', err);
@@ -50,7 +49,7 @@ export class AuthService {
             }).switchMap(userData => this.firebaseSignin(email, password, userData));
     }
 
-    public firebaseSignin(email, password, userData) {
+    firebaseSignin(email, password, userData) {
         return Observable.from(firebase.auth().signInWithEmailAndPassword(email, password))
             .catch(err => {
                 console.error('Error signing in to firebase Auth: ', err);
@@ -65,7 +64,7 @@ export class AuthService {
             });
     }
 
-    public getCurrentUserData() {
+    getCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .filter(res => res !== undefined)
             .do(res => {
@@ -75,7 +74,7 @@ export class AuthService {
             })
     }
 
-    public verifyLoginAndUserState(user) {
+    verifyLoginAndUserState(user) {
         this.authenticated = true;
 
         if (!this.userToken) {
@@ -90,12 +89,12 @@ export class AuthService {
         }
     }
 
-    public logout() {
+    logout() {
         firebase.auth().signOut();
         this.clearUserState();
     }
 
-    public clearUserState() {
+    clearUserState() {
         this.currentUser = {};
         this.userToken = '';
         this.authenticated = false;

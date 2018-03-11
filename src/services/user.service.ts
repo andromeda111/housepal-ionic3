@@ -4,19 +4,20 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserService {
-    public activeUser: any = {};
 
-    public get getActiveUser() {
+    activeUser: any = {};
+
+    get getActiveUser() {
         return this.activeUser;
     }
 
-    public get userHouseId() {
+    get userHouseId() {
         return this.activeUser.house_id;
     }
 
-    constructor(public http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    // public setCurrentUser() {
+    // setCurrentUser() {
     //     let getCurrentUserData = new Promise(resolve => {
     //         this.http.get('https://housepal-server.herokuapp.com/users/signin').subscribe(result => {
     //             const userData = result[0];
@@ -29,12 +30,12 @@ export class UserService {
     //     });
     // }
 
-    public setActiveUser(userData) {
+    setActiveUser(userData) {
         this.activeUser = userData;
         // TODO: Need to save active user in localstorage? Or check on signin if user data exists during onAuthStateChange check.
     }
 
-    public setHouseID(id) {
+    setHouseID(id) {
         this.activeUser.house_id = id;
     }
 }

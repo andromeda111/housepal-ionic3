@@ -18,7 +18,8 @@ import { Observable } from 'rxjs';
     templateUrl: 'app.html'
 })
 export class MyApp {
-    public rootPage: any = SigninPage;
+
+    rootPage: any = SigninPage;
 
     constructor(
         private platform: Platform,
@@ -55,7 +56,6 @@ export class MyApp {
             }
         });
     }
-
 
     private setStartPage() {
         // Nav to appropriate place
