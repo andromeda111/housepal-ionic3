@@ -68,7 +68,7 @@ export class AuthService {
         }
 
         if (Object.keys(this.userService.activeUser).length === 0) {
-            return this.userService.getAndSetCurrentUserData();
+            return this.userService.retrieveCurrentUserData();
         } else {
             return Observable.of(undefined);
         }
@@ -80,6 +80,7 @@ export class AuthService {
         }
 
         this._userAuthToken = '';
+        this.userService.clearActiveUser();
         this.authenticated = false;
     }
 
