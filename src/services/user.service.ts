@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
@@ -30,10 +31,14 @@ export class UserService {
 
     getAndSetCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
-            .filter(res => res !== undefined)
+            .catch(err => {
+                console.error('User does not exist: ', err);
+                return Observable.throw(err);
+            })
             .do(res => {
                 console.log('current: ', res[0]);
                 this._activeUser = res[0];
+                // logout?
             });
     }
 }
