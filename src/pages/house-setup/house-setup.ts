@@ -14,7 +14,7 @@ import 'rxjs/add/operator/do';
 export class HouseSetupPage {
     public showSection: string = 'landing';
 
-    constructor(private nav: NavController, private houseService: HouseService, private userService: UserService) {}
+    constructor(private nav: NavController, private houseService: HouseService, private userService: UserService) { }
 
     selectOption(option) {
         switch (option) {
@@ -34,7 +34,7 @@ export class HouseSetupPage {
         this.houseService
             .createHouse(form.value.houseName, form.value.houseCode)
             .do((res: any) => {
-                this.userService.setHouseID(res.houseID);
+                this.userService.userHouseID = res.houseID;
             })
             .subscribe(res => {
                 // TODO: Error handling for create and join house

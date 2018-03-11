@@ -59,8 +59,8 @@ export class MyApp {
 
     private setStartPage() {
         // Nav to appropriate place
-        const houseId = this.userService.userHouseId;
-        console.log(this.userService.getActiveUser);
+        const houseId = this.userService.userHouseID;
+        console.log(this.userService.activeUser);
 
         if (houseId) {
             this.rootPage = TabsPage;

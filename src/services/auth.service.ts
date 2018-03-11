@@ -16,11 +16,11 @@ export class AuthService {
 
     currentUser: any = {};
 
-    private userToken: string;
+    private _userAuthToken: string;
     private authenticated: boolean = false;
 
-    get getUserToken() {
-        return this.userToken;
+    get userAuthToken() {
+        return this._userAuthToken;
     }
     get isAuthenticated() {
         return this.authenticated;
@@ -55,35 +55,24 @@ export class AuthService {
                 console.error('Error signing in to firebase Auth: ', err);
                 return Observable.throw(err)
             }).do(result => {
-                // Authentication succcessful: Set this.currentUser, this.userToken, and this.auth()enticated.
+                // Authentication succcessful: Set this.currentUser, this._userAuthToken, and this.auth()enticated.
                 const firebaseUser = result.toJSON();
                 this.currentUser = userData; // TODO: Can remove this? User Service works here!
-                this.userService.setActiveUser(userData);
-                this.userToken = firebaseUser.stsTokenManager.accessToken;
+                this.userService.activeUser = userData;
+                this._userAuthToken = firebaseUser.stsTokenManager.accessToken;
                 this.authenticated = true;
             });
     }
 
-    getCurrentUserData() {
-        return this.http.get('https://housepal-server.herokuapp.com/users/current')
-            .filter(res => res !== undefined)
-            .do(res => {
-                console.log('current: ', res[0]);
-                this.currentUser = res[0];
-                this.userService.setActiveUser(res[0]);
-            })
-    }
-
     verifyLoginAndUserState(user) {
-        this.authenticated = true;
-
-        if (!this.userToken) {
-            this.userToken = user.toJSON().stsTokenManager.accessToken;
+        if (!this._userAuthToken) {
+            this._userAuthToken = user.toJSON().stsTokenManager.accessToken;
             this.refreshAuthToken();
+            this.authenticated = true;
         }
 
-        if (Object.keys(this.currentUser).length === 0) {
-            return this.getCurrentUserData();
+        if (Object.keys(this.userService.activeUser).length === 0) {
+            return this.userService.getAndSetCurrentUserData();
         } else {
             return Observable.of(undefined);
         }
@@ -95,8 +84,8 @@ export class AuthService {
     }
 
     clearUserState() {
-        this.currentUser = {};
-        this.userToken = '';
+        this.currentUser = {}; // not needed? clear now in user service?
+        this._userAuthToken = '';
         this.authenticated = false;
     }
 
@@ -104,7 +93,7 @@ export class AuthService {
     private refreshAuthToken() {
         firebase.auth().currentUser.getIdToken()
             .then(token => {
-                this.userToken = token;
+                this._userAuthToken = token;
             });
     }
 
@@ -114,7 +103,7 @@ export class AuthService {
     ******************************************/
     // Dev - can delete later
     verifyAuthorization() {
-        return this.http.post('https://housepal-server.herokuapp.com/users/verify', { token: this.userToken }).subscribe(res => {
+        return this.http.post('https://housepal-server.herokuapp.com/users/verify', { token: this._userAuthToken }).subscribe(res => {
             console.log(res);
         });
     }
