@@ -3,7 +3,6 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
-import { Observable } from 'rxjs/Observable';
 // Pages
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { SigninPage } from '../pages/user-setup/signin/signin';

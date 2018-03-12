@@ -3,9 +3,9 @@ import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-    selector: 'page-message-board',
-    templateUrl: 'message-board.html'
+    selector: 'page-messages',
+    templateUrl: 'messages.html'
 })
-export class MessageBoardPage {
+export class MessagesPage {
 
 }

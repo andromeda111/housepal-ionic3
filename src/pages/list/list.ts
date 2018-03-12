@@ -3,9 +3,9 @@ import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-    selector: 'page-shopping-list',
-    templateUrl: 'shopping-list.html'
+    selector: 'page-list',
+    templateUrl: 'list.html'
 })
-export class ShoppingListPage {
+export class ListPage {
 
 }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { MessageBoardPage } from '../message-board/message-board';
+import { MessagesPage } from '../messages/messages';
 import { ChoresPage } from '../chores/chores';
-import { ShoppingListPage } from '../shopping-list/shopping-list';
+import { ListPage } from '../list/list';
 import { LaundryPage } from '../laundry/laundry';
 
 @IonicPage()
@@ -11,12 +11,12 @@ import { LaundryPage } from '../laundry/laundry';
 })
 export class TabsPage {
 
-    tab1Root = MessageBoardPage;
+    tab1Root = MessagesPage;
     tab2Root = ChoresPage;
-    tab3Root = ShoppingListPage;
+    tab3Root = ListPage;
     tab4Root = LaundryPage;
 
     constructor() {
-    
+
     }
 }
