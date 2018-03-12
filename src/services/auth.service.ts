@@ -67,10 +67,10 @@ export class AuthService {
             this._userAuthToken = user.toJSON().stsTokenManager.accessToken;
         }
 
-        if (Object.keys(this.userService.activeUser).length === 0) {
-            return this.userService.retrieveCurrentUserData();
-        } else {
+        if (this.userService.activeUser.uid) {
             return Observable.of(undefined);
+        } else {
+            return this.userService.retrieveCurrentUserData();
         }
     }
 
