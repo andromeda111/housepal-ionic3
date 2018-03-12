@@ -12,10 +12,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SigninPage {
 
-    constructor(private authService: AuthService,
-        private nav: NavController) { }
+    constructor(private authService: AuthService, private nav: NavController) { }
 
-    public signin(form: NgForm) {
+    signin(form: NgForm) {
         this.authService.signin(form.value.email, form.value.password).subscribe();
 
         console.log('end signin');

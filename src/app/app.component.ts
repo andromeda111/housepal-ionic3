@@ -41,13 +41,12 @@ export class MyApp {
         // Firebase Check Authorization
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log('Auth State Logged In', user);
+                console.log('AuthState Logged In');
                 this.authService.verifyLoginAndUserState(user)
                     .do(() => this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage)
                     .subscribe();
-                // NOTE: House ID exists but it's not being recognized...
             } else {
-                console.log('logged out');
+                console.log('Logged Out');
                 this.authService.logout();
                 this.rootPage = SigninPage;
             }

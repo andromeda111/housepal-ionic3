@@ -12,36 +12,33 @@ import 'rxjs/add/operator/do';
     templateUrl: 'house-setup.html'
 })
 export class HouseSetupPage {
-    public showSection: string = 'landing';
+
+    setupSection: string = 'landing';
 
     constructor(private nav: NavController, private houseService: HouseService, private userService: UserService) { }
 
     selectOption(option) {
         switch (option) {
             case 'join':
-                this.showSection = 'join';
+                this.setupSection = 'join';
                 break;
             case 'create':
-                this.showSection = 'create';
+                this.setupSection = 'create';
                 break;
             default:
-                this.showSection = 'landing';
+                this.setupSection = 'landing';
                 break;
         }
     }
 
     createHouse(form: NgForm) {
-        this.houseService
-            .createHouse(form.value.houseName, form.value.houseCode)
+        this.houseService.createHouse(form.value.houseName, form.value.houseCode)
             .do((res: any) => {
-                console.log(res);
-                this.userService.userHouseID = res.houseID;
-            })
-            .subscribe(res => {
-                // TODO: Error handling for create and join house
                 console.log('new house created: ', res);
+                this.userService.userHouseID = res.houseID;
                 this.nav.setRoot(TabsPage);
-            });
+            })
+            .subscribe();
     }
 
     joinHouse(form: NgForm) {

@@ -5,7 +5,7 @@
         <img src="assets/imgs/housepal-logo.png">
 
         <!-- Intro & Options -->
-        <section class="section-landing" *ngIf="showSection === 'landing'">
+        <section class="section-landing" *ngIf="setupSection === 'landing'">
 
             <h1>Welcome!</h1>
             <p class="description">You are currently not part of a house group. Would you like to join an existing house, or start your own house
@@ -18,7 +18,7 @@
         </section>
 
         <!-- Join Existing House -->
-        <section class="section-join" *ngIf="showSection === 'join'">
+        <section class="section-join" *ngIf="setupSection === 'join'">
             <form #formJoinHouse="ngForm" (ngSubmit)="joinHouse(formJoinHouse)">
 
                 <h1>Join Existing House</h1>
@@ -42,7 +42,7 @@
         </section>
 
         <!-- Create New House -->
-        <section class="section-create" *ngIf="showSection === 'create'">
+        <section class="section-create" *ngIf="setupSection === 'create'">
             <form #formCreateHouse="ngForm" (ngSubmit)="createHouse(formCreateHouse)">
 
                 <h1>Create New House</h1>

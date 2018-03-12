@@ -11,10 +11,9 @@ import { SigninPage } from '../signin/signin';
 })
 export class SignupPage {
 
-    constructor(private authService: AuthService,
-        private nav: NavController) { }
+    constructor(private authService: AuthService, private nav: NavController) { }
 
-    public signup(form: NgForm) {
+    signup(form: NgForm) {
         this.authService.signup(form.value.name, form.value.email, form.value.password).subscribe();
     }
 

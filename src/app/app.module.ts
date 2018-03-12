@@ -12,8 +12,8 @@ import { MyApp } from './app.component';
 import { ChoresPage } from '../pages/chores/chores';
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { LaundryPage } from '../pages/laundry/laundry';
-import { MessagesPage } from '../pages/messages/messages';
 import { ListPage } from '../pages/list/list';
+import { MessagesPage } from '../pages/messages/messages';
 import { SideMenuPage } from '../pages/side-menu/side-menu';
 import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
@@ -32,8 +32,8 @@ import { UserService } from '../services/user.service';
         ChoresPage,
         HouseSetupPage,
         LaundryPage,
-        MessagesPage,
         ListPage,
+        MessagesPage,
         SideMenuPage,
         SigninPage,
         SignupPage,
@@ -54,8 +54,8 @@ import { UserService } from '../services/user.service';
         ChoresPage,
         HouseSetupPage,
         LaundryPage,
-        MessagesPage,
         ListPage,
+        MessagesPage,
         SideMenuPage,
         SigninPage,
         SignupPage,
