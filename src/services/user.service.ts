@@ -33,7 +33,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    retrieveCurrentUserData() {
+     retrieveCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .catch(err => {
                 console.error('User does not exist: ', err);

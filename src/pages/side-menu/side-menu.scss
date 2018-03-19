@@ -2,24 +2,37 @@
     background: linear-gradient(to bottom right, #2b618c, #3a85bf, #1bbcb1);
 
     .header {
-        background-image: url('../assets/imgs/coffee.jpg');
-        height: 130px;
-        background-position: center;
-        background-size: cover;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        .house-name {
+        .user-name {
             color: $white;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 5px $black;
+            font-size: 2rem;
             text-align: center;
-            padding-top: 12px;
         }
     }
 
     .side-menu-content {
         height: 100%;
-        opacity: 0.2;
-        background-color: $white;
+        
+        .options-list {
+            width: 100%;
+
+            .list-item {
+                color: #eee;
+                height: 5rem;
+                display: flex;
+                align-items: center;
+                padding-left: 32px;
+
+                &.menu-active {
+                    font-weight: bold;
+                    background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(255,255,255,0.15) 100%);
+                }
+            }
+        }
     }
 
 }

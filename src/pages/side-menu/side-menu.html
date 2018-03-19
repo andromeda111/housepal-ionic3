@@ -1,16 +1,19 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
-        <div class="house-name">Tanglemansion</div>
+        <div class="user-name">{{ userName }}</div>
     </div>
 
-    <div class="side-menu-content"></div>
-    <ion-list>
-        <button ion-button icon-right color="danger" (click)="onLogout()">
-            Sign Out
-            <ion-icon name="log-out"></ion-icon>
-        </button>
-    </ion-list>
-    <button ion-button clear color="danger" (click)="verifyLogin()">Verify Login</button>
+    <div class="side-menu-content">
+
+        <ion-list class="options-list">
+            <div *ngFor="let item of menuItems; let i = index" class="list-item" [ngClass]="{ 'menu-active': i === activeMenu }" (click)="selectMenuItem(i)">
+                <!-- <ion-icon *ngIf="i === menuItems.length-1" name="log-out"></ion-icon> -->
+                {{ item }}
+            </div>
+        </ion-list>
+        <!-- <button ion-button clear color="danger" (click)="verifyLogin()">Verify Login</button> -->
+
+    </div>
 
 </ion-content>
