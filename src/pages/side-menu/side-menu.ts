@@ -11,10 +11,10 @@ import { UserService } from '../../services/user.service';
 })
 export class SideMenuPage {
 
+    clicked = false;
     activeMenu: number;
     menuItems = [
         'Settings',
-        'Roommates',
         'Sign Out'
     ];
 

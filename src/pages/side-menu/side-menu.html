@@ -6,13 +6,30 @@
 
     <div class="side-menu-content">
 
-        <ion-list class="options-list">
-            <div *ngFor="let item of menuItems; let i = index" class="list-item" [ngClass]="{ 'menu-active': i === activeMenu }" (click)="selectMenuItem(i)">
-                <!-- <ion-icon *ngIf="i === menuItems.length-1" name="log-out"></ion-icon> -->
-                {{ item }}
+        <div class="main-list options-list">
+            <div class="list-item menu-active" (click)="clicked = !clicked">
+                Roommates
             </div>
-        </ion-list>
-        <!-- <button ion-button clear color="danger" (click)="verifyLogin()">Verify Login</button> -->
+            <div class="dark collapsable" [ngClass]="{'expanded': clicked}">
+                <ul class="roommate-list">
+                    <li class="roommate-item">
+                        Cassandra
+                    </li>
+                    <li class="roommate-item">
+                        Lindsey
+                    </li>
+                </ul>
+            </div>
+
+                <ion-list class="options-list">
+                    <div *ngFor="let item of menuItems; let i = index" class="list-item" [ngClass]="{ 'menu-active': i === activeMenu }" (click)="selectMenuItem(i)">
+                        <!-- <ion-icon *ngIf="i === menuItems.length-1" name="log-out"></ion-icon> -->
+                        {{ item }}
+                    </div>
+                </ion-list>
+        </div>
+
+
 
     </div>
 
