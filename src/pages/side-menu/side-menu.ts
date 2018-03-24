@@ -11,11 +11,12 @@ import { UserService } from '../../services/user.service';
 })
 export class SideMenuPage {
 
-    clicked = false;
-    activeMenu: number;
-    menuItems = [
-        'Settings',
-        'Sign Out'
+    activeMenu = 'Roommates';
+    roommates: string[] = [
+        'Ryan',
+        'Cassandra',
+        'Lindsey',
+        'David'
     ];
 
     @Input() userName = '';
@@ -24,26 +25,15 @@ export class SideMenuPage {
         private menuCtrl: MenuController,
         private nav: NavController) { }
 
-    selectMenuItem(index) {
-        const item = this.menuItems[index];
-        this.activeMenu = index;
-
-        if (this.menuItems.length - 1 === index ) {
-            this.onLogout();
-            return;
-        }
-
-        
+    selectMenu(menu: string) {
+        this.activeMenu === menu ? this.activeMenu = '' : this.activeMenu = menu;
     }
 
-    onLogout() {
+    signOut() {
+        this.activeMenu = 'Sign Out';
         this.authService.logout();
         this.menuCtrl.close();
         this.nav.setRoot(SigninPage);
-    }
-
-    verifyLogin() {
-        this.authService.verifyAuthorization()
     }
 
 }

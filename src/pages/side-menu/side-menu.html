@@ -6,30 +6,27 @@
 
     <div class="side-menu-content">
 
-        <div class="main-list options-list">
-            <div class="list-item menu-active" (click)="clicked = !clicked">
-                Roommates
-            </div>
-            <div class="dark collapsable" [ngClass]="{'expanded': clicked}">
-                <ul class="roommate-list">
-                    <li class="roommate-item">
-                        Cassandra
-                    </li>
-                    <li class="roommate-item">
-                        Lindsey
-                    </li>
-                </ul>
-            </div>
-
-                <ion-list class="options-list">
-                    <div *ngFor="let item of menuItems; let i = index" class="list-item" [ngClass]="{ 'menu-active': i === activeMenu }" (click)="selectMenuItem(i)">
-                        <!-- <ion-icon *ngIf="i === menuItems.length-1" name="log-out"></ion-icon> -->
-                        {{ item }}
-                    </div>
-                </ion-list>
+        <!-- Roommates -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Roommates'}" (click)="selectMenu('Roommates')">
+            Roommates
+        </div>
+        <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
+            <ul class="roommate-list">
+                <li *ngFor="let roommate of roommates" class="roommate-item">
+                    {{ roommate }}
+                </li>
+            </ul>
         </div>
 
+        <!-- Settings -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Settings'}" (click)="selectMenu('Settings')">
+            Settings
+        </div>
 
+        <!-- Sign Out -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Sign Out'}" (click)="signOut()">
+            Sign Out
+        </div>
 
     </div>
 
