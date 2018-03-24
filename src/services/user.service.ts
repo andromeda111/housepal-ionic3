@@ -9,8 +9,8 @@ export class UserService {
     private _activeUser: User = {
         uid: '',
         name: '',
-        house_id: null,
-        deviceId: ''
+        houseID: null,
+        deviceID: ''
     };
 
     // Active (current) User - Get and Set    
@@ -24,16 +24,16 @@ export class UserService {
 
     // User House ID - Get and Set
     get userHouseID() {
-        return this.activeUser.house_id;
+        return this.activeUser.houseID;
     }
 
     set userHouseID(id) {
-        this._activeUser.house_id = id;
+        this._activeUser.houseID = id;
     }
 
     constructor(private http: HttpClient) { }
 
-     retrieveCurrentUserData() {
+    retrieveCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .catch(err => {
                 console.error('User does not exist: ', err);
@@ -50,8 +50,8 @@ export class UserService {
         this._activeUser = {
             uid: '',
             name: '',
-            house_id: null,
-            deviceId: ''
+            houseID: null,
+            deviceID: ''
         };
     }
 }
