@@ -33,7 +33,7 @@ export class HouseService {
 
     getHouse() {
         console.log('get house');
-        return this.http.get(`https://housepal-server.herokuapp.com/users/roommates/${this.userService.userHouseID}`)
+        return this.http.get(`https://housepal-server.herokuapp.com/houses/id/${this.userService.userHouseID}`)
             .catch(err => {
                 console.error('Error getting house info: ', err);
                 return Observable.throw(err);

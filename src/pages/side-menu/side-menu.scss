@@ -4,13 +4,19 @@
     .header {
         height: 150px;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        align-items: flex-end;
+        padding: 2.8rem 0 1.4rem;
+        flex-wrap: wrap;
 
-        .user-name {
+        .titles {
             color: $white;
-            font-size: 2rem;
+            font-size: 1.4rem;
             text-align: center;
+            width: 100%;
+
+            &.user-name {
+                font-size: 2rem;
+            }
         }
     }
 

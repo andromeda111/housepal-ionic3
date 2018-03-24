@@ -1,7 +1,8 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
-        <div class="user-name">{{ userName }}</div>
+        <div class="titles user-name">{{ userName }}</div>
+        <div class="titles">{{ house.houseName }}</div>
     </div>
 
     <div class="side-menu-content">
@@ -21,7 +22,7 @@
                 </li>
             </ul>
             <div class="share-code">
-                <strong>+ Share Code: </strong>icecream
+                <strong>+ Share Code: </strong>{{ house.houseCode}}
             </div>
         </div>
 
