@@ -55,6 +55,7 @@ export class AuthService {
                 // Authentication succcessful: Set activeUser, this._userAuthToken, and this.auth()enticated.
                 const firebaseUser = result.toJSON();
                 this.userService.activeUser = userData;
+                console.log(this.userService.activeUser);
                 this._userAuthToken = firebaseUser.stsTokenManager.accessToken;
                 this.authenticated = true;
             });

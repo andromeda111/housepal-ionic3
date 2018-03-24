@@ -49,13 +49,33 @@
                 margin: 0;
                 padding: 0;
                 color: $white;
+                padding: 12px 24px 12px 48px;                
             }
     
             .roommate-item {
                 display: flex;
                 align-items: center;
-                padding-left: 48px;
                 line-height: 2.5rem;
+
+                &.no-items {
+                    line-height: 1.5rem;
+                    flex-direction: column;
+
+                    p {
+                        margin-top: 0;
+
+                        &:last-of-type {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+
+            .share-code {
+                color: $white;
+                margin: 0 24px 0 48px;
+                padding: 8px 0 12px;           
+                border-top: 1px solid $white;
             }
         }  
     }

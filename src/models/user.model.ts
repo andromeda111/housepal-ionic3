@@ -1,6 +1,7 @@
 export interface User {
-    uid: string,
-    name: string,
-    houseID: number,
-    deviceID?: string
+    uid: string;
+    name: string;
+    email: string;
+    houseID: number;
+    deviceID?: string;
 }

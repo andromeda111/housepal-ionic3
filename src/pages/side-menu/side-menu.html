@@ -13,9 +13,16 @@
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
             <ul class="roommate-list">
                 <li *ngFor="let roommate of roommates" class="roommate-item">
-                    {{ roommate }}
+                    {{ roommate.name }}
+                </li>
+                <li *ngIf="!roommates.length" class="roommate-item no-items">
+                    <p>There are no other users associated with this house yet.</p>
+                    <p>Invite a roommate to join with your house's name and share code.</p>
                 </li>
             </ul>
+            <div class="share-code">
+                <strong>+ Share Code: </strong>icecream
+            </div>
         </div>
 
         <!-- Settings -->

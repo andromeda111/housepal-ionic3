@@ -8,6 +8,7 @@ export class UserService {
 
     private _activeUser: User = {
         uid: '',
+        email: '',
         name: '',
         houseID: null,
         deviceID: ''
@@ -50,6 +51,7 @@ export class UserService {
         this._activeUser = {
             uid: '',
             name: '',
+            email: '',
             houseID: null,
             deviceID: ''
         };
