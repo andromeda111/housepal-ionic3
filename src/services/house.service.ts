@@ -56,4 +56,9 @@ export class HouseService {
                 this._roommates = res;
             });
     }
+
+    removeRoommate(roommate) {
+        console.log('in service to remove', roommate);
+        return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', { roommateUID: roommate.uid });
+    }
 }

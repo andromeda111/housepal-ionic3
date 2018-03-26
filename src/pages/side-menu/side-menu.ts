@@ -43,24 +43,24 @@ export class SideMenuPage {
     }
 
     private initializeForm() {
-        let name = null;
+        let roommate = null;
     
         this.removeForm = new FormGroup({
-          'name': new FormControl(name, Validators.required),
+          'roommate': new FormControl(roommate, Validators.required),
         });
       }
 
     removeFormSubmit() {
-        const selectedName = this.removeForm.value.name;
-        console.log(selectedName);
+        const selectedRoommate = Object.assign({}, this.removeForm.value.roommate);
+        console.log(selectedRoommate.name);
 
         let alert = this.alertCtrl.create({
             title: 'Remove Roommate',
-            message: `Please confirm by typing this persons name: ${selectedName}`,
+            message: `Please confirm by typing this persons name: ${selectedRoommate.name}`,
             inputs: [
                 {
-                  name: 'name',
-                  placeholder: selectedName
+                    name: 'name',
+                    placeholder: selectedRoommate.name
                 },
             ],
             cssClass: 'alert-input-text-red',
@@ -75,10 +75,11 @@ export class SideMenuPage {
                 {
                     text: 'Remove',
                     handler: (data) => {
-                        console.log('Removing: ', selectedName, data);
-                        if (data.name === selectedName) {
+                        console.log('Removing: ', selectedRoommate, data);
+                        if (data.name === selectedRoommate.name) {
                             console.log('CONFIRMED');
-                            // Remove via service                     
+                            // Remove via service        
+                            this.houseService.removeRoommate(selectedRoommate);             
                         } else {
                             this.removeConfirmMismatchAlert();   
                         }     
@@ -87,7 +88,8 @@ export class SideMenuPage {
                     }
                 }
             ]
-            });
+        });
+
         alert.present();
         
         // let ingredients = [];
@@ -115,7 +117,8 @@ export class SideMenuPage {
                     role: 'cancel',
                 }
             ]
-            });
+        });
+
         alert.present();
     }
 

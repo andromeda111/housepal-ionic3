@@ -39,8 +39,8 @@
                     <form [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
                         <ion-item class="input-remove">
                             <ion-label inline>Name</ion-label>
-                            <ion-select formControlName="name">
-                                <ion-option *ngFor="let roommate of roommates" [value]="roommate.name">{{ roommate.name }}</ion-option>
+                            <ion-select formControlName="roommate">
+                                <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
                             </ion-select>
                         </ion-item>
 
