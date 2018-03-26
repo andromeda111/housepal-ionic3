@@ -30,6 +30,31 @@
         <div class="menu-item" [ngClass]="{'active': activeMenu === 'Settings'}" (click)="selectMenu('Settings')">
             Settings
         </div>
+        <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Settings'}">
+            <div class="settings-container">
+                <div class="settings-block">
+                    <strong>Remove Roommate</strong>
+                    <div class="information">Removing a roommate will also remove chores associated with that person.</div>
+
+                    <form [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
+                        <ion-item class="input-remove">
+                            <ion-label inline>Name</ion-label>
+                            <ion-select formControlName="name">
+                                <ion-option *ngFor="let roommate of roommates" [value]="roommate.name">{{ roommate.name }}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <button
+                        color="danger"
+                        small
+                        type="submit"
+                        ion-button
+                        [disabled]="!removeForm.valid">Confirm</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
 
         <!-- Sign Out -->
         <div class="menu-item" [ngClass]="{'active': activeMenu === 'Sign Out'}" (click)="signOut()">

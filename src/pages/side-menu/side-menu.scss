@@ -42,6 +42,7 @@
             max-height: 0;
             transition: max-height 0.3s cubic-bezier(0,1,0,1);
             overflow: hidden;
+            color: $white;
 
             &.expanded {
                 overflow: hidden;
@@ -53,8 +54,6 @@
             .roommate-list {
                 list-style: none;
                 margin: 0;
-                padding: 0;
-                color: $white;
                 padding: 12px 24px 12px 48px;                
             }
     
@@ -82,6 +81,51 @@
                 margin: 0 24px 0 48px;
                 padding: 8px 0 12px;           
                 border-top: 1px solid $white;
+            }
+
+            .settings-container {
+                padding: 12px 24px 12px 48px;                
+                font-size: 1.25rem;
+
+                .settings-block {
+                    display: flex;
+                    flex-direction: column;
+
+                    .input-remove {
+                        margin-top: 4px;
+                        font-size: 1.25rem;
+                        color: $white;
+                        background: rgba(0,0,0,0.15);
+
+                        .item-inner {
+                            border-bottom: none;
+                        }
+
+                        ion-label {
+                            color: $white;
+                        }
+
+                        ion-select {
+                            padding-left: 0;
+                            text-align: right;
+                            flex: 3;
+                            max-width: none;
+                            align-items: center;
+
+                            .select-icon-inner {
+                                color: $white;
+                            }
+                        }
+                    }
+
+                    button {
+                        float: right;
+                    } 
+                }
+
+                .information {
+                    font-size: 1rem;
+                }
             }
         }  
     }
