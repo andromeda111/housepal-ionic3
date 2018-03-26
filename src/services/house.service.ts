@@ -59,6 +59,13 @@ export class HouseService {
 
     removeRoommate(roommate) {
         console.log('in service to remove', roommate);
-        return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', { roommateUID: roommate.uid });
+        return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
+            .catch(err => {
+                console.error('Error removing roommates: ', err);
+                return Observable.throw(err);
+            })
+            .do((res: any) => {
+                console.log('completed, in do: ', res);
+            })
     }
 }

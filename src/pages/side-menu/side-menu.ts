@@ -79,7 +79,15 @@ export class SideMenuPage {
                         if (data.name === selectedRoommate.name) {
                             console.log('CONFIRMED');
                             // Remove via service        
-                            this.houseService.removeRoommate(selectedRoommate);             
+                            this.houseService.removeRoommate(selectedRoommate)
+                                .subscribe((res: any) => {
+                                    console.log(res);
+                                    this.removeConfirmSuccessAlert(selectedRoommate);
+
+                                    this.houseService.getRoommates()
+                                    .do(() => this.roommates = this.houseService.roommates)
+                                    .subscribe();
+                                });             
                         } else {
                             this.removeConfirmMismatchAlert();   
                         }     
@@ -111,6 +119,21 @@ export class SideMenuPage {
         let alert = this.alertCtrl.create({
             title: 'Sorry!',
             message: 'The names did not match. Please try again.',
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
+    removeConfirmSuccessAlert(roommate) {
+        let alert = this.alertCtrl.create({
+            title: 'Success',
+            message: `${roommate.name} has been removed from ${this.house.houseName}.`,
             buttons: [
                 {
                     text: 'Okay',
