@@ -24,3 +24,9 @@ ion-content {
     background-color: #F5F5F5;
     font-family: 'Lato-Regular';
 }
+
+.alert-input-text-red {
+    input {
+        color: red !important;
+    }
+}

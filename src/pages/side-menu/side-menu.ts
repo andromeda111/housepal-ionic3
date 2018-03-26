@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, MenuController, NavController } from 'ionic-angular';
+import { IonicPage, MenuController, NavController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { SigninPage } from '../user-setup/signin/signin';
 import { UserService } from '../../services/user.service';
@@ -24,7 +24,8 @@ export class SideMenuPage {
     constructor(private authService: AuthService,
         private menuCtrl: MenuController,
         private nav: NavController,
-        private houseService: HouseService) {
+        private houseService: HouseService,
+        private alertCtrl: AlertController) {
 
         this.houseService.getHouse()
             .do(() => this.house = this.houseService.house)
@@ -49,9 +50,45 @@ export class SideMenuPage {
         });
       }
 
-    onRemoveFormSubmit() {
-        const value = this.removeForm.value;
-        console.log(value);
+    removeFormSubmit() {
+        const selectedName = this.removeForm.value.name;
+        console.log(selectedName);
+
+        let alert = this.alertCtrl.create({
+            title: 'Remove Roommate',
+            message: `Please confirm by typing this persons name: ${selectedName}`,
+            inputs: [
+                {
+                  name: 'name',
+                  placeholder: selectedName
+                },
+            ],
+            cssClass: 'alert-input-text-red',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        this.initializeForm();
+                    }
+                },
+                {
+                    text: 'Remove',
+                    handler: (data) => {
+                        console.log('Removing: ', selectedName, data);
+                        if (data.name === selectedName) {
+                            console.log('CONFIRMED');
+                            // Remove via service                     
+                        } else {
+                            this.removeConfirmMismatchAlert();   
+                        }     
+
+                        this.initializeForm();
+                    }
+                }
+            ]
+            });
+        alert.present();
         
         // let ingredients = [];
         // if (value.ingredients.length > 0) {
@@ -66,8 +103,21 @@ export class SideMenuPage {
         // }
         // this.recipeForm.reset();
         // this.navCtrl.popToRoot();
-      }
+    }
 
+    removeConfirmMismatchAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Sorry!',
+            message: 'The names did not match. Please try again.',
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                }
+            ]
+            });
+        alert.present();
+    }
 
     signOut() {
         this.activeMenu = 'Sign Out';
