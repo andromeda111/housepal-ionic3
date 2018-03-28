@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, Events } from 'ionic-angular';
 import { MessagesPage } from '../messages/messages';
 import { ChoresPage } from '../chores/chores';
 import { ListPage } from '../list/list';
 import { LaundryPage } from '../laundry/laundry';
 import { UserService } from '../../services/user.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/map';
+import { HouseService } from '../../services/house.service';
 
 @IonicPage()
 @Component({
@@ -19,7 +23,7 @@ export class TabsPage {
 
     userName = '';
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService, private houseService: HouseService, private events: Events) {
 
     }
 
@@ -27,5 +31,9 @@ export class TabsPage {
         console.log( this.userService.activeUser.name);
         
         this.userName = this.userService.activeUser.name;
+    }
+
+    menuOpened() {
+        this.houseService.updateMenuData().subscribe();
     }
 }

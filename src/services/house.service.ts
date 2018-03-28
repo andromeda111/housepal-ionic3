@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
+import { Events } from 'ionic-angular';
 
 @Injectable()
 export class HouseService {
 
     _house: any = {};
     _roommates: any[] = [];
-
+// Note to self: do I actually / Should I / even store these?
     get house() {
         return this._house;
     }
@@ -17,18 +18,20 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService, private events: Events) { }
 
     createHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
         const newHouse = { houseName, houseCode };
-        return this.http.post('https://housepal-server.herokuapp.com/houses/create', newHouse);
+        return this.http.post('https://housepal-server.herokuapp.com/houses/create', newHouse)
+            .do(() => this.setMenuData());
     }
 
     joinHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
         const house = { houseName, houseCode };
-        return this.http.post('https://housepal-server.herokuapp.com/houses/join', house);
+        return this.http.post('https://housepal-server.herokuapp.com/houses/join', house)
+            .do(() => this.setMenuData());
     }
 
     getHouse() {
@@ -67,5 +70,22 @@ export class HouseService {
             .do((res: any) => {
                 console.log('completed, in do: ', res);
             })
+    }
+
+    setMenuData() {
+        console.log('houseService: Set menu data');
+        this.events.publish('menu:opened', { house: this.house, roommates: this.roommates })
+    }
+
+    updateMenuData() {
+        if (!this.userService.userHouseID) {
+            return Observable.of(undefined);
+        }
+
+        return Observable.forkJoin([
+            this.getHouse(),
+            this.getRoommates()
+        ])
+        .do(() => this.setMenuData());
     }
 }

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, MenuController, NavController, AlertController } from 'ionic-angular';
+import { Component, Input, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { IonicPage, MenuController, NavController, AlertController, Events } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { SigninPage } from '../user-setup/signin/signin';
 import { UserService } from '../../services/user.service';
@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     selector: 'page-side-menu',
     templateUrl: 'side-menu.html'
 })
-export class SideMenuPage {
+export class SideMenuPage implements OnInit, OnDestroy {
 
     activeMenu = 'Roommates';
     house: any = {};
@@ -25,18 +25,32 @@ export class SideMenuPage {
         private menuCtrl: MenuController,
         private nav: NavController,
         private houseService: HouseService,
-        private alertCtrl: AlertController) {
+        private alertCtrl: AlertController,
+        private events: Events,
+        private cdref: ChangeDetectorRef) {
 
-        this.houseService.getHouse()
-            .do(() => this.house = this.houseService.house)
-            .subscribe();
+        this.events.subscribe('menu:opened', data => {
+            this.house = data.house;
+            this.roommates = data.roommates;
+            this.cdref.detectChanges();
+            // Detect changes causes issue on login when joining house
+        });
 
-        this.houseService.getRoommates()
-            .do(() => this.roommates = this.houseService.roommates)
-            .subscribe();
-
-            this.initializeForm()
+        this.initializeForm()
     }
+
+    ngOnInit() {
+
+
+        console.log('on init');
+    }
+
+    ngOnDestroy() {
+        console.log('on destroy');
+        
+        // this.cdref.detach(); // try this
+        // this.events.unsubscribe('menu:opened');
+      }
 
     selectMenu(menu: string) {
         this.activeMenu === menu ? this.activeMenu = '' : this.activeMenu = menu;
