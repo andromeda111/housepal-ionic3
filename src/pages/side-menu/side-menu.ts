@@ -20,6 +20,14 @@ export class SideMenuPage implements OnInit, OnDestroy {
 
 
     @Input() userName = '';
+    @Input() set menuData(data) {
+        if (!data) {
+            return;
+        }
+        this.house = data.house;
+        this.roommates = data.roommates;
+        console.log('input', data.house, data.roommates);
+    };
 
     constructor(private authService: AuthService,
         private menuCtrl: MenuController,
@@ -28,13 +36,6 @@ export class SideMenuPage implements OnInit, OnDestroy {
         private alertCtrl: AlertController,
         private events: Events,
         private cdref: ChangeDetectorRef) {
-
-        this.events.subscribe('menu:opened', data => {
-            this.house = data.house;
-            this.roommates = data.roommates;
-            this.cdref.detectChanges();
-            // Detect changes causes issue on login when joining house
-        });
 
         this.initializeForm()
     }
@@ -47,10 +48,10 @@ export class SideMenuPage implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         console.log('on destroy');
-        
+
         // this.cdref.detach(); // try this
         // this.events.unsubscribe('menu:opened');
-      }
+    }
 
     selectMenu(menu: string) {
         this.activeMenu === menu ? this.activeMenu = '' : this.activeMenu = menu;
@@ -58,11 +59,11 @@ export class SideMenuPage implements OnInit, OnDestroy {
 
     private initializeForm() {
         let roommate = null;
-    
+
         this.removeForm = new FormGroup({
-          'roommate': new FormControl(roommate, Validators.required),
+            'roommate': new FormControl(roommate, Validators.required),
         });
-      }
+    }
 
     removeFormSubmit() {
         const selectedRoommate = Object.assign({}, this.removeForm.value.roommate);
@@ -99,12 +100,12 @@ export class SideMenuPage implements OnInit, OnDestroy {
                                     this.removeConfirmSuccessAlert(selectedRoommate);
 
                                     this.houseService.getRoommates()
-                                    .do(() => this.roommates = this.houseService.roommates)
-                                    .subscribe();
-                                });             
+                                        .do(() => this.roommates = this.houseService.roommates)
+                                        .subscribe();
+                                });
                         } else {
-                            this.removeConfirmMismatchAlert();   
-                        }     
+                            this.removeConfirmMismatchAlert();
+                        }
 
                         this.initializeForm();
                     }
@@ -113,7 +114,7 @@ export class SideMenuPage implements OnInit, OnDestroy {
         });
 
         alert.present();
-        
+
         // let ingredients = [];
         // if (value.ingredients.length > 0) {
         //   ingredients = value.ingredients.map(name => {

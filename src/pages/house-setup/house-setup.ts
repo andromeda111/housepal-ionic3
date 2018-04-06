@@ -42,7 +42,10 @@ export class HouseSetupPage {
     }
 
     joinHouse(form: NgForm) {
-        this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
+        this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe((res) => {
+            console.log('res', res);
+            // NEED TO SET HOUSE ID HERE?!?!!?
+            // ERROR: OTHER USER DOESN"T GET SIGNED OUT IF THEY"RE REMOVED FROM A HOUSE BY ANOTHER!!!!
             this.nav.setRoot(TabsPage);
         });
     }
