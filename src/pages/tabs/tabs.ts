@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { MessagesPage } from '../messages/messages';
 import { ChoresPage } from '../chores/chores';
@@ -24,25 +24,17 @@ export class TabsPage {
     userName = '';
     menuData: any;
 
-    constructor(private userService: UserService, private houseService: HouseService, private cdref: ChangeDetectorRef) {
+    constructor(private userService: UserService, private houseService: HouseService) {
 
     }
 
     ionViewWillEnter() {
         console.log(this.userService.activeUser.name);
-
         this.userName = this.userService.activeUser.name;
         this.menuOpened();
     }
 
     menuOpened() {
-        this.houseService.updateMenuData()
-            .filter(res => res !== undefined)
-            .do(([house, roommates]) => {
-                this.menuData = { house, roommates };
-                console.log('menoOpened', this.menuData);
-                this.cdref.detectChanges();
-            })
-            .subscribe();
+        this.houseService.updateMenuData();
     }
 }

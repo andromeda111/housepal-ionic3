@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, Events } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
@@ -27,8 +27,7 @@ export class MyApp {
         private splashScreen: SplashScreen,
         private authService: AuthService,
         private userService: UserService,
-        private houseService: HouseService,
-        private events: Events
+        private houseService: HouseService
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -65,11 +64,6 @@ export class MyApp {
 
     private initializeData() {
         // Update Side Menu Data
-        this.houseService.updateMenuData()
-        .filter(data => {
-            console.log('??', data);
-            return data !== undefined;
-        }) 
-        .subscribe();
+        this.houseService.updateMenuData();
     }
 }

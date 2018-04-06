@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
-import { Events } from 'ionic-angular';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class HouseService {
+
+    menuDataSubject = new Subject<any>();
 
     _house: any = {};
     _roommates: any[] = [];
@@ -18,7 +20,7 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService, private events: Events) { }
+    constructor(private http: HttpClient, private userService: UserService) { }
 
     createHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
@@ -80,12 +82,14 @@ export class HouseService {
 
     updateMenuData() {
         if (!this.userService.userHouseID) {
-            return Observable.of(undefined);
+            return;
         }
 
-        return Observable.forkJoin([
+        Observable.forkJoin([
             this.getHouse(),
             this.getRoommates()
-        ]);
+        ])
+        .do(result => this.menuDataSubject.next(result))
+        .subscribe();
     }
 }
