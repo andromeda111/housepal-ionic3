@@ -23,13 +23,21 @@ export class HouseService {
     createHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
         const newHouse = { houseName, houseCode };
-        return this.http.post('https://housepal-server.herokuapp.com/houses/create', newHouse);
+        return this.http.post('https://housepal-server.herokuapp.com/houses/create', newHouse)
+            .do((res: any) => {
+                console.log('new house created: ', res);
+                this.userService.userHouseID = res.houseID;
+            });
     }
 
     joinHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
         const house = { houseName, houseCode };
-        return this.http.post('https://housepal-server.herokuapp.com/houses/join', house);
+        return this.http.post('https://housepal-server.herokuapp.com/houses/join', house)
+            .do((res: any) => {
+                console.log('joined house: ', res);
+                this.userService.userHouseID = res.houseID;
+            });
     }
 
     getHouse() {

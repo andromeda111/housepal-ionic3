@@ -32,21 +32,16 @@ export class HouseSetupPage {
     }
 
     createHouse(form: NgForm) {
-        this.houseService.createHouse(form.value.houseName, form.value.houseCode)
-            .do((res: any) => {
-                console.log('new house created: ', res);
-                this.userService.userHouseID = res.houseID;
-                this.nav.setRoot(TabsPage);
-            })
-            .subscribe();
-    }
-
-    joinHouse(form: NgForm) {
-        this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe((res) => {
-            console.log('res', res);
-            // NEED TO SET HOUSE ID HERE?!?!!?
-            // ERROR: OTHER USER DOESN"T GET SIGNED OUT IF THEY"RE REMOVED FROM A HOUSE BY ANOTHER!!!!
+        this.houseService.createHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
             this.nav.setRoot(TabsPage);
         });
     }
+
+    joinHouse(form: NgForm) {
+        this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
+            this.nav.setRoot(TabsPage);
+        });
+    }
+
+    // ERROR: OTHER USER DOESN"T GET SIGNED OUT IF THEY"RE REMOVED FROM A HOUSE BY ANOTHER!!!!
 }
