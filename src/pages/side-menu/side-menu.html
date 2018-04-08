@@ -36,20 +36,15 @@
                     <strong>Remove Roommate</strong>
                     <div class="information">Removing a roommate will also remove chores associated with that person.</div>
 
-                    <form [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
+                    <form class="remove-form" [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
                         <ion-item class="input-remove">
-                            <ion-label inline>Name</ion-label>
-                            <ion-select formControlName="roommate">
+                            <ion-label hidden>Name</ion-label>
+                            <ion-select formControlName="roommate" placeholder="Choose" clearInput>
                                 <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
                             </ion-select>
                         </ion-item>
 
-                        <button
-                        color="danger"
-                        small
-                        type="submit"
-                        ion-button
-                        [disabled]="!removeForm.valid">Confirm</button>
+                        <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
                     </form>
 
                 </div>
