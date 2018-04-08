@@ -32,10 +32,10 @@
         </div>
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Settings'}">
             <div class="settings-container">
+                <!-- Form: Remove Roommate -->
                 <div class="settings-block">
                     <strong>Remove Roommate</strong>
                     <div class="information">Removing a roommate will also remove chores associated with that person.</div>
-
                     <form class="remove-form" [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
                         <ion-item class="input-remove">
                             <ion-label hidden>Name</ion-label>
@@ -46,7 +46,14 @@
 
                         <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
                     </form>
-
+                </div>
+                <!-- Form: Leave House -->
+                <div class="settings-block">
+                    <strong>Leave House</strong>
+                    <div class="leave-block">
+                        <div class="information">Leave this house to join or create another.</div>
+                        <button color="danger" small type="submit" ion-button>Leave</button>
+                    </div>
                 </div>
             </div>
         </div>
