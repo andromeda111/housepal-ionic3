@@ -47,12 +47,12 @@
                         <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
                     </form>
                 </div>
-                <!-- Form: Leave House -->
+                <!-- Leave House -->
                 <div class="settings-block">
                     <strong>Leave House</strong>
                     <div class="leave-block">
                         <div class="information">Leave this house to join or create another.</div>
-                        <button color="danger" small type="submit" ion-button>Leave</button>
+                        <button color="danger" small ion-button (click)="leaveHouse()">Leave</button>
                     </div>
                 </div>
             </div>

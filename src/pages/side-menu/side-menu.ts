@@ -5,6 +5,7 @@ import { SigninPage } from '../user-setup/signin/signin';
 import { HouseService } from '../../services/house.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import 'rxjs/add/operator/takeWhile';
+import { HouseSetupPage } from '../house-setup/house-setup';
 
 @IonicPage()
 @Component({
@@ -56,6 +57,50 @@ export class SideMenuPage implements OnDestroy {
         });
     }
 
+    leaveHouse() {
+        let alert = this.alertCtrl.create({
+            title: 'Leave House',
+            message: `Please confirm by typing the house name: ${this.house.houseName}`,
+            inputs: [
+                {
+                    name: 'house',
+                    placeholder: this.house.houseName
+                },
+            ],
+            cssClass: 'alert-input-text-red',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Leave',
+                    handler: (data) => {
+                        console.log('Leaving: ', this.house.houseName, data);
+                        if (data.house === this.house.houseName) {
+                            console.log('CONFIRMED LEAVE');
+                            // Leave via service        
+                            this.houseService.leaveHouse()
+                                .subscribe((res: any) => {
+                                    // ERROR HANDLING???!?!?!
+                                    console.log('LEFT END', res);
+                                    this.leaveHouseConfirmSuccessAlert();
+                                    this.menuCtrl.close();
+                                    this.nav.setRoot(HouseSetupPage);
+                                });
+                        } else {
+                            this.confirmMismatchAlert();
+                        }
+
+                        this.initializeForm();
+                    }
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
     removeFormSubmit() {
         const selectedRoommate = Object.assign({}, this.removeForm.value.roommate);
         console.log(selectedRoommate.name);
@@ -95,7 +140,7 @@ export class SideMenuPage implements OnDestroy {
                                         .subscribe();
                                 });
                         } else {
-                            this.removeConfirmMismatchAlert();
+                            this.confirmMismatchAlert();
                         }
 
                         this.initializeForm();
@@ -105,23 +150,9 @@ export class SideMenuPage implements OnDestroy {
         });
 
         alert.present();
-
-        // let ingredients = [];
-        // if (value.ingredients.length > 0) {
-        //   ingredients = value.ingredients.map(name => {
-        //     return {name: name, amount: 1}
-        //   })
-        // }
-        // if (this.mode == 'Edit') {
-        //   this.recipesService.updateRecipe(this.index, value.title, value.description, value.difficulty, ingredients)
-        // } else {
-        //   this.recipesService.addRecipe(value.title, value.description, value.difficulty, ingredients);
-        // }
-        // this.recipeForm.reset();
-        // this.navCtrl.popToRoot();
     }
 
-    removeConfirmMismatchAlert() {
+    confirmMismatchAlert() {
         let alert = this.alertCtrl.create({
             title: 'Sorry!',
             message: 'The names did not match. Please try again.',
@@ -140,6 +171,21 @@ export class SideMenuPage implements OnDestroy {
         let alert = this.alertCtrl.create({
             title: 'Success',
             message: `${roommate.name} has been removed from ${this.house.houseName}.`,
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
+    leaveHouseConfirmSuccessAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Success',
+            message: `You have left ${this.house.houseName}.`,
             buttons: [
                 {
                     text: 'Okay',

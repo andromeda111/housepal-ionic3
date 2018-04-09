@@ -74,14 +74,23 @@ export class HouseService {
             .catch(err => {
                 console.error('Error removing roommates: ', err);
                 return Observable.throw(err);
+            });
+    }
+
+    leaveHouse() {
+        console.log('in house service to leave house');
+        return this.http.post('https://housepal-server.herokuapp.com/users/leave', { houseID: this.userService.activeUser.houseID })
+            .catch(err => {
+                console.error('Error leaving house ', err);
+                return Observable.throw(err);
             })
-            .do((res: any) => {
-                console.log('completed, in do: ', res);
-            })
+            .switchMap(() => this.userService.retrieveCurrentUserData())
+            .do(() => console.log('updated active usr', this.userService.activeUser));
     }
 
     updateMenuData() {
         if (!this.userService.userHouseID) {
+            console.error('No House ID')
             return;
         }
 
@@ -89,7 +98,7 @@ export class HouseService {
             this.getHouse(),
             this.getRoommates()
         ])
-        .do(result => this.menuDataSubject.next(result))
-        .subscribe();
+            .do(result => this.menuDataSubject.next(result))
+            .subscribe();
     }
 }
