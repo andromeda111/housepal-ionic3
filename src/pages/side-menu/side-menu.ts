@@ -37,7 +37,9 @@ export class SideMenuPage implements OnDestroy {
         this.houseService.menuDataSubject
             .takeWhile(() => this.alive)
             .subscribe(result => {
-                if (result.length) {
+                if (!this.userService.activeUser.houseID) {
+                    this.alertService.notInHouse();
+                } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
                 }

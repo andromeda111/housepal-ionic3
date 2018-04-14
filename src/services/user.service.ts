@@ -38,12 +38,12 @@ export class UserService {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .catch(err => {
                 console.error('User does not exist: ', err);
+                // logout?
                 return Observable.throw(err);
             })
             .do((res: User) => {
                 console.log('current: ', res);
                 this._activeUser = res;
-                // logout?
             });
     }
 

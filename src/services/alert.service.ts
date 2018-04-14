@@ -11,6 +11,23 @@ export class AlertService {
         private userService: UserService,
         private events: Events) { }
 
+    notInHouse() {
+        let alert = this.alertCtrl.create({
+            title: 'Notice',
+            message: `It looks like you are no longer in this house. You may have been removed by another person. Please join it again or create a new house.`,
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                    handler: () => {
+                        this.events.publish('appNav:HouseSetupPage');
+                    }
+                }
+            ]
+        });
+
+        alert.present();
+    }
 
     leaveHouse(houseName: string) {
         let alert = this.alertCtrl.create({
@@ -33,16 +50,13 @@ export class AlertService {
                     handler: (data) => {
                         console.log('Leaving: ', houseName, data);
                         if (data.house === houseName) {
-                            console.log('CONFIRMED LEAVE');
-                            // Leave via service        
+                            console.log('CONFIRMED LEAVE');  
                             this.houseService.leaveHouse()
                                 .subscribe((res: any) => {
                                     // ERROR HANDLING???!?!?!
                                     console.log('LEFT END', res);
-                                    if (this.userService.activeUser.houseID) {
+                                    if (!this.userService.activeUser.houseID) {
                                         this.leaveHouseSuccess(houseName);
-                                        // this.menuCtrl.close();
-                                        // this.nav.setRoot(HouseSetupPage);
                                     }
                                 });
                         } else {
@@ -63,7 +77,9 @@ export class AlertService {
             buttons: [
                 {
                     text: 'Okay',
-                    role: 'cancel',
+                    handler: () => {
+                        this.events.publish('appNav:HouseSetupPage');
+                    }
                 }
             ]
         });

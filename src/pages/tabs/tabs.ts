@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, Events, NavController, MenuController } from 'ionic-angular';
 import { MessagesPage } from '../messages/messages';
 import { ChoresPage } from '../chores/chores';
 import { ListPage } from '../list/list';
@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
 import { HouseService } from '../../services/house.service';
+import { AlertService } from '../../services/alert.service';
+import { HouseSetupPage } from '../house-setup/house-setup';
 
 @IonicPage()
 @Component({
@@ -24,8 +26,14 @@ export class TabsPage {
     userName = '';
     menuData: any;
 
-    constructor(private userService: UserService, private houseService: HouseService) {
+    constructor(private userService: UserService,
+        private houseService: HouseService,
+        private alertService: AlertService,
+        private events: Events,
+        private nav: NavController,
+        private menuCtrl: MenuController) {
 
+        this.events.subscribe('appNav:HouseSetupPage', () => this.nav.setRoot(HouseSetupPage));
     }
 
     ionViewWillEnter() {
@@ -35,6 +43,13 @@ export class TabsPage {
     }
 
     menuOpened() {
-        this.houseService.updateMenuData();
+        const hasHouseID = this.userService.activeUser.houseID;
+        hasHouseID ? this.houseService.updateMenuData() : this.alertService.notInHouse();
+    }
+
+    ngOnDestroy() {
+        console.log('destroy tabs');
+        this.menuCtrl.close();
+        
     }
 }

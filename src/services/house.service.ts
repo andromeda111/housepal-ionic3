@@ -97,7 +97,8 @@ export class HouseService {
 
         Observable.forkJoin([
             this.getHouse(),
-            this.getRoommates()
+            this.getRoommates(),
+            this.userService.retrieveCurrentUserData()
         ])
             .do(result => this.menuDataSubject.next(result))
             .subscribe();
