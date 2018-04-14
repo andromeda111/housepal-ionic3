@@ -18,9 +18,8 @@ export class AlertService {
             buttons: [
                 {
                     text: 'Okay',
-                    role: 'cancel',
                     handler: () => {
-                        this.events.publish('appNav:HouseSetupPage');
+                        this.events.publish('appSetRoot:HouseSetupPage');
                     }
                 }
             ]
@@ -78,7 +77,7 @@ export class AlertService {
                 {
                     text: 'Okay',
                     handler: () => {
-                        this.events.publish('appNav:HouseSetupPage');
+                        this.events.publish('appSetRoot:HouseSetupPage');
                     }
                 }
             ]

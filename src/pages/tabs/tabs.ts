@@ -33,7 +33,6 @@ export class TabsPage {
         private nav: NavController,
         private menuCtrl: MenuController) {
 
-        this.events.subscribe('appNav:HouseSetupPage', () => this.nav.setRoot(HouseSetupPage));
     }
 
     ionViewWillEnter() {
@@ -50,6 +49,7 @@ export class TabsPage {
     ngOnDestroy() {
         console.log('destroy tabs');
         this.menuCtrl.close();
+        this.events.unsubscribe('appNav:HouseSetupPage');
         
     }
 }

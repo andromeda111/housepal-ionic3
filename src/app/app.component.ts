@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
@@ -27,7 +27,8 @@ export class MyApp {
         private splashScreen: SplashScreen,
         private authService: AuthService,
         private userService: UserService,
-        private houseService: HouseService
+        private houseService: HouseService,
+        private events: Events
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -60,6 +61,9 @@ export class MyApp {
                 this.rootPage = SigninPage;
             }
         });
+
+        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = TabsPage);
+        this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = HouseSetupPage);
     }
 
     private initializeData() {
