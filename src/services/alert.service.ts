@@ -94,16 +94,11 @@ export class AlertService {
                     text: 'Remove',
                     handler: (data) => {
                         console.log('Removing: ', roommate, data);
-                        if (data.name === roommate.name) {
-                            console.log('CONFIRMED');
-                            // Remove via service        
+                        if (data.name === roommate.name) {   
                             this.houseService.removeRoommate(roommate)
                                 .subscribe((res: any) => {
-                                    console.log(res);
                                     this.removeRoommateSuccess(roommate.name, houseName);
-                                    // What if there is an error and this is not an array? How can I make sure this is always an array?
-                                    this.events.publish('menu:action-setRoommates', res);
-
+                                    this.events.publish('menu:action-setRoommates', res || []);
                                 });
                         } else {
                             this.alertNameMismatch();
