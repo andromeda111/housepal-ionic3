@@ -68,6 +68,7 @@ export class HouseService {
             });
     }
 
+    // Set this up to return an array of current roommates + error handling - TEST
     removeRoommate(roommate) {
         console.log('in service to remove', roommate);
         return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
