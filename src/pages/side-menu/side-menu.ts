@@ -1,13 +1,12 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { IonicPage, MenuController, NavController, AlertController, Events } from 'ionic-angular';
-import { AuthService } from '../../services/auth.service';
-import { SigninPage } from '../user-setup/signin/signin';
-import { HouseService } from '../../services/house.service';
+import { IonicPage, MenuController, NavController, Events } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import 'rxjs/add/operator/takeWhile';
-import { HouseSetupPage } from '../house-setup/house-setup';
+import { AuthService } from '../../services/auth.service';
+import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
+import { SigninPage } from '../user-setup/signin/signin';
 
 @IonicPage()
 @Component({
@@ -30,7 +29,6 @@ export class SideMenuPage implements OnDestroy {
         private nav: NavController,
         private houseService: HouseService,
         private userService: UserService,
-        private alertCtrl: AlertController,
         private alertService: AlertService,
         private events: Events) {
 
@@ -46,7 +44,7 @@ export class SideMenuPage implements OnDestroy {
             });
 
         this.events.subscribe('menu:action-initializeForm', () => this.initializeForm());
-        this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates); //testing this out
+        this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
 
         this.initializeForm()
     }
@@ -60,7 +58,6 @@ export class SideMenuPage implements OnDestroy {
     }
 
     private initializeForm() {
-        console.log('form initialize');
         let roommate = null;
 
         this.removeForm = new FormGroup({

@@ -11,7 +11,6 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-    // TODO: Create interfaces
 
     private _userAuthToken: string;
     private authenticated: boolean = false;
@@ -25,9 +24,9 @@ export class AuthService {
 
     constructor(private http: HttpClient, private userService: UserService) { }
 
-    /****************************
+    /*============================
         Signup, Signin, Logout
-    *****************************/
+    =============================*/
     signup(name: string, email: string, password: string) {
         const newUser = { name, email, password };
 
@@ -52,7 +51,7 @@ export class AuthService {
                 console.error('Error signing in to firebase Auth: ', err);
                 return Observable.throw(err)
             }).do(result => {
-                // Authentication succcessful: Set activeUser, this._userAuthToken, and this.auth()enticated.
+                // Authentication succcessful: Set activeUser, this._userAuthToken, and this.authenticated.
                 const firebaseUser = result.toJSON();
                 this.userService.activeUser = userData;
                 console.log(this.userService.activeUser);
@@ -83,15 +82,5 @@ export class AuthService {
         this._userAuthToken = '';
         this.userService.clearActiveUser();
         this.authenticated = false;
-    }
-
-    /*****************************************
-        Development Methods: DELETE LATER
-    ******************************************/
-    // Dev - can delete later
-    verifyAuthorization() {
-        return this.http.post('https://housepal-server.herokuapp.com/users/verify', { token: this._userAuthToken }).subscribe(res => {
-            console.log(res);
-        });
     }
 }

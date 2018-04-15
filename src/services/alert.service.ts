@@ -47,13 +47,9 @@ export class AlertService {
                 {
                     text: 'Leave',
                     handler: (data) => {
-                        console.log('Leaving: ', houseName, data);
                         if (data.house === houseName) {
-                            console.log('CONFIRMED LEAVE');  
                             this.houseService.leaveHouse()
                                 .subscribe((res: any) => {
-                                    // ERROR HANDLING???!?!?!
-                                    console.log('LEFT END', res);
                                     if (!this.userService.activeUser.houseID) {
                                         this.leaveHouseSuccess(houseName);
                                     }
@@ -157,5 +153,4 @@ export class AlertService {
 
         alert.present();
     }
-
 }

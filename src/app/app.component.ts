@@ -45,7 +45,6 @@ export class MyApp {
 
         // Firebase Check Authorization
         firebase.auth().onAuthStateChanged(user => {
-            // 'User not found' but logged into app into tab page. FB auth worked, but DB failed and still let through?
             if (user) {
                 console.log('AuthState Logged In');
                 this.authService.verifyLoginAndUserState(user)
@@ -62,12 +61,12 @@ export class MyApp {
             }
         });
 
+        // Set App Root Events
         this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = TabsPage);
         this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = HouseSetupPage);
     }
 
     private initializeData() {
-        // Update Side Menu Data
         this.houseService.updateMenuData();
     }
 }

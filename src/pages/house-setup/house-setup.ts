@@ -42,6 +42,4 @@ export class HouseSetupPage {
             this.events.publish('appSetRoot:TabsPage');
         });
     }
-
-    // ERROR: OTHER USER DOESN"T GET SIGNED OUT IF THEY"RE REMOVED FROM A HOUSE BY ANOTHER!!!!
 }

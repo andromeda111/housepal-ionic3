@@ -49,10 +49,7 @@ export class HouseService {
                 console.error('Error getting house info: ', err);
                 return Observable.throw(err);
             })
-            .do((res: any[]) => {
-                console.log('house (App): ', res);
-                this._house = res;
-            });
+            .do((res: any[]) => this._house = res);
     }
 
     getRoommates() {
@@ -68,9 +65,7 @@ export class HouseService {
             });
     }
 
-    // Set this up to return an array of current roommates + error handling - TEST
     removeRoommate(roommate) {
-        console.log('in service to remove', roommate);
         return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
             .catch(err => {
                 console.error('Error removing roommates: ', err);
