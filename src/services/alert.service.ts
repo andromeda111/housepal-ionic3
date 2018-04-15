@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlertController, Events } from 'ionic-angular';
 import { HouseService } from './house.service';
 import { UserService } from './user.service';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class AlertService {
@@ -9,7 +10,8 @@ export class AlertService {
     constructor(private alertCtrl: AlertController,
         private houseService: HouseService,
         private userService: UserService,
-        private events: Events) { }
+        private events: Events,
+        private loadingService: LoadingService) { }
 
     notInHouse() {
         let alert = this.alertCtrl.create({
@@ -48,7 +50,10 @@ export class AlertService {
                     text: 'Leave',
                     handler: (data) => {
                         if (data.house === houseName) {
+                            const loading = this.loadingService.loadingSpinner();
+                            loading.present();
                             this.houseService.leaveHouse()
+                                .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
                                     if (!this.userService.activeUser.houseID) {
                                         this.leaveHouseSuccess(houseName);
@@ -106,7 +111,10 @@ export class AlertService {
                     handler: (data) => {
                         console.log('Removing: ', roommate, data);
                         if (data.name === roommate.name) {   
+                            const loading = this.loadingService.loadingSpinner();
+                            loading.present();
                             this.houseService.removeRoommate(roommate)
+                                .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
                                     this.removeRoommateSuccess(roommate.name, houseName);
                                     this.events.publish('menu:action-setRoommates', res || []);
