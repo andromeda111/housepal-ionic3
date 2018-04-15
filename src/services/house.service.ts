@@ -43,7 +43,6 @@ export class HouseService {
     }
 
     getHouse() {
-        console.log('get house');
         return this.http.get(`https://housepal-server.herokuapp.com/houses/id/${this.userService.userHouseID}`)
             .catch(err => {
                 console.error('Error getting house info: ', err);
@@ -53,7 +52,6 @@ export class HouseService {
     }
 
     getRoommates() {
-        console.log('get roommates');
         return this.http.get(`https://housepal-server.herokuapp.com/users/roommates/${this.userService.userHouseID}`)
             .catch(err => {
                 console.error('Error getting roommates: ', err);
@@ -74,7 +72,6 @@ export class HouseService {
     }
 
     leaveHouse() {
-        console.log('in house service to leave house');
         return this.http.post('https://housepal-server.herokuapp.com/users/leave', { houseID: this.userService.activeUser.houseID })
             .catch(err => {
                 console.error('Error leaving house ', err);
