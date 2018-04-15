@@ -23,6 +23,7 @@ import { AlertService } from '../services/alert.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { AuthService } from '../services/auth.service';
 import { HouseService } from '../services/house.service';
+import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
 // Components
 
@@ -68,6 +69,7 @@ import { UserService } from '../services/user.service';
         AlertService,
         AuthService,
         HouseService,
+        LoadingService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

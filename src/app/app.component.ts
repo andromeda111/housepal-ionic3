@@ -9,10 +9,9 @@ import { SigninPage } from '../pages/user-setup/signin/signin';
 import { TabsPage } from '../pages/tabs/tabs';
 // Services
 import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
 import { HouseService } from '../services/house.service';
-
-import 'rxjs/add/operator/filter';
+import { LoadingService } from '../services/loading.service';
+import { UserService } from '../services/user.service';
 
 @Component({
     templateUrl: 'app.html'
@@ -28,7 +27,8 @@ export class MyApp {
         private authService: AuthService,
         private userService: UserService,
         private houseService: HouseService,
-        private events: Events
+        private events: Events,
+        private loadingService: LoadingService
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -47,11 +47,14 @@ export class MyApp {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log('AuthState Logged In');
+                const loading = this.loadingService.loadingSpinner();
+                loading.present();
                 this.authService.verifyLoginAndUserState(user)
                     .do(() => {
                         console.log('verified');
                         this.initializeData();
-                        this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage
+                        this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage;
+                        loading.dismiss();
                     })
                     .subscribe();
             } else {

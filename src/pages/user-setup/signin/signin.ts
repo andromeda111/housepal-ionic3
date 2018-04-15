@@ -4,6 +4,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth.service';
 import { SignupPage } from '../signup/signup';
 import { Observable } from 'rxjs/Observable';
+import { LoadingService } from '../../../services/loading.service';
 
 @IonicPage()
 @Component({
@@ -12,12 +13,13 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SigninPage {
 
-    constructor(private authService: AuthService, private nav: NavController) { }
+    constructor(private authService: AuthService, private nav: NavController, private loadingService: LoadingService) { }
 
     signin(form: NgForm) {
-        this.authService.signin(form.value.email, form.value.password).subscribe();
-
-        console.log('end signin');
+        const loading = this.loadingService.loadingSpinner();
+        loading.present();
+        this.authService.signin(form.value.email, form.value.password)
+            .subscribe(() => loading.dismiss());
     }
 
     goToSignup() {

@@ -5,6 +5,7 @@ import { HouseService } from '../../services/house.service';
 import { TabsPage } from '../tabs/tabs';
 import { UserService } from '../../services/user.service';
 import 'rxjs/add/operator/do';
+import { LoadingService } from '../../services/loading.service';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class HouseSetupPage {
 
     setupSection: string = 'landing';
 
-    constructor(private nav: NavController, private houseService: HouseService, private userService: UserService, private events: Events) { }
+    constructor(private nav: NavController, private houseService: HouseService, private userService: UserService, private events: Events, private loadingService: LoadingService) { }
 
     selectOption(option) {
         switch (option) {
@@ -32,14 +33,20 @@ export class HouseSetupPage {
     }
 
     createHouse(form: NgForm) {
+        const loading = this.loadingService.loadingSpinner();
+        loading.present();
         this.houseService.createHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
             this.events.publish('appSetRoot:TabsPage');
+            loading.dismiss();
         });
     }
 
     joinHouse(form: NgForm) {
+        const loading = this.loadingService.loadingSpinner();
+        loading.present();
         this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
             this.events.publish('appSetRoot:TabsPage');
+            loading.dismiss();
         });
     }
 }
