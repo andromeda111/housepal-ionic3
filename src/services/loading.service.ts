@@ -10,7 +10,7 @@ export class LoadingService {
         const loader = this.loadingCtrl.create({
           content: 'Please wait...'
         });
-      
+
         return loader;
       }
 }

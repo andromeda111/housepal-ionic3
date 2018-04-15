@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonicPage, NavController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/finally';
 import { AuthService } from '../../../services/auth.service';
 import { SignupPage } from '../signup/signup';
-import { Observable } from 'rxjs/Observable';
 import { LoadingService } from '../../../services/loading.service';
 
 @IonicPage()
@@ -19,7 +20,8 @@ export class SigninPage {
         const loading = this.loadingService.loadingSpinner();
         loading.present();
         this.authService.signin(form.value.email, form.value.password)
-            .subscribe(() => loading.dismiss());
+            .finally(() => loading.dismiss())
+            .subscribe()
     }
 
     goToSignup() {

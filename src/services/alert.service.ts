@@ -53,8 +53,8 @@ export class AlertService {
                             const loading = this.loadingService.loadingSpinner();
                             loading.present();
                             this.houseService.leaveHouse()
+                                .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
-                                    loading.dismiss();
                                     if (!this.userService.activeUser.houseID) {
                                         this.leaveHouseSuccess(houseName);
                                     }
@@ -114,8 +114,8 @@ export class AlertService {
                             const loading = this.loadingService.loadingSpinner();
                             loading.present();
                             this.houseService.removeRoommate(roommate)
+                                .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
-                                    loading.dismiss();
                                     this.removeRoommateSuccess(roommate.name, houseName);
                                     this.events.publish('menu:action-setRoommates', res || []);
                                 });

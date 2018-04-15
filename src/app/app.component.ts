@@ -54,8 +54,8 @@ export class MyApp {
                         console.log('verified');
                         this.initializeData();
                         this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage;
-                        loading.dismiss();
                     })
+                    .finally(() => loading.dismiss())
                     .subscribe();
             } else {
                 console.log('Logged Out');

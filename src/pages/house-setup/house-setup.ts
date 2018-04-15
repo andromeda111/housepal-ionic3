@@ -35,18 +35,20 @@ export class HouseSetupPage {
     createHouse(form: NgForm) {
         const loading = this.loadingService.loadingSpinner();
         loading.present();
-        this.houseService.createHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
-            this.events.publish('appSetRoot:TabsPage');
-            loading.dismiss();
-        });
+        this.houseService.createHouse(form.value.houseName, form.value.houseCode)
+            .finally(() => loading.dismiss())
+            .subscribe(() => {
+                this.events.publish('appSetRoot:TabsPage');
+            });
     }
 
     joinHouse(form: NgForm) {
         const loading = this.loadingService.loadingSpinner();
         loading.present();
-        this.houseService.joinHouse(form.value.houseName, form.value.houseCode).subscribe(() => {
-            this.events.publish('appSetRoot:TabsPage');
-            loading.dismiss();
-        });
+        this.houseService.joinHouse(form.value.houseName, form.value.houseCode)
+            .finally(() => loading.dismiss())
+            .subscribe(() => {
+                this.events.publish('appSetRoot:TabsPage');
+            });
     }
 }

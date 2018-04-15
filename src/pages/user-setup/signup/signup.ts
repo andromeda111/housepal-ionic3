@@ -18,7 +18,8 @@ export class SignupPage {
         const loading = this.loadingService.loadingSpinner();
         loading.present();
         this.authService.signup(form.value.name, form.value.email, form.value.password)
-            .subscribe(() => loading.dismiss());
+            .finally(() => loading.dismiss())
+            .subscribe();
     }
 
     goToSignin() {

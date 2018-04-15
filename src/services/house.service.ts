@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs/Subject';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class HouseService {
@@ -20,7 +21,7 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService, private loadingService: LoadingService) { }
 
     createHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
