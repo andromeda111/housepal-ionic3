@@ -35,17 +35,20 @@
                 <!-- Form: Remove Roommate -->
                 <div class="settings-block">
                     <strong>Remove Roommate</strong>
-                    <div class="information">Removing a roommate will also remove chores associated with that person.</div>
-                    <form class="remove-form" [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
-                        <ion-item class="input-remove">
-                            <ion-label hidden>Name</ion-label>
-                            <ion-select formControlName="roommate" placeholder="Choose" clearInput>
-                                <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
-                            </ion-select>
-                        </ion-item>
-
-                        <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
-                    </form>
+                    <div *ngIf="roommates.length">
+                        <div class="information">Removing a roommate will also remove chores associated with that person.</div>
+                        <form class="remove-form" [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
+                            <ion-item class="input-remove">
+                                <ion-label hidden>Name</ion-label>
+                                <ion-select formControlName="roommate" placeholder="Choose" clearInput>
+                                    <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
+                                </ion-select>
+                            </ion-item>
+    
+                            <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
+                        </form>
+                    </div>
+                    <div *ngIf="!roommates.length" class="information">You are the only user in this house currently.</div>
                 </div>
                 <!-- Leave House -->
                 <div class="settings-block">
