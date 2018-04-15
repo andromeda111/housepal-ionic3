@@ -8,9 +8,10 @@ export class UserService {
 
     private _activeUser: User = {
         uid: '',
+        email: '',
         name: '',
-        house_id: null,
-        deviceId: ''
+        houseID: null,
+        deviceID: ''
     };
 
     // Active (current) User - Get and Set    
@@ -24,11 +25,11 @@ export class UserService {
 
     // User House ID - Get and Set
     get userHouseID() {
-        return this.activeUser.house_id;
+        return this.activeUser.houseID;
     }
 
     set userHouseID(id) {
-        this._activeUser.house_id = id;
+        this._activeUser.houseID = id;
     }
 
     constructor(private http: HttpClient) { }
@@ -37,12 +38,12 @@ export class UserService {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .catch(err => {
                 console.error('User does not exist: ', err);
+                // logout?
                 return Observable.throw(err);
             })
             .do((res: User) => {
                 console.log('current: ', res);
                 this._activeUser = res;
-                // logout?
             });
     }
 
@@ -50,8 +51,9 @@ export class UserService {
         this._activeUser = {
             uid: '',
             name: '',
-            house_id: null,
-            deviceId: ''
+            email: '',
+            houseID: null,
+            deviceID: ''
         };
     }
 }

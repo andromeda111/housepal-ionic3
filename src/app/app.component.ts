@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
@@ -10,6 +10,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 // Services
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { HouseService } from '../services/house.service';
+
+import 'rxjs/add/operator/filter';
 
 @Component({
     templateUrl: 'app.html'
@@ -23,7 +26,9 @@ export class MyApp {
         private statusBar: StatusBar,
         private splashScreen: SplashScreen,
         private authService: AuthService,
-        private userService: UserService
+        private userService: UserService,
+        private houseService: HouseService,
+        private events: Events
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -43,7 +48,11 @@ export class MyApp {
             if (user) {
                 console.log('AuthState Logged In');
                 this.authService.verifyLoginAndUserState(user)
-                    .do(() => this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage)
+                    .do(() => {
+                        console.log('verified');
+                        this.initializeData();
+                        this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage
+                    })
                     .subscribe();
             } else {
                 console.log('Logged Out');
@@ -51,5 +60,13 @@ export class MyApp {
                 this.rootPage = SigninPage;
             }
         });
+
+        // Set App Root Events
+        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = TabsPage);
+        this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = HouseSetupPage);
+    }
+
+    private initializeData() {
+        this.houseService.updateMenuData();
     }
 }

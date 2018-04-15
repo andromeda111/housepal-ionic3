@@ -1,16 +1,71 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
-        <div class="house-name">Tanglemansion</div>
+        <div class="titles user-name">{{ userName }}</div>
+        <div class="titles">{{ house.houseName }}</div>
     </div>
 
-    <div class="side-menu-content"></div>
-    <ion-list>
-        <button ion-button icon-right color="danger" (click)="onLogout()">
+    <div class="side-menu-content">
+
+        <!-- Roommates -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Roommates'}" (click)="selectMenu('Roommates')">
+            Roommates
+        </div>
+        <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
+            <ul class="roommate-list">
+                <li *ngFor="let roommate of roommates" class="roommate-item">
+                    {{ roommate.name }}
+                </li>
+                <li *ngIf="!roommates.length" class="roommate-item no-items">
+                    <p>There are no other users associated with this house yet.</p>
+                    <p>Invite a roommate to join with your house's name and share code.</p>
+                </li>
+            </ul>
+            <div class="share-code">
+                <strong>+ Share Code: </strong>{{ house.houseCode}}
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Settings'}" (click)="selectMenu('Settings')">
+            Settings
+        </div>
+        <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Settings'}">
+            <div class="settings-container">
+                <!-- Form: Remove Roommate -->
+                <div class="settings-block">
+                    <strong>Remove Roommate</strong>
+                    <div *ngIf="roommates.length">
+                        <div class="information">Removing a roommate will also remove chores associated with that person.</div>
+                        <form class="remove-form" [formGroup]="removeForm" (ngSubmit)="removeFormSubmit()">
+                            <ion-item class="input-remove">
+                                <ion-label hidden>Name</ion-label>
+                                <ion-select formControlName="roommate" placeholder="Choose" clearInput>
+                                    <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
+                                </ion-select>
+                            </ion-item>
+    
+                            <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
+                        </form>
+                    </div>
+                    <div *ngIf="!roommates.length" class="information">You are the only user in this house currently.</div>
+                </div>
+                <!-- Leave House -->
+                <div class="settings-block">
+                    <strong>Leave House</strong>
+                    <div class="leave-block">
+                        <div class="information">Leave this house to join or create another.</div>
+                        <button color="danger" small ion-button (click)="leaveHouse()">Leave</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Out -->
+        <div class="menu-item" [ngClass]="{'active': activeMenu === 'Sign Out'}" (click)="signOut()">
             Sign Out
-            <ion-icon name="log-out"></ion-icon>
-        </button>
-    </ion-list>
-    <button ion-button clear color="danger" (click)="verifyLogin()">Verify Login</button>
+        </div>
+
+    </div>
 
 </ion-content>

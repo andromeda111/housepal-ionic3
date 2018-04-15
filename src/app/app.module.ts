@@ -19,6 +19,7 @@ import { SigninPage } from '../pages/user-setup/signin/signin';
 import { SignupPage } from '../pages/user-setup/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 // Services
+import { AlertService } from '../services/alert.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { AuthService } from '../services/auth.service';
 import { HouseService } from '../services/house.service';
@@ -64,6 +65,7 @@ import { UserService } from '../services/user.service';
     providers: [
         StatusBar,
         SplashScreen,
+        AlertService,
         AuthService,
         HouseService,
         UserService,

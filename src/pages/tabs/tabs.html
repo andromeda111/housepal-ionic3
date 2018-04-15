@@ -1,6 +1,6 @@
-<ion-menu [content]="nav">
+<ion-menu [content]="nav" persistent=true (ionOpen)="menuOpened()">
     <ion-content>
-        <page-side-menu></page-side-menu>
+        <page-side-menu [userName]="userName"></page-side-menu>
     </ion-content>
 </ion-menu>
 
