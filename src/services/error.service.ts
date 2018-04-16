@@ -7,9 +7,16 @@ export class ErrorService implements ErrorHandler {
     constructor(private alertCtrl: AlertController) { }
 
         handleError(error) {
+            let title = 'Oops! Something went wrong!';
+
+            switch (error.type) {
+                case 'notice':
+                    title = 'Notice'
+                    break;
+            }
+
             let alert = this.alertCtrl.create({
-                title: 'Oops! Something went wrong!',
-                subTitle: `Status: ${error.status}`,
+                title: title,
                 message: error.error.message,
                 buttons: [
                     {

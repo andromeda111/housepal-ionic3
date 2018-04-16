@@ -36,7 +36,7 @@ export class AuthService {
                 console.error('Error creating new user: ', err);
                 this.errorService.handleError(err);
                 return Observable.of();
-            }).switchMap(newUserData => this.firebaseSignin(email, password, newUserData.user));
+            }).switchMap((newUserData: any) => this.firebaseSignin(email, password, newUserData.user));
     }
 
     signin(email: string, password: string) {
