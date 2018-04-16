@@ -25,6 +25,21 @@ ion-content {
     font-family: 'Lato-Regular';
 }
 
+
+// Alerts && Error Messages
+
+.alert-message {
+    font-size: 14px !important;
+} 
+
+.alert-title {
+    font-size: 16px !important;
+}
+
+.alert-sub-title {
+    font-size: 12px !important;
+}
+
 .alert-input-text-red {
     input {
         color: red !important;

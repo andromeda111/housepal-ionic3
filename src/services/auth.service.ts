@@ -8,6 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import { UserService } from './user.service';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
         return this.authenticated;
     }
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
 
     /*============================
         Signup, Signin, Logout
@@ -33,7 +34,8 @@ export class AuthService {
         return this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
             .catch(err => {
                 console.error('Error creating new user: ', err);
-                return Observable.throw(err);
+                this.errorService.handleError(err);
+                return Observable.of();
             }).switchMap(newUserData => this.firebaseSignin(email, password, newUserData.user));
     }
 
@@ -41,7 +43,8 @@ export class AuthService {
         return this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password })
             .catch(err => {
                 console.error('Signin to Database Failed: ', err);
-                return Observable.throw(err);
+                this.errorService.handleError(err);
+                return Observable.of();
             }).switchMap(userData => this.firebaseSignin(email, password, userData));
     }
 
@@ -49,6 +52,7 @@ export class AuthService {
         return Observable.from(firebase.auth().signInWithEmailAndPassword(email, password))
             .catch(err => {
                 console.error('Error signing in to firebase Auth: ', err);
+                this.errorService.handleError(err);
                 return Observable.throw(err)
             }).do(result => {
                 // Authentication succcessful: Set activeUser, this._userAuthToken, and this.authenticated.

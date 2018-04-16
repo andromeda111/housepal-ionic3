@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs/Subject';
 import { LoadingService } from './loading.service';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class HouseService {
@@ -21,7 +22,7 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService, private loadingService: LoadingService) { }
+    constructor(private http: HttpClient, private userService: UserService, private loadingService: LoadingService, private errorService: ErrorService) { }
 
     createHouse(houseName, houseCode) {
         console.log(houseName, houseCode);
@@ -47,7 +48,7 @@ export class HouseService {
         return this.http.get(`https://housepal-server.herokuapp.com/houses/id/${this.userService.userHouseID}`)
             .catch(err => {
                 console.error('Error getting house info: ', err);
-                return Observable.throw(err);
+                return Observable.of();
             })
             .do((res: any[]) => this._house = res);
     }
@@ -56,7 +57,8 @@ export class HouseService {
         return this.http.get(`https://housepal-server.herokuapp.com/users/roommates/${this.userService.userHouseID}`)
             .catch(err => {
                 console.error('Error getting roommates: ', err);
-                return Observable.throw(err);
+                this.errorService.handleError(err);
+                return Observable.of();
             })
             .do((res: any[]) => {
                 console.log('roommates (App): ', res);
@@ -68,7 +70,7 @@ export class HouseService {
         return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
             .catch(err => {
                 console.error('Error removing roommates: ', err);
-                return Observable.throw(err);
+                return Observable.of();
             });
     }
 
@@ -76,7 +78,7 @@ export class HouseService {
         return this.http.post('https://housepal-server.herokuapp.com/users/leave', { houseID: this.userService.activeUser.houseID })
             .catch(err => {
                 console.error('Error leaving house ', err);
-                return Observable.throw(err);
+                return Observable.of();
             })
             .switchMap(() => this.userService.retrieveCurrentUserData())
             .do(() => console.log('updated active usr', this.userService.activeUser));
@@ -93,7 +95,11 @@ export class HouseService {
             this.getRoommates(),
             this.userService.retrieveCurrentUserData()
         ])
-            .do(result => this.menuDataSubject.next(result))
+            .do(result => {
+                console.log('in update do');
+                
+                this.menuDataSubject.next(result)
+            })
             .subscribe();
     }
 }

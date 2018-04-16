@@ -69,6 +69,7 @@ import { UserService } from '../services/user.service';
         SplashScreen,
         AlertService,
         AuthService,
+        ErrorService,
         HouseService,
         LoadingService,
         UserService,

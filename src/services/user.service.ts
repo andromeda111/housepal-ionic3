@@ -39,7 +39,7 @@ export class UserService {
             .catch(err => {
                 console.error('User does not exist: ', err);
                 // logout?
-                return Observable.throw(err);
+                return Observable.of();
             })
             .do((res: User) => {
                 console.log('current: ', res);
