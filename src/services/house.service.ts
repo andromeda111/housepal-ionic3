@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs/Subject';
-import { LoadingService } from './loading.service';
 import { ErrorService } from './error.service';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService, private loadingService: LoadingService, private errorService: ErrorService) { }
+    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
 
     createHouse(houseName, houseCode) {
         const newHouse = { houseName, houseCode };
@@ -78,6 +77,7 @@ export class HouseService {
     removeRoommate(roommate) {
         return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
             .catch(err => {
+                err.type = 'notice';
                 this.errorService.handleError(err);
                 return Observable.of();
             });
