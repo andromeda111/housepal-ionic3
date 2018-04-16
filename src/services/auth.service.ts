@@ -8,6 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import { UserService } from './user.service';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
         return this.authenticated;
     }
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
 
     /*============================
         Signup, Signin, Logout
@@ -33,15 +34,19 @@ export class AuthService {
         return this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
             .catch(err => {
                 console.error('Error creating new user: ', err);
-                return Observable.throw(err);
-            }).switchMap(newUserData => this.firebaseSignin(email, password, newUserData.user));
+                err.type = 'notice';
+                this.errorService.handleError(err);
+                return Observable.of();
+            }).switchMap((newUserData: any) => this.firebaseSignin(email, password, newUserData.user));
     }
 
     signin(email: string, password: string) {
         return this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password })
             .catch(err => {
                 console.error('Signin to Database Failed: ', err);
-                return Observable.throw(err);
+                err.type = 'notice';
+                this.errorService.handleError(err);
+                return Observable.of();
             }).switchMap(userData => this.firebaseSignin(email, password, userData));
     }
 
@@ -49,7 +54,11 @@ export class AuthService {
         return Observable.from(firebase.auth().signInWithEmailAndPassword(email, password))
             .catch(err => {
                 console.error('Error signing in to firebase Auth: ', err);
-                return Observable.throw(err)
+                if (!err.error || !err.error.message) {
+                    err.error = { message: 'Email or password did not match an existing user. Please try again or sign up.' };
+                }
+                this.errorService.handleError(err);
+                return Observable.of()
             }).do(result => {
                 // Authentication succcessful: Set activeUser, this._userAuthToken, and this.authenticated.
                 const firebaseUser = result.toJSON();

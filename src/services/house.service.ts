@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs/Subject';
-import { LoadingService } from './loading.service';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class HouseService {
@@ -21,24 +21,29 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService, private loadingService: LoadingService) { }
+    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
 
     createHouse(houseName, houseCode) {
-        console.log(houseName, houseCode);
         const newHouse = { houseName, houseCode };
         return this.http.post('https://housepal-server.herokuapp.com/houses/create', newHouse)
+            .catch(err => {
+                this.errorService.handleError(err);
+                return Observable.of();
+            })
             .do((res: any) => {
-                console.log('new house created: ', res);
                 this.userService.userHouseID = res.houseID;
             });
     }
 
     joinHouse(houseName, houseCode) {
-        console.log(houseName, houseCode);
         const house = { houseName, houseCode };
         return this.http.post('https://housepal-server.herokuapp.com/houses/join', house)
+            .catch(err => {
+                err.type = 'notice';
+                this.errorService.handleError(err);
+                return Observable.of();
+            })
             .do((res: any) => {
-                console.log('joined house: ', res);
                 this.userService.userHouseID = res.houseID;
             });
     }
@@ -46,8 +51,11 @@ export class HouseService {
     getHouse() {
         return this.http.get(`https://housepal-server.herokuapp.com/houses/id/${this.userService.userHouseID}`)
             .catch(err => {
-                console.error('Error getting house info: ', err);
-                return Observable.throw(err);
+                if (!err.error.message) {
+                    err.error = { message: 'There was an error retrieving the house data. Please sign out and try reloading the app.' };
+                }
+                this.errorService.handleError(err);
+                return Observable.of();
             })
             .do((res: any[]) => this._house = res);
     }
@@ -55,11 +63,13 @@ export class HouseService {
     getRoommates() {
         return this.http.get(`https://housepal-server.herokuapp.com/users/roommates/${this.userService.userHouseID}`)
             .catch(err => {
-                console.error('Error getting roommates: ', err);
-                return Observable.throw(err);
+                if (!err.error.message) {
+                    err.error = { message: 'There was an error retrieving the list of roommates. Please sign out and try reloading the app.' };
+                }
+                this.errorService.handleError(err);
+                return Observable.of();
             })
             .do((res: any[]) => {
-                console.log('roommates (App): ', res);
                 this._roommates = res;
             });
     }
@@ -67,16 +77,17 @@ export class HouseService {
     removeRoommate(roommate) {
         return this.http.post('https://housepal-server.herokuapp.com/users/remove-roommate', roommate)
             .catch(err => {
-                console.error('Error removing roommates: ', err);
-                return Observable.throw(err);
+                err.type = 'notice';
+                this.errorService.handleError(err);
+                return Observable.of();
             });
     }
 
     leaveHouse() {
         return this.http.post('https://housepal-server.herokuapp.com/users/leave', { houseID: this.userService.activeUser.houseID })
             .catch(err => {
-                console.error('Error leaving house ', err);
-                return Observable.throw(err);
+                this.errorService.handleError(err);
+                return Observable.of();
             })
             .switchMap(() => this.userService.retrieveCurrentUserData())
             .do(() => console.log('updated active usr', this.userService.activeUser));
