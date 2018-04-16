@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class UserService {
@@ -32,13 +33,12 @@ export class UserService {
         this._activeUser.houseID = id;
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private errorService: ErrorService) { }
 
     retrieveCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
             .catch(err => {
-                console.error('User does not exist: ', err);
-                // logout?
+                this.errorService.handleError(err);
                 return Observable.of();
             })
             .do((res: User) => {
