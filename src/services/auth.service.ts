@@ -34,6 +34,7 @@ export class AuthService {
         return this.http.post('https://housepal-server.herokuapp.com/users/signup', newUser)
             .catch(err => {
                 console.error('Error creating new user: ', err);
+                err.type = 'notice';
                 this.errorService.handleError(err);
                 return Observable.of();
             }).switchMap((newUserData: any) => this.firebaseSignin(email, password, newUserData.user));
@@ -43,6 +44,7 @@ export class AuthService {
         return this.http.post('https://housepal-server.herokuapp.com/users/signin', { email, password })
             .catch(err => {
                 console.error('Signin to Database Failed: ', err);
+                err.type = 'notice';
                 this.errorService.handleError(err);
                 return Observable.of();
             }).switchMap(userData => this.firebaseSignin(email, password, userData));
@@ -52,8 +54,11 @@ export class AuthService {
         return Observable.from(firebase.auth().signInWithEmailAndPassword(email, password))
             .catch(err => {
                 console.error('Error signing in to firebase Auth: ', err);
+                if (!err.error || !err.error.message) {
+                    err.error = { message: 'Email or password did not match an existing user. Please try again or sign up.' };
+                }
                 this.errorService.handleError(err);
-                return Observable.throw(err)
+                return Observable.of()
             }).do(result => {
                 // Authentication succcessful: Set activeUser, this._userAuthToken, and this.authenticated.
                 const firebaseUser = result.toJSON();
