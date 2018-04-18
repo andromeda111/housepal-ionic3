@@ -25,9 +25,7 @@ ion-content {
     font-family: 'Lato-Regular';
 }
 
-
 // Alerts && Error Messages
-
 .alert-message {
     font-size: 14px !important;
 } 
@@ -43,5 +41,43 @@ ion-content {
 .alert-input-text-red {
     input {
         color: red !important;
+    }
+}
+
+// Main App Header Toolbar
+.toolbar {
+    .bar-button {
+        color: map-get($colors, light) !important;
+    }
+
+    .toolbar-background{
+        background: linear-gradient(to top, #3a85bf, #11a7ba) !important;   
+    }
+    
+    .toolbar-title {
+        color: map-get($colors, light) !important;
+        font-weight: 300 !important;
+    }
+}
+
+// Tabs Bar
+.tabbar {
+    background: #3a85bf !important;
+
+    .tab-button[aria-selected=true] {
+        color: $white;
+        background: linear-gradient(to top, rgba(27,188,177,0.25), #3a85bf, transparent) !important;
+    }
+    .tab-button-icon {
+        color: map-get($colors, light) !important;
+    }
+
+    .tab-button-text {
+        color: map-get($colors, light) !important;
+        font-weight: 300 !important;
+    }
+        
+    .tab-highlight {
+        background: #1bbcb1 !important;
     }
 }

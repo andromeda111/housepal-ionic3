@@ -17,10 +17,9 @@ import { AlertService } from '../../services/alert.service';
 })
 export class TabsPage {
 
-    tab1Root = MessagesPage;
+    tab1Root = LaundryPage;
     tab2Root = ChoresPage;
     tab3Root = ListPage;
-    tab4Root = LaundryPage;
 
     userName = '';
     menuData: any;
