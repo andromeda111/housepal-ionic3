@@ -27,6 +27,7 @@ export class ChoresPage {
 
         this.choreService.getAllChores()
             .subscribe((chores: any) => {
+                console.log(chores);
                 this.allChores = chores.data;
                 this.myChores = this.allChores.filter(chore => {
                     return chore.cycle.cycleList[chore.currentAssigned] === this.currentUser.id;

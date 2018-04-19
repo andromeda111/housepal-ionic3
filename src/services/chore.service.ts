@@ -9,7 +9,7 @@ export class ChoreService {
     constructor(private http: HttpClient, private errorService: ErrorService) { }
 
     getAllChores() {
-        return this.http.get(`https://housepal-server.herokuapp.com/chores`)
+        return this.http.get(`https://housepal-server.herokuapp.com/chores/chores`)
             .catch(err => {
                 this.errorService.handleError(err);
                 return Observable.of();
