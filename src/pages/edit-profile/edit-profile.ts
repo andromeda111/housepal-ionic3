@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
 export class EditProfilePage {
 
     profileImage: any;
-    profileImageUrl = 'url(../../assets/imgs/profile_blank.png)';
+    profileImageUrl = '../../assets/imgs/profile_blank.png';
     progress = 0;
 
     private userImageRef: any;
@@ -25,7 +25,7 @@ export class EditProfilePage {
     ionViewWillEnter() {
 
         if (this.userService.activeUser.profileImgUrl) {
-            this.profileImageUrl = `url(${this.userService.activeUser.profileImgUrl})`;
+            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
         }
 
         // Get the download URL
@@ -100,7 +100,6 @@ export class EditProfilePage {
                         break;
                 }
             }, function (error) {
-
                 // A full list of error codes is available at
                 // https://firebase.google.com/docs/storage/web/handle-errors
                 switch (error.code) {
@@ -119,8 +118,9 @@ export class EditProfilePage {
             }, function () {
                 // Upload completed successfully, now we can get the download URL
                 const imgUrl = uploadTask.snapshot.downloadURL;
-                this.profileImageUrl = `url(${imgUrl})`;
+                this.profileImageUrl = imgUrl;
+
                 this.userService.postProfileImageUrl(imgUrl).subscribe();
-            });
+            }.bind(this));
     }
 }

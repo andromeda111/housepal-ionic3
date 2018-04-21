@@ -7,11 +7,12 @@
 </ion-header>
 
 <ion-content>
-    <div class="image-container" [ngStyle]="{ 'background-image': profileImageUrl}">
-    </div>
+    <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + profileImageUrl + ')'}"></div>
 
     <button ion-button color="primary" (click)="editPhoto()">Edit Photo</button>
 
     {{ progress }}
+
+    <button (click)="upload()">Test</button>
 
 </ion-content>

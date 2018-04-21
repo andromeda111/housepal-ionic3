@@ -1,6 +1,7 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
+        <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + profileImageUrl + ')'}"></div>
         <div class="titles user-name" (click)="editProfile()">{{ userName }}</div>
         <div class="titles">{{ house.houseName }}</div>
     </div>

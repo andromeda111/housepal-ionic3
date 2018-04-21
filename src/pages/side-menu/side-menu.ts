@@ -20,6 +20,7 @@ export class SideMenuPage implements OnDestroy {
     house: any = {};
     roommates: any = [];
     removeForm: FormGroup;
+    profileImageUrl = '../../assets/imgs/profile_blank.png';
 
     private alive = true;
 
@@ -48,6 +49,12 @@ export class SideMenuPage implements OnDestroy {
         this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
 
         this.initializeForm()
+    }
+
+    ionViewWillEnter() {
+        if (this.userService.activeUser.profileImgUrl) {
+            this.profileImageUrl = `url(${this.userService.activeUser.profileImgUrl})`;
+        }
     }
 
     ngOnDestroy() {

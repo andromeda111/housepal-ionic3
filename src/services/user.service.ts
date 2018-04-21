@@ -49,6 +49,7 @@ export class UserService {
     }
 
     postProfileImageUrl(imgUrl: string) {
+        console.log('in service', imgUrl);
         return this.http.post('https://housepal-server.herokuapp.com/users/images', { imgUrl })
             .catch(err => {
                 this.errorService.handleError(err);

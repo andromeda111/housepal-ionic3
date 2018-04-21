@@ -2,11 +2,18 @@
     background: linear-gradient(to bottom right, #2b618c, #3a85bf, #1bbcb1);
 
     .header {
-        height: 150px;
+        height: 200px;
         display: flex;
         align-items: flex-end;
         padding: 2.8rem 0 1.4rem;
         flex-wrap: wrap;
+        justify-content: center;
+
+        .profile-container {
+            width: 96px;
+            height: 96px;
+            border: 1px solid $white;
+        }
 
         .titles {
             color: $white;
