@@ -1,10 +1,15 @@
 page-edit-profile {
 
     .image-container {
-        width: 100px;
-        height: 100px;
+        width: 128px;
+        height: 128px;
         margin: auto;
         background-color: blue;
         margin-top: 20px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

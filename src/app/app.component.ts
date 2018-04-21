@@ -40,7 +40,8 @@ export class MyApp {
         // Firebase Authentication Initialization
         firebase.initializeApp({
             apiKey: 'AIzaSyDRabPL_UaXgWdIIx-rgTpoP7s1Tay3gGM',
-            authDomain: 'housepal-v2.firebaseapp.com'
+            authDomain: 'housepal-v2.firebaseapp.com',
+            storageBucket: 'housepal-v2.appspot.com',
         });
 
         // Firebase Check Authorization
