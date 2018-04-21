@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.service';
 export class EditProfilePage {
 
     profileImage: any;
+    progress: any;
 
     private userImageRef: any;
 
@@ -76,14 +77,14 @@ export class EditProfilePage {
         // };
 
         // Upload file and metadata to the object 'images/mountains.jpg'
-        var uploadTask = this.userImageRef.put(this.profileImage);
+        var uploadTask = this.userImageRef.putString(this.profileImage, 'data_url');
 
         // Listen for state changes, errors, and completion of the upload.
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
             function (snapshot) {
                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
+                this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + this.progress + '% done');
                 switch (snapshot.state) {
                     case firebase.storage.TaskState.PAUSED: // or 'paused'
                         console.log('Upload is paused');
