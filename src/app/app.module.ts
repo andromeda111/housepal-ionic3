@@ -6,10 +6,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Camera } from '@ionic-native/camera';
 // App
 import { MyApp } from './app.component';
 // Pages
 import { ChoresPage } from '../pages/chores/chores';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { LaundryPage } from '../pages/laundry/laundry';
 import { ListPage } from '../pages/list/list';
@@ -33,6 +35,7 @@ import { UserService } from '../services/user.service';
     declarations: [
         MyApp,
         ChoresPage,
+        EditProfilePage,
         HouseSetupPage,
         LaundryPage,
         ListPage,
@@ -55,6 +58,7 @@ import { UserService } from '../services/user.service';
     entryComponents: [
         MyApp,
         ChoresPage,
+        EditProfilePage,
         HouseSetupPage,
         LaundryPage,
         ListPage,
@@ -67,6 +71,7 @@ import { UserService } from '../services/user.service';
     providers: [
         StatusBar,
         SplashScreen,
+        Camera,
         AlertService,
         AuthService,
         ErrorService,

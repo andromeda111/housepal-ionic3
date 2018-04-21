@@ -7,6 +7,7 @@ import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { SigninPage } from '../user-setup/signin/signin';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 
 @IonicPage()
 @Component({
@@ -51,6 +52,10 @@ export class SideMenuPage implements OnDestroy {
 
     ngOnDestroy() {
         this.alive = false;
+    }
+
+    editProfile() {
+        this.nav.push(EditProfilePage);
     }
 
     selectMenu(menu: string) {

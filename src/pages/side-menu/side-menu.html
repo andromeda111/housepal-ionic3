@@ -1,7 +1,7 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
-        <div class="titles user-name">{{ userName }}</div>
+        <div class="titles user-name" (click)="editProfile()">{{ userName }}</div>
         <div class="titles">{{ house.houseName }}</div>
     </div>
 
@@ -44,7 +44,7 @@
                                     <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
                                 </ion-select>
                             </ion-item>
-    
+
                             <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
                         </form>
                     </div>
