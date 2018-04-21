@@ -42,19 +42,14 @@ export class SideMenuPage implements OnDestroy {
                 } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
+                    this.setProfileImage();
                 }
             });
 
         this.events.subscribe('menu:action-initializeForm', () => this.initializeForm());
         this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
 
-        this.initializeForm()
-    }
-
-    ionViewWillEnter() {
-        if (this.userService.activeUser.profileImgUrl) {
-            this.profileImageUrl = `url(${this.userService.activeUser.profileImgUrl})`;
-        }
+        this.initializeForm();
     }
 
     ngOnDestroy() {
@@ -93,4 +88,11 @@ export class SideMenuPage implements OnDestroy {
         this.nav.setRoot(SigninPage);
     }
 
+    setProfileImage() {
+        if (this.userService.activeUser.profileImgUrl) {
+            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
+        } else {
+            this.profileImageUrl = '../../assets/imgs/profile_blank.png';
+        }
+    }
 }

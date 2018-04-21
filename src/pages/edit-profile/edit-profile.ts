@@ -23,10 +23,7 @@ export class EditProfilePage {
     }
 
     ionViewWillEnter() {
-
-        if (this.userService.activeUser.profileImgUrl) {
-            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
-        }
+        this.setProfileImage();
 
         // Get the download URL
         // this.userImageRef.getDownloadURL().then(function (url) {
@@ -55,13 +52,21 @@ export class EditProfilePage {
         // });
     }
 
+    setProfileImage() {
+        if (this.userService.activeUser.profileImgUrl) {
+            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
+        } else {
+            this.profileImageUrl = '../../assets/imgs/profile_blank.png';
+        }
+    }
+
     editPhoto() {
         const options: CameraOptions = {
-            quality: 100,
+            quality: 80,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 720,
+            targetWidth: 576,
             correctOrientation: true
         }
 
