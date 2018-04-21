@@ -7,5 +7,9 @@
 </ion-header>
 
 <ion-content>
-    Edit Profile
+    <div class="image-container">
+        <img src="{{ photo }}">
+    </div>
+
+    <button ion-button color="primary" (click)="editPhoto()">Edit Photo</button>
 </ion-content>
