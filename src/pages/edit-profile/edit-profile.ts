@@ -19,7 +19,8 @@ export class EditProfilePage {
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 720
+            targetWidth: 720,
+            correctOrientation: true
         }
 
         this.camera.getPicture(options).then((imageData) => {
