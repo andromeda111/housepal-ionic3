@@ -12,7 +12,8 @@ import { UserService } from '../../services/user.service';
 export class EditProfilePage {
 
     profileImage: any;
-    progress: any;
+    profileImageUrl = 'url(../../assets/imgs/profile_blank.png)';
+    progress = 0;
 
     private userImageRef: any;
 
@@ -22,6 +23,11 @@ export class EditProfilePage {
     }
 
     ionViewWillEnter() {
+
+        if (this.userService.activeUser.profileImgUrl) {
+            this.profileImageUrl = `url(${this.userService.activeUser.profileImgUrl})`;
+        }
+
         // Get the download URL
         // this.userImageRef.getDownloadURL().then(function (url) {
         //     // Insert url into an <img> tag to "download"
@@ -112,8 +118,9 @@ export class EditProfilePage {
                 }
             }, function () {
                 // Upload completed successfully, now we can get the download URL
-                var downloadURL = uploadTask.snapshot.downloadURL;
-                console.log('download complete: ', downloadURL);
+                const imgUrl = uploadTask.snapshot.downloadURL;
+                this.profileImageUrl = `url(${imgUrl})`;
+                this.userService.postProfileImageUrl(imgUrl).subscribe();
             });
     }
 }
