@@ -19,7 +19,7 @@ export class EditProfilePage {
 
     testvalue:any = '';
 
-    constructor(private camera: Camera, private userService: UserService, private imageService: ImageService) { 
+    constructor(private camera: Camera, private userService: UserService, private imageService: ImageService, private errorService: ErrorService) { 
         this.userImageRef = firebase.storage().ref().child(`userprofile/${this.userService.activeUser.uid}.jpg`);
     }
 
@@ -40,6 +40,13 @@ export class EditProfilePage {
         this.imageService.takeProfilePhoto().then(res => {
             this.testvalue = res;
             this.profileImageUrl = res;
+        })
+        .catch((err) => {
+            if (!err.error || !err.error.message) {
+                err = { error: { message: 'There was a problem uploading. Please try again.' } }
+            }
+
+            this.errorService.handleError(err);
         })
     }
     

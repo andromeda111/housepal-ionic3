@@ -26,13 +26,6 @@ export class ImageService {
             const imageBase64 = 'data:image/jpeg;base64,' + imageData;
             return this.upload(imageBase64);
         })
-        .catch(err => {
-            if (!err.error.message) {
-                err.error = { message: 'There was a problem uploading. Please try again.' };
-            }
-
-            this.errorService.handleError(err);
-        })
     }
 
     upload(imageBase64) {
@@ -41,13 +34,6 @@ export class ImageService {
         return userImageRef.putString(imageBase64, 'data_url').then(snapshot => {
             return snapshot.downloadURL;
         })
-        .catch(err => {
-            if (!err.error.message) {
-                err.error = { message: 'There was a problem uploading. Please try again.' };
-            }
-
-            this.errorService.handleError(err);
-        });
     }
 
     imageRefFactory(uid: string) {
