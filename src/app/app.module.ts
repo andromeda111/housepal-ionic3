@@ -26,6 +26,7 @@ import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { AuthService } from '../services/auth.service';
 import { ErrorService } from '../services/error.service';
 import { HouseService } from '../services/house.service';
+import { ImageService } from '../services/image.service';
 import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
 // Components
@@ -76,6 +77,7 @@ import { UserService } from '../services/user.service';
         AuthService,
         ErrorService,
         HouseService,
+        ImageService,
         LoadingService,
         UserService,
         {
