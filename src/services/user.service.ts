@@ -12,8 +12,7 @@ export class UserService {
         email: '',
         name: '',
         houseID: null,
-        deviceID: '',
-        profileImgUrl: ''
+        deviceID: ''
     };
 
     // Active (current) User - Get and Set    
@@ -48,23 +47,13 @@ export class UserService {
             });
     }
 
-    postProfileImageUrl(imgUrl: string) {
-        console.log('in service', imgUrl);
-        return this.http.post('https://housepal-server.herokuapp.com/users/images', { imgUrl })
-            .catch(err => {
-                this.errorService.handleError(err);
-                return Observable.of();
-            })
-    }
-
     clearActiveUser() {
         this._activeUser = {
             uid: '',
             name: '',
             email: '',
             houseID: null,
-            deviceID: '',
-            profileImgUrl: ''
+            deviceID: ''
         };
     }
 }

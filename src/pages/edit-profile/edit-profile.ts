@@ -3,6 +3,7 @@ import { IonicPage } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 import { UserService } from '../../services/user.service';
+import { ErrorService } from '../../services/error.service';
 
 @IonicPage()
 @Component({
@@ -11,58 +12,33 @@ import { UserService } from '../../services/user.service';
 })
 export class EditProfilePage {
 
-    profileImage: any;
     profileImageUrl = '../../assets/imgs/profile_blank.png';
-    progress = 0;
 
     private userImageRef: any;
 
-    constructor(private camera: Camera, private userService: UserService) {
-
+    constructor(private camera: Camera, private userService: UserService, private errorService: ErrorService) { 
         this.userImageRef = firebase.storage().ref().child(`userprofile/${this.userService.activeUser.uid}.jpg`);
     }
 
     ionViewWillEnter() {
         this.setProfileImage();
-
-        // Get the download URL
-        // this.userImageRef.getDownloadURL().then(function (url) {
-        //     // Insert url into an <img> tag to "download"
-        // }).catch(function (error) {
-
-        //     // A full list of error codes is available at
-        //     // https://firebase.google.com/docs/storage/web/handle-errors
-        //     switch (error.code) {
-        //         case 'storage/object_not_found':
-        //             // File doesn't exist
-        //             break;
-
-        //         case 'storage/unauthorized':
-        //             // User doesn't have permission to access the object
-        //             break;
-
-        //         case 'storage/canceled':
-        //             // User canceled the upload
-        //             break;
-
-        //         case 'storage/unknown':
-        //             // Unknown error occurred, inspect the server response
-        //             break;
-        //     }
-        // });
     }
 
     setProfileImage() {
-        if (this.userService.activeUser.profileImgUrl) {
-            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
-        } else {
+        this.userImageRef.getDownloadURL().then(url => {
+            this.profileImageUrl = url;
+        })
+        .catch(error => {
             this.profileImageUrl = '../../assets/imgs/profile_blank.png';
-        }
+        });
     }
 
-    editPhoto() {
+    /*============================
+        Camera Photo and Upload
+    =============================*/
+    takeProfilePhoto() {
         const options: CameraOptions = {
-            quality: 80,
+            quality: 90,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
@@ -71,61 +47,28 @@ export class EditProfilePage {
         }
 
         this.camera.getPicture(options).then((imageData) => {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-            this.profileImage = 'data:image/jpeg;base64,' + imageData;
-            this.upload();
-        }, (err) => {
-            // Handle error
-        });
+            const imageBase64 = 'data:image/jpeg;base64,' + imageData;
+            this.upload(imageBase64);
+        })
+        .catch(err => {
+            if (!err.error.message) {
+                err.error = { message: 'There was a problem uploading. Please try again.' };
+            }
+
+            this.errorService.handleError(err);
+        })
     }
 
-    upload() {
+    upload(imageBase64) {
+        this.userImageRef.putString(imageBase64, 'data_url').then(snapshot => {
+            this.profileImageUrl = snapshot.downloadURL;
+        })
+        .catch(err => {
+            if (!err.error.message) {
+                err.error = { message: 'There was a problem uploading. Please try again.' };
+            }
 
-        // Create the file metadata
-        // var metadata = {
-        //     contentType: 'image/jpeg'
-        // };
-
-        // Upload file and metadata to the object 'images/mountains.jpg'
-        var uploadTask = this.userImageRef.putString(this.profileImage, 'data_url');
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-            function (snapshot) {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + this.progress + '% done');
-                switch (snapshot.state) {
-                    case firebase.storage.TaskState.PAUSED: // or 'paused'
-                        console.log('Upload is paused');
-                        break;
-                    case firebase.storage.TaskState.RUNNING: // or 'running'
-                        console.log('Upload is running');
-                        break;
-                }
-            }, function (error) {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                    case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
-                        break;
-
-                    case 'storage/canceled':
-                        // User canceled the upload
-                        break;
-
-                    case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
-                        break;
-                }
-            }, function () {
-                // Upload completed successfully, now we can get the download URL
-                const imgUrl = uploadTask.snapshot.downloadURL;
-                this.profileImageUrl = imgUrl;
-
-                this.userService.postProfileImageUrl(imgUrl).subscribe();
-            }.bind(this));
+            this.errorService.handleError(err);
+        });
     }
 }

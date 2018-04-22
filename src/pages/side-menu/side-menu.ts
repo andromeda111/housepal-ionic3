@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { SigninPage } from '../user-setup/signin/signin';
 import { EditProfilePage } from '../edit-profile/edit-profile';
+import firebase from 'firebase';
 
 @IonicPage()
 @Component({
@@ -56,6 +57,16 @@ export class SideMenuPage implements OnDestroy {
         this.alive = false;
     }
 
+    setProfileImage() {
+        const userImageRef = firebase.storage().ref().child(`userprofile/${this.userService.activeUser.uid}.jpg`);
+        userImageRef.getDownloadURL().then(url => {
+            this.profileImageUrl = url;
+        })
+        .catch(error => {
+            this.profileImageUrl = '../../assets/imgs/profile_blank.png';
+        });
+    }
+
     editProfile() {
         this.nav.push(EditProfilePage);
     }
@@ -86,13 +97,5 @@ export class SideMenuPage implements OnDestroy {
         this.authService.logout();
         this.menuCtrl.close();
         this.nav.setRoot(SigninPage);
-    }
-
-    setProfileImage() {
-        if (this.userService.activeUser.profileImgUrl) {
-            this.profileImageUrl = this.userService.activeUser.profileImgUrl;
-        } else {
-            this.profileImageUrl = '../../assets/imgs/profile_blank.png';
-        }
     }
 }

@@ -4,5 +4,4 @@ export interface User {
     email: string;
     houseID: number;
     deviceID?: string;
-    profileImgUrl: string;
 }
