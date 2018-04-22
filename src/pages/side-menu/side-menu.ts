@@ -9,6 +9,7 @@ import { AlertService } from '../../services/alert.service';
 import { SigninPage } from '../user-setup/signin/signin';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
+import { ImageService } from '../../services/image.service';
 
 @IonicPage()
 @Component({
@@ -33,7 +34,8 @@ export class SideMenuPage implements OnDestroy {
         private houseService: HouseService,
         private userService: UserService,
         private alertService: AlertService,
-        private events: Events) {
+        private events: Events,
+        private imageService: ImageService) {
 
         this.houseService.menuDataSubject
             .takeWhile(() => this.alive)
@@ -43,7 +45,7 @@ export class SideMenuPage implements OnDestroy {
                 } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
-                    this.setProfileImage();
+                    this.setUserProfileImage();
                 }
             });
 
@@ -57,13 +59,9 @@ export class SideMenuPage implements OnDestroy {
         this.alive = false;
     }
 
-    setProfileImage() {
-        const userImageRef = firebase.storage().ref().child(`userprofile/${this.userService.activeUser.uid}.jpg`);
-        userImageRef.getDownloadURL().then(url => {
+    setUserProfileImage() {
+        this.imageService.getProfileImageUrl(this.userService.activeUser.uid).then(url => {
             this.profileImageUrl = url;
-        })
-        .catch(error => {
-            this.profileImageUrl = '../../assets/imgs/profile_blank.png';
         });
     }
 

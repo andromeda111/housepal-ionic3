@@ -15,6 +15,7 @@
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
             <ul class="roommate-list">
                 <li *ngFor="let roommate of roommates" class="roommate-item">
+                    <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + roommate.profileImageUrl + ')'}"></div>
                     {{ roommate.name }}
                 </li>
                 <li *ngIf="!roommates.length" class="roommate-item no-items">

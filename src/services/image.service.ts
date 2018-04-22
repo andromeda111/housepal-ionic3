@@ -1,13 +1,24 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
-import { ErrorService } from './error.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 
 @Injectable()
 export class ImageService {
 
-    constructor(private camera: Camera, private userService: UserService, private errorService: ErrorService) { }
+    constructor(private camera: Camera,
+                private userService: UserService) { }
+
+    /*============================
+        Profile Image Handlers
+    =============================*/
+    getProfileImageUrl(uid: string) {
+        const imageRef = firebase.storage().ref().child(`userprofile/${ uid }.jpg`);
+        return imageRef.getDownloadURL().catch(() => {
+            // Ignore error for default url
+            return '../../assets/imgs/profile_blank.png';
+        });;
+    }
 
     /*============================
         Camera Photo and Upload
@@ -18,7 +29,7 @@ export class ImageService {
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 576,
+            targetWidth: 384,
             correctOrientation: true
         }
 
@@ -29,6 +40,7 @@ export class ImageService {
     }
 
     upload(imageBase64) {
+        const uid = this.userService.activeUser.uid;
         const userImageRef = this.imageRefFactory(this.userService.activeUser.uid);
 
         return userImageRef.putString(imageBase64, 'data_url').then(snapshot => {
@@ -36,6 +48,9 @@ export class ImageService {
         })
     }
 
+    /*==============
+        Utility
+    ================*/
     imageRefFactory(uid: string) {
         return firebase.storage().ref().child(`userprofile/${ uid }.jpg`);
     }
