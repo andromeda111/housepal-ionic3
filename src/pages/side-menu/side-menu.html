@@ -1,7 +1,8 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
-        <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + profileImageUrl + ')'}"></div>
+        <div class="profile-container profile-image"
+            [ngStyle]="{ 'background-image': profileImageUrl ? 'url(' + profileImageUrl + ')' : profileImageDefault }"></div>
         <div class="titles user-name" (click)="editProfile()">{{ userName }}</div>
         <div class="titles">{{ house.houseName }}</div>
     </div>
@@ -15,7 +16,8 @@
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
             <ul class="roommate-list">
                 <li *ngFor="let roommate of roommates" class="roommate-item">
-                    <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + roommate.profileImageUrl + ')'}"></div>
+                    <div class="profile-container profile-image" 
+                        [ngStyle]="{ 'background-image': roommate.profileImageUrl ? 'url(' + roommate.profileImageUrl + ')' : profileImageDefault }"></div>
                     {{ roommate.name }}
                 </li>
                 <li *ngIf="!roommates.length" class="roommate-item no-items">

@@ -22,7 +22,8 @@ export class SideMenuPage implements OnDestroy {
     house: any = {};
     roommates: any = [];
     removeForm: FormGroup;
-    profileImageUrl = '../../assets/imgs/profile_blank.png';
+    profileImageUrl = '';
+    profileImageDefault = '../../assets/imgs/profile_blank.png';
 
     private alive = true;
 
