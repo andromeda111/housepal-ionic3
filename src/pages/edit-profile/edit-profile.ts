@@ -12,7 +12,7 @@ import { ImageService } from '../../services/image.service';
 export class EditProfilePage {
 
     profileImageUrl = '../../assets/imgs/profile_blank.png';
-
+    test: any;
     constructor(private userService: UserService,
         private imageService: ImageService,
         private errorService: ErrorService,
@@ -38,13 +38,7 @@ export class EditProfilePage {
                     return;
                 }
                 this.profileImageUrl = url;
-            })
-            .catch((err) => {
-                if (!err.error || !err.error.message) {
-                    err = { error: { message: 'There was a problem uploading. Please try again.' } }
-                }
-
-                this.errorService.handleError(err);
+                this.test = url;
             })
     }
 

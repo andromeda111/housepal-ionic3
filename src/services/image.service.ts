@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class ImageService {
 
     constructor(private camera: Camera,
-        private userService: UserService) { }
+        private userService: UserService,
+        private errorService: ErrorService) { }
 
     /*============================
         Profile Image Handlers
@@ -47,9 +49,17 @@ export class ImageService {
         const uid = this.userService.activeUser.uid;
         const userImageRef = this.imageRefFactory(this.userService.activeUser.uid);
 
-        return userImageRef.putString(imageBase64, 'data_url').then(snapshot => {
-            return snapshot.downloadURL;
-        })
+        return userImageRef.putString(imageBase64, 'data_url')
+            .then(snapshot => {
+                return snapshot.downloadURL;
+            }).catch((err) => {
+                if (!err.error || !err.error.message) {
+                    err = { error: { message: 'There was a problem uploading. Please try again.' } }
+                }
+
+                this.errorService.handleError(err);
+                return;
+            })
     }
 
     /*==============
