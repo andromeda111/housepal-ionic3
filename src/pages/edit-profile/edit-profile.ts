@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ActionSheetController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { ErrorService } from '../../services/error.service';
 import { ImageService } from '../../services/image.service';
@@ -13,19 +13,13 @@ export class EditProfilePage {
 
     profileImageUrl = '../../assets/imgs/profile_blank.png';
 
-    constructor(private userService: UserService,
+    constructor(private navParams: NavParams,
+        private userService: UserService,
         private imageService: ImageService,
         private errorService: ErrorService,
-        private actionSheetCtrl: ActionSheetController) { }
+        private actionSheetCtrl: ActionSheetController) {
 
-    /*======================
-        LifeCycle Hooks
-    ========================*/
-    ionViewWillEnter() {
-        // Set User Profile Image
-        this.imageService.getProfileImageUrl(this.userService.activeUser.uid).then(url => {
-            this.profileImageUrl = url;
-        });
+        this.profileImageUrl = this.navParams.get('profileUrl');
     }
 
     /*=====================

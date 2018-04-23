@@ -67,7 +67,7 @@ export class SideMenuPage implements OnDestroy {
     }
 
     editProfile() {
-        this.nav.push(EditProfilePage);
+        this.nav.push(EditProfilePage, { profileUrl: this.profileImageUrl });
     }
 
     selectMenu(menu: string) {
