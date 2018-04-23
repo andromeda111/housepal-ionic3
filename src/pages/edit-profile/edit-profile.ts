@@ -12,7 +12,7 @@ import { ImageService } from '../../services/image.service';
 export class EditProfilePage {
 
     profileImageUrl = '../../assets/imgs/profile_blank.png';
-    test: any;
+
     constructor(private userService: UserService,
         private imageService: ImageService,
         private errorService: ErrorService,
@@ -38,7 +38,6 @@ export class EditProfilePage {
                     return;
                 }
                 this.profileImageUrl = url;
-                this.test = url;
             })
     }
 
@@ -56,7 +55,7 @@ export class EditProfilePage {
                     text: 'Image Gallery',
                     icon: 'images',
                     handler: () => {
-                        this.getPhoto('SAVEDPHOTOALBUM');
+                        this.getPhoto('PHOTOLIBRARY');
                     }
                 }, {
                     text: 'Cancel',
