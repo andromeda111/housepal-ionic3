@@ -34,6 +34,9 @@ export class EditProfilePage {
     getPhoto(sourceType: string) {
         this.imageService.getPhoto(sourceType)
             .then(url => {
+                if (!url) {
+                    return;
+                }
                 this.profileImageUrl = url;
             })
             .catch((err) => {

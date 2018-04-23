@@ -35,6 +35,9 @@ export class ImageService {
         }
 
         return this.camera.getPicture(options).then((imageData) => {
+            if (!imageData) {
+                return;
+            }
             const imageBase64 = 'data:image/jpeg;base64,' + imageData;
             return this.upload(imageBase64);
         })
