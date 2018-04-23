@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-import firebase from 'firebase';
+import { IonicPage, ActionSheetController } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { ErrorService } from '../../services/error.service';
 import { ImageService } from '../../services/image.service';
@@ -15,8 +14,9 @@ export class EditProfilePage {
     profileImageUrl = '../../assets/imgs/profile_blank.png';
 
     constructor(private userService: UserService,
-                private imageService: ImageService,
-                private errorService: ErrorService) { }
+        private imageService: ImageService,
+        private errorService: ErrorService,
+        private actionSheetCtrl: ActionSheetController) { }
 
     /*======================
         LifeCycle Hooks
@@ -28,20 +28,45 @@ export class EditProfilePage {
         });
     }
 
-    /*=============
-        Actions
-    ===============*/
-    takeProfilePhoto() {
-        this.imageService.takeProfilePhoto().then(url => {
-            this.profileImageUrl = url;
-        })
-        .catch((err) => {
-            if (!err.error || !err.error.message) {
-                err = { error: { message: 'There was a problem uploading. Please try again.' } }
-            }
+    /*=====================
+       Edit Profile Image
+    ======================*/
+    getPhoto(sourceType: string) {
+        this.imageService.getPhoto(sourceType)
+            .then(url => {
+                this.profileImageUrl = url;
+            })
+            .catch((err) => {
+                if (!err.error || !err.error.message) {
+                    err = { error: { message: 'There was a problem uploading. Please try again.' } }
+                }
 
-            this.errorService.handleError(err);
-        })
+                this.errorService.handleError(err);
+            })
     }
-  
+
+    selectImageSource() {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Select Image Source',
+            buttons: [
+                {
+                    text: 'Camera',
+                    icon: 'camera',
+                    handler: () => {
+                        this.getPhoto('CAMERA');
+                    }
+                }, {
+                    text: 'Image Gallery',
+                    icon: 'images',
+                    handler: () => {
+                        this.getPhoto('PHOTOLIBRARY');
+                    }
+                }, {
+                    text: 'Cancel',
+                    role: 'cancel'
+                }
+            ]
+        });
+        actionSheet.present();
+    }
 }

@@ -9,14 +9,6 @@
 <ion-content>
     <div class="profile-container profile-image" [ngStyle]="{ 'background-image': 'url(' + profileImageUrl + ')'}"></div>
 
-    <button ion-button color="primary" (click)="takeProfilePhoto()">Edit Photo</button>
-
-    Test:
-
-    {{ testvalue }}
-
-    ...
-
-    {{ testvalue | json }}
+    <button ion-button color="primary" (click)="selectImageSource()">Edit Photo</button>
 
 </ion-content>

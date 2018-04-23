@@ -7,13 +7,13 @@ import firebase from 'firebase';
 export class ImageService {
 
     constructor(private camera: Camera,
-                private userService: UserService) { }
+        private userService: UserService) { }
 
     /*============================
         Profile Image Handlers
     =============================*/
     getProfileImageUrl(uid: string) {
-        const imageRef = firebase.storage().ref().child(`userprofile/${ uid }.jpg`);
+        const imageRef = firebase.storage().ref().child(`userprofile/${uid}.jpg`);
         return imageRef.getDownloadURL().catch(() => {
             // Ignore error for default url
             return '../../assets/imgs/profile_blank.png';
@@ -23,14 +23,15 @@ export class ImageService {
     /*============================
         Camera Photo and Upload
     =============================*/
-    takeProfilePhoto() {
+    getPhoto(sourceType: string) {
         const options: CameraOptions = {
             quality: 90,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
             targetWidth: 384,
-            correctOrientation: true
+            correctOrientation: true,
+            sourceType: this.camera.PictureSourceType[sourceType]
         }
 
         return this.camera.getPicture(options).then((imageData) => {
@@ -52,6 +53,6 @@ export class ImageService {
         Utility
     ================*/
     imageRefFactory(uid: string) {
-        return firebase.storage().ref().child(`userprofile/${ uid }.jpg`);
+        return firebase.storage().ref().child(`userprofile/${uid}.jpg`);
     }
 }
