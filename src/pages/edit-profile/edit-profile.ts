@@ -56,7 +56,7 @@ export class EditProfilePage {
                     text: 'Image Gallery',
                     icon: 'images',
                     handler: () => {
-                        this.getPhoto('PHOTOLIBRARY');
+                        this.getPhoto('SAVEDPHOTOALBUM');
                     }
                 }, {
                     text: 'Cancel',
