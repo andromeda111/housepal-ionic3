@@ -6,10 +6,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Camera } from '@ionic-native/camera';
 // App
 import { MyApp } from './app.component';
 // Pages
 import { ChoresPage } from '../pages/chores/chores';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { LaundryPage } from '../pages/laundry/laundry';
 import { ListPage } from '../pages/list/list';
@@ -24,6 +26,7 @@ import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { AuthService } from '../services/auth.service';
 import { ErrorService } from '../services/error.service';
 import { HouseService } from '../services/house.service';
+import { ImageService } from '../services/image.service';
 import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
 // Components
@@ -33,6 +36,7 @@ import { UserService } from '../services/user.service';
     declarations: [
         MyApp,
         ChoresPage,
+        EditProfilePage,
         HouseSetupPage,
         LaundryPage,
         ListPage,
@@ -55,6 +59,7 @@ import { UserService } from '../services/user.service';
     entryComponents: [
         MyApp,
         ChoresPage,
+        EditProfilePage,
         HouseSetupPage,
         LaundryPage,
         ListPage,
@@ -67,10 +72,12 @@ import { UserService } from '../services/user.service';
     providers: [
         StatusBar,
         SplashScreen,
+        Camera,
         AlertService,
         AuthService,
         ErrorService,
         HouseService,
+        ImageService,
         LoadingService,
         UserService,
         {

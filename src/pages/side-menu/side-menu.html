@@ -1,6 +1,7 @@
 <ion-content class="page-side-menu">
 
     <div class="header">
+        <img class="user-profile profile-image-circle" (click)="editProfile()" src="{{ profileImageUrl ? profileImageUrl : profileImageDefault }}">
         <div class="titles user-name">{{ userName }}</div>
         <div class="titles">{{ house.houseName }}</div>
     </div>
@@ -14,7 +15,7 @@
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
             <ul class="roommate-list">
                 <li *ngFor="let roommate of roommates" class="roommate-item">
-                    {{ roommate.name }}
+                    <img class="roommate-profile profile-image-circle" src="{{ roommate.profileImageUrl ? roommate.profileImageUrl : profileImageDefault }}"> {{ roommate.name }}
                 </li>
                 <li *ngIf="!roommates.length" class="roommate-item no-items">
                     <p>There are no other users associated with this house yet.</p>
@@ -44,7 +45,7 @@
                                     <ion-option *ngFor="let roommate of roommates" [value]="roommate">{{ roommate.name }}</ion-option>
                                 </ion-select>
                             </ion-item>
-    
+
                             <button color="danger" small type="submit" ion-button [disabled]="!removeForm.valid">Confirm</button>
                         </form>
                     </div>

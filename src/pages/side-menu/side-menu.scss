@@ -2,11 +2,18 @@
     background: linear-gradient(to bottom right, #2b618c, #3a85bf, #1bbcb1);
 
     .header {
-        height: 150px;
+        height: 200px;
         display: flex;
         align-items: flex-end;
         padding: 2.8rem 0 1.4rem;
         flex-wrap: wrap;
+        justify-content: center;
+
+        .user-profile {
+            width: 96px;
+            height: 96px;
+            border: 1px solid $white;
+        }
 
         .titles {
             color: $white;
@@ -36,6 +43,7 @@
                 background: linear-gradient(to right, transparent,rgba(255,255,255,0.25) 100%);
                 border-bottom: 1px solid rgba(255,255,255,0.15);
             }
+
         }
 
         .collapsable {
@@ -61,7 +69,7 @@
             .roommate-item {
                 display: flex;
                 align-items: center;
-                line-height: 2.5rem;
+                line-height: 4rem;
 
                 &.no-items {
                     line-height: 1.5rem;
@@ -74,6 +82,13 @@
                             margin-bottom: 0;
                         }
                     }
+                }
+
+                .roommate-profile {
+                    width: 32px;
+                    height: 32px;
+                    margin-right: 10px;
+                    border: 1px solid $white;
                 }
             }
 
