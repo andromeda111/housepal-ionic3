@@ -81,3 +81,9 @@ ion-content {
         background: #1bbcb1 !important;
     }
 }
+
+// Images 
+.profile-image-circle {
+    border-radius: 50%;
+    object-fit: cover;
+}

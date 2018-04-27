@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from './user.service';
 import { Subject } from 'rxjs/Subject';
 import { ErrorService } from './error.service';
+import { ImageService } from './image.service';
 
 @Injectable()
 export class HouseService {
@@ -21,7 +22,7 @@ export class HouseService {
         return this._roommates;
     }
 
-    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
+    constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService, private imageService: ImageService) { }
 
     createHouse(houseName, houseCode) {
         const newHouse = { houseName, houseCode };
@@ -69,8 +70,9 @@ export class HouseService {
                 this.errorService.handleError(err);
                 return Observable.of();
             })
-            .do((res: any[]) => {
-                this._roommates = res;
+            .map((res: any[]) => {
+                this._roommates = this.setRoommateProfileImageUrls(res);
+                return this._roommates;
             });
     }
 
@@ -80,6 +82,10 @@ export class HouseService {
                 err.type = 'notice';
                 this.errorService.handleError(err);
                 return Observable.of();
+            })
+            .map((res: any[]) => {
+                this._roommates = this.setRoommateProfileImageUrls(res);              
+                return this._roommates;
             });
     }
 
@@ -106,5 +112,19 @@ export class HouseService {
         ])
             .do(result => this.menuDataSubject.next(result))
             .subscribe();
+    }
+
+
+    /*==============
+        Utility
+    ================*/
+    setRoommateProfileImageUrls(roommates: any[]) {
+        return roommates.map((roommate: any) => {
+            this.imageService.getProfileImageUrl(roommate.uid).then(url => {
+                roommate.profileImageUrl = url;
+            });
+            
+            return roommate;
+        })
     }
 }

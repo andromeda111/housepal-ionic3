@@ -7,6 +7,9 @@ import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { SigninPage } from '../user-setup/signin/signin';
+import { EditProfilePage } from '../edit-profile/edit-profile';
+import firebase from 'firebase';
+import { ImageService } from '../../services/image.service';
 
 @IonicPage()
 @Component({
@@ -19,6 +22,8 @@ export class SideMenuPage implements OnDestroy {
     house: any = {};
     roommates: any = [];
     removeForm: FormGroup;
+    profileImageUrl = '';
+    profileImageDefault = '../../assets/imgs/profile_blank.png';
 
     private alive = true;
 
@@ -30,7 +35,8 @@ export class SideMenuPage implements OnDestroy {
         private houseService: HouseService,
         private userService: UserService,
         private alertService: AlertService,
-        private events: Events) {
+        private events: Events,
+        private imageService: ImageService) {
 
         this.houseService.menuDataSubject
             .takeWhile(() => this.alive)
@@ -40,17 +46,28 @@ export class SideMenuPage implements OnDestroy {
                 } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
+                    this.setUserProfileImage();
                 }
             });
 
         this.events.subscribe('menu:action-initializeForm', () => this.initializeForm());
         this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
 
-        this.initializeForm()
+        this.initializeForm();
     }
 
     ngOnDestroy() {
         this.alive = false;
+    }
+
+    setUserProfileImage() {
+        this.imageService.getProfileImageUrl(this.userService.activeUser.uid).then(url => {
+            this.profileImageUrl = url;
+        });
+    }
+
+    editProfile() {
+        this.nav.push(EditProfilePage, { profileUrl: this.profileImageUrl });
     }
 
     selectMenu(menu: string) {
@@ -80,5 +97,4 @@ export class SideMenuPage implements OnDestroy {
         this.menuCtrl.close();
         this.nav.setRoot(SigninPage);
     }
-
 }
