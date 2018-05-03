@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, MenuController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
@@ -26,10 +26,12 @@ export class TabsPage {
 
     constructor(private userService: UserService,
         private houseService: HouseService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private menuCtrl: MenuController, ) { }
 
     ionViewWillEnter() {
         this.userName = this.userService.activeUser.name;
+        this.menuCtrl.open();
         this.menuOpened();
     }
 
