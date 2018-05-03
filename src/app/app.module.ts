@@ -30,7 +30,7 @@ import { ImageService } from '../services/image.service';
 import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
 // Components
-
+import { ChoreCardComponent } from '../components/chore-card/chore-card.component'
 
 @NgModule({
     declarations: [
@@ -44,7 +44,8 @@ import { UserService } from '../services/user.service';
         SideMenuPage,
         SigninPage,
         SignupPage,
-        TabsPage
+        TabsPage,
+        ChoreCardComponent
     ],
     imports: [
         BrowserModule,
