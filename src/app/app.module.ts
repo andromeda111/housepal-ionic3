@@ -24,6 +24,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AlertService } from '../services/alert.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
 import { AuthService } from '../services/auth.service';
+import { ChoreService } from '../services/chore.service';
 import { ErrorService } from '../services/error.service';
 import { HouseService } from '../services/house.service';
 import { ImageService } from '../services/image.service';
@@ -76,6 +77,7 @@ import { ChoreCardComponent } from '../components/chore-card/chore-card.componen
         Camera,
         AlertService,
         AuthService,
+        ChoreService,
         ErrorService,
         HouseService,
         ImageService,
