@@ -29,6 +29,7 @@ export class ChoresPage {
             .subscribe((chores: any) => {
                 console.log(chores);
                 // 
+                this.allChores = chores;
             });
 
         this.houseService.getRoommates().subscribe((roommates: any) => this.roommates = roommates);

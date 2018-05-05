@@ -13,7 +13,9 @@
 
 <ion-content padding>
     <div class="chore-list-container">
-        <chore-card></chore-card>
+        <div *ngFor="let chore of allChores">
+            <chore-card [chore]="chore"></chore-card>
+        </div>
 
     </div>
 </ion-content>

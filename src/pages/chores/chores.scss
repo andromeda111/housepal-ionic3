@@ -6,4 +6,10 @@ page-chores {
         padding: 10px !important;
     }
 
+    .chore-list-container {
+        >div {
+            margin-bottom: 10px;
+        }
+    }
+
 }
