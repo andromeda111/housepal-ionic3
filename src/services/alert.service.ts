@@ -117,7 +117,7 @@ export class AlertService {
                                 .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
                                     this.removeRoommateSuccess(roommate.name, houseName);
-                                    this.events.publish('menu:action-setRoommates', res || []);
+                                    this.events.publish('menu:action-setRoommates');
                                 });
                         } else {
                             this.alertNameMismatch();

@@ -11,29 +11,20 @@ import { ChoreService } from '../../services/chore.service';
 })
 export class ChoresPage {
 
-    currentUser
     roommates = []
     allChores = []
     myChores = []
     otherChores = []
 
-    constructor(private userService: UserService, private houseService: HouseService, private choreService: ChoreService) {
+    profileUrlMap: any;
 
-        this.currentUser = this.userService.activeUser;
-    }
-
+    constructor(private userService: UserService, private houseService: HouseService, private choreService: ChoreService) { }
 
     ionViewWillEnter() {
-
         this.choreService.getAllChores()
             .subscribe((chores: any) => {
                 console.log(chores);
-                // 
                 this.allChores = chores;
             });
-
-        this.houseService.getRoommates().subscribe((roommates: any) => this.roommates = roommates);
     }
-
-
 }

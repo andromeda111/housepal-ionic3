@@ -13,9 +13,10 @@
     <div class="main-content-box">
         <div class="chore-title">{{ chore?.chore }}</div>
         <div class="assignees">
-            <div class="label">Assigned to [user name]</div>
+            <div class="label">Assigned to {{ chore?.cycle[chore?.currentAssigned] }}</div>
             <div class="user-row">
-                <div class="primary"></div>
+                <!-- refactor, maybe add separate array of actual order with uids in chore data from backend and bind to imageservice? -->
+                <img class="primary profile-image-circle" src="{{ sourceProfileUrl(chore?.cycle[chore?.currentAssigned]) }}"> 
                 <div class="cycle-row">
                     <ion-icon name="arrow-round-back"></ion-icon>
                     <div class="secondary"></div>

@@ -23,7 +23,7 @@ export class SideMenuPage implements OnDestroy {
     roommates: any = [];
     removeForm: FormGroup;
     profileImageUrl = '';
-    profileImageDefault = '../../assets/imgs/profile_blank.png';
+    profileImageDefault = 'assets/imgs/profile_blank.png';
 
     private alive = true;
 
@@ -46,24 +46,18 @@ export class SideMenuPage implements OnDestroy {
                 } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
-                    this.setUserProfileImage();
+                    this.profileImageUrl = this.imageService.profileUrlMap[this.userService.activeUser.uid];
                 }
             });
 
         this.events.subscribe('menu:action-initializeForm', () => this.initializeForm());
-        this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
+        this.events.subscribe('menu:action-setRoommates', () => this.roommates = this.houseService.roommates);
 
         this.initializeForm();
     }
 
     ngOnDestroy() {
         this.alive = false;
-    }
-
-    setUserProfileImage() {
-        this.imageService.getProfileImageUrl(this.userService.activeUser.uid).then(url => {
-            this.profileImageUrl = url;
-        });
     }
 
     editProfile() {

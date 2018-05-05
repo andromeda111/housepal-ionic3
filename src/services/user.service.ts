@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 import { ErrorService } from './error.service';
+import { ImageService } from './image.service';
 
 @Injectable()
 export class UserService {
@@ -33,7 +34,7 @@ export class UserService {
         this._activeUser.houseID = id;
     }
 
-    constructor(private http: HttpClient, private errorService: ErrorService) { }
+    constructor(private http: HttpClient, private errorService: ErrorService, private imageService: ImageService) { }
 
     retrieveCurrentUserData() {
         return this.http.get('https://housepal-server.herokuapp.com/users/current')
@@ -42,8 +43,8 @@ export class UserService {
                 return Observable.of();
             })
             .do((res: User) => {
-                console.log('current: ', res);
                 this._activeUser = res;
+                this.imageService.getProfileImageUrl(this._activeUser.uid);
             });
     }
 

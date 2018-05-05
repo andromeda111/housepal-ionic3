@@ -70,8 +70,9 @@ export class HouseService {
                 this.errorService.handleError(err);
                 return Observable.of();
             })
-            .map((res: any[]) => {
-                this._roommates = this.setRoommateProfileImageUrls(res);
+            .map((res: any[]) => {           
+                this.setRoommateProfileImageUrls(res);
+                this._roommates = res;
                 return this._roommates;
             });
     }
@@ -84,7 +85,8 @@ export class HouseService {
                 return Observable.of();
             })
             .map((res: any[]) => {
-                this._roommates = this.setRoommateProfileImageUrls(res);              
+                this.setRoommateProfileImageUrls(res);
+                this._roommates = res;
                 return this._roommates;
             });
     }
@@ -119,12 +121,8 @@ export class HouseService {
         Utility
     ================*/
     setRoommateProfileImageUrls(roommates: any[]) {
-        return roommates.map((roommate: any) => {
-            this.imageService.getProfileImageUrl(roommate.uid).then(url => {
-                roommate.profileImageUrl = url;
-            });
-            
-            return roommate;
+        roommates.forEach((roommate: any) => {
+            this.imageService.getProfileImageUrl(roommate.uid);
         })
     }
 }

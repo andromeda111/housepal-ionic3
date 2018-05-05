@@ -27,7 +27,7 @@ export class TabsPage {
     constructor(private userService: UserService,
         private houseService: HouseService,
         private alertService: AlertService,
-        private menuCtrl: MenuController, ) { }
+        private menuCtrl: MenuController) { }
 
     ionViewWillEnter() {
         this.userName = this.userService.activeUser.name;
