@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Globalization } from '@ionic-native/globalization';
 import firebase from 'firebase';
 // Pages
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
@@ -12,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { HouseService } from '../services/house.service';
 import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
     templateUrl: 'app.html'
@@ -24,11 +26,13 @@ export class MyApp {
         private platform: Platform,
         private statusBar: StatusBar,
         private splashScreen: SplashScreen,
+        private globalization: Globalization,
         private authService: AuthService,
         private userService: UserService,
         private houseService: HouseService,
         private events: Events,
-        private loadingService: LoadingService
+        private loadingService: LoadingService,
+        private alertService: AlertService
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -71,6 +75,15 @@ export class MyApp {
     }
 
     private initializeData() {
-        this.houseService.updateMenuData();
+        
+        this.globalization.getDatePattern({formatLength:'short', selector:'date and time'}).then(res => {
+            console.log(res);
+            this.alertService.generic(res);
+        }).catch(err => {
+            this.alertService.generic(err);
+        })
+
+        // dont need this if we start the app with the menu open
+        // this.houseService.updateMenuData();
     }
 }

@@ -161,4 +161,19 @@ export class AlertService {
 
         alert.present();
     }
+
+    generic(data) {
+        let alert = this.alertCtrl.create({
+            title: 'Time Test',
+            message: 'Time obj:' + JSON.stringify(data) + `${data.utc_offset ? data.utc_offset : 'error'}`,
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                }
+            ]
+        });
+
+        alert.present();
+    }
 }

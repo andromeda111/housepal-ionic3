@@ -7,6 +7,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
+import { Globalization } from '@ionic-native/globalization';
 // App
 import { MyApp } from './app.component';
 // Pages
@@ -74,6 +75,7 @@ import { ChoreCardComponent } from '../components/chore-card/chore-card.componen
     providers: [
         StatusBar,
         SplashScreen,
+        Globalization,
         Camera,
         AlertService,
         AuthService,
