@@ -76,12 +76,13 @@ export class MyApp {
 
     private initializeData() {
         
-        this.globalization.getDatePattern({formatLength:'short', selector:'date and time'}).then(res => {
-            console.log(res);
-            this.alertService.generic(res);
-        }).catch(err => {
-            this.alertService.generic(err);
-        })
+        // Use this again later when we collect UTC_OFFSET or timezone
+        // this.globalization.getDatePattern({formatLength:'short', selector:'date and time'}).then(res => {
+        //     console.log(res);
+        //     this.alertService.generic(res);
+        // }).catch(err => {
+        //     this.alertService.generic(err);
+        // })
 
         // dont need this if we start the app with the menu open
         // this.houseService.updateMenuData();

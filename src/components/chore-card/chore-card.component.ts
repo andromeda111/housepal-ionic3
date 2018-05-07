@@ -11,7 +11,7 @@ export class ChoreCardComponent {
 
     constructor(private imageService: ImageService) {}
 
-    sourceProfileUrl(uid) {
-        return this.imageService.profileUrlMap[uid] ? this.imageService.profileUrlMap[uid] : 'assets/imgs/profile_blank.png';
-    }
+    // sourceProfileUrl(uid) {
+    //     return this.imageService.profileUrlMap[uid] ? this.imageService.profileUrlMap[uid] : 'assets/imgs/profile_blank.png';
+    // }
 }

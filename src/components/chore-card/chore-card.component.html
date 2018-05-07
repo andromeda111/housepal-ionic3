@@ -11,15 +11,15 @@
     </div>
 
     <div class="main-content-box">
-        <div class="chore-title">{{ chore?.chore }}</div>
+        <div class="chore-title">{{ chore?.title }}</div>
         <div class="assignees">
-            <div class="label">Assigned to {{ chore?.cycle[chore?.currentAssigned] }}</div>
+            <div class="label">Assigned to {{ chore?.currentAssigned.name }}</div>
             <div class="user-row">
                 <!-- refactor, maybe add separate array of actual order with uids in chore data from backend and bind to imageservice? -->
-                <img class="primary profile-image-circle" src="{{ sourceProfileUrl(chore?.cycle[chore?.currentAssigned]) }}"> 
+                <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}"> 
                 <div class="cycle-row">
-                    <ion-icon name="arrow-round-back"></ion-icon>
-                    <div class="secondary"></div>
+                    <ion-icon *ngIf="chore?.upcoming.length" name="arrow-round-back"></ion-icon>
+                    <img *ngFor="let user of chore?.upcoming" class="secondary profile-image-circle" src="{{ imageService.profileUrlMap[user.uid] ? imageService.profileUrlMap[user.uid] : profileImageDefault }}">
                 </div>
             </div>
         </div>
