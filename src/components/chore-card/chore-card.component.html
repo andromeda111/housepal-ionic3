@@ -3,9 +3,13 @@
     <div class="left-content-box">
         <div class="left-content">
             <div class="due-text">
-                <div>Finish by</div>
-                <div>[day of week]</div>
-                <div>[month, date]</div>
+                Wednesday
+            </div>
+            <div class="left-center">
+                <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
+            </div>
+            <div class="due-text">
+                [date]
             </div>
         </div>
     </div>
@@ -16,7 +20,6 @@
             <div class="label">Assigned to {{ chore?.currentAssigned.name }}</div>
             <div class="user-row">
                 <!-- refactor, maybe add separate array of actual order with uids in chore data from backend and bind to imageservice? -->
-                <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}"> 
                 <div class="cycle-row">
                     <ion-icon *ngIf="chore?.upcoming.length" name="arrow-round-back"></ion-icon>
                     <img *ngFor="let user of chore?.upcoming" class="secondary profile-image-circle" src="{{ imageService.profileUrlMap[user.uid] ? imageService.profileUrlMap[user.uid] : profileImageDefault }}">
