@@ -3,13 +3,13 @@
     <div class="left-content-box">
         <div class="left-content">
             <div class="due-text">
-                Wednesday
+                {{ chore.currentDueDay.date | date: 'EEEE' }}
             </div>
             <div class="left-center">
                 <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
             </div>
             <div class="due-text">
-                May 23
+                {{ chore.currentDueDay.date | date: 'MMM d' }}
             </div>
         </div>
     </div>
