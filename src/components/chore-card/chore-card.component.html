@@ -9,7 +9,7 @@
                 <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
             </div>
             <div class="due-text">
-                [date]
+                May 23
             </div>
         </div>
     </div>
@@ -17,8 +17,8 @@
     <div class="main-content-box">
         <div class="chore-title">{{ chore?.title }}</div>
         <div class="assignees">
-            <div class="label">Assigned to {{ chore?.currentAssigned.name }}</div>
-            <div class="user-row">
+            <div class="current">{{ chore?.currentAssigned.name }}</div>
+            <div class="upcoming">
                 <!-- refactor, maybe add separate array of actual order with uids in chore data from backend and bind to imageservice? -->
                 <div class="cycle-row">
                     <ion-icon *ngIf="chore?.upcoming.length" name="arrow-round-back"></ion-icon>
@@ -26,6 +26,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="right-content-box">
+        <ion-icon name="settings"></ion-icon>
     </div>
 
 </div>

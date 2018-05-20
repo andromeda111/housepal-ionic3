@@ -1,7 +1,7 @@
 .chore-card {
-    display:flex;
+    display: flex;
     width: 100%;
-    height: 90px;
+    height: 85px;
     background-color: $white;
     box-shadow: 6px 4px 13px -1px rgba(0, 0, 0, 0.35);
 
@@ -27,8 +27,8 @@
                 display: flex;
 
                 .primary {
-                    width: 40px;
-                    height: 40px;
+                    width: 38px;
+                    height: 38px;
                 }
             }
         }
@@ -40,27 +40,25 @@
         justify-content: space-between;
         width: 100%;
         height: 100%;
-        padding: 5px 10px;
+        padding: 5px 0 5px 10px;
 
         .chore-title {
             font-weight: bold;
         }
 
         .assignees {
-            .label {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            .current {
                 font-size: 12px;
-                color: gray;
-                margin-bottom: 5px;
+                color: $slategray;
             }
 
-            .user-row { 
+            .upcoming { 
                 display: flex;
                 align-items: flex-end;
-
-                .primary {
-                    width: 40px;
-                    height: 40px;
-                }
 
                 .cycle-row {
                     display: flex;
@@ -72,12 +70,32 @@
                     }
 
                     .secondary {
-                        width: 25px;
-                        height: 25px;
-                        margin-right: 10px;
+                        width: 22px;
+                        height: 22px;
+                        margin-right: 8px;
                     }
                 }
             }
+        }
+    }
+
+    .divider {
+        height: 20%;
+        border-right: 1px solid $slategray;
+        margin: auto;
+    }
+
+    .right-content-box {
+        width: 50px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        color: $slategray;
+
+        ion-icon {
+            padding-bottom: 2px;
         }
     }
 }
