@@ -39,5 +39,9 @@ export class ChoreCardComponent {
         this.color = 'green';
     }
 
+    edit(id) {
+        console.log('edit');
+    }
+
 
 }

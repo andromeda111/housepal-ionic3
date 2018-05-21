@@ -7,12 +7,16 @@
             </div>
             <div class="left-center">
 
-                <div *ngIf="isMyChore" class="check" (click)="markDone(chore.id)">
-                    <ion-icon *ngIf="!done" name="checkmark-circle-outline" md="ios-checkmark-circle-outline"></ion-icon>
-                    <ion-icon *ngIf="done" name="checkmark-circle" md="ios-checkmark-circle"></ion-icon>
+                <div *ngIf="isMyChore && !done" class="check" (click)="markDone(chore.id)">
+                    <ion-icon name="checkmark-circle-outline" md="ios-checkmark-circle-outline"></ion-icon>
                 </div>
 
-                <img *ngIf="!isMyChore" class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
+                <img *ngIf="!isMyChore && !done" class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
+
+                <div *ngIf="done" class="check">
+                    <ion-icon name="checkmark-circle" md="ios-checkmark-circle"></ion-icon>
+                </div>
+
             </div>
             <div class="due-text">
                 {{ chore.currentDueDay.date | date: 'MMM d' }}
@@ -36,7 +40,7 @@
 
     <div class="divider"></div>
 
-    <div class="right-content-box">
+    <div class="right-content-box" (click)="edit(chore.id)">
         <ion-icon name="settings"></ion-icon>
     </div>
 
