@@ -31,6 +31,10 @@ export class ChoreCardComponent {
                 this.color = 'blue';
                 break;
         }
+
+        if (this.chore.done) {
+            this.done = true;
+        }
     }
 
     markDone(id) {
