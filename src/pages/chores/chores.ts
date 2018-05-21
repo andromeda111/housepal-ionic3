@@ -25,6 +25,16 @@ export class ChoresPage {
             .subscribe((chores: any) => {
                 console.log(chores);
                 this.allChores = chores;
+
+                this.myChores = chores.filter(chore => {
+                    return chore.currentAssigned.uid === this.userService.activeUser.uid;
+                });
+
+                this.otherChores = chores.filter(chore => {
+                    return chore.currentAssigned.uid !== this.userService.activeUser.uid;
+                });
             });
+
+
     }
 }

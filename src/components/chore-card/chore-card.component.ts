@@ -27,6 +27,7 @@ export class ChoreCardComponent {
                 break;
             case false:
                 this.color = !this.chore.late ? 'blue' : 'red';
+                break;
             default:
                 this.color = 'blue';
                 break;
