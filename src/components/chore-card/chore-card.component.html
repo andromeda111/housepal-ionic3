@@ -1,12 +1,18 @@
 <div class="chore-card">
 
     <div class="left-content-box">
-        <div class="left-content">
+        <div class="left-content" [ngClass]="color">
             <div class="due-text">
                 {{ chore.currentDueDay.date | date: 'EEEE' }}
             </div>
             <div class="left-center">
-                <img class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
+
+                <div *ngIf="isMyChore" class="check" (click)="markDone(chore.id)">
+                    <ion-icon *ngIf="!done" name="checkmark-circle-outline" md="ios-checkmark-circle-outline"></ion-icon>
+                    <ion-icon *ngIf="done" name="checkmark-circle" md="ios-checkmark-circle"></ion-icon>
+                </div>
+
+                <img *ngIf="!isMyChore" class="primary profile-image-circle" src="{{ imageService.profileUrlMap[chore?.currentAssigned.uid] ? imageService.profileUrlMap[chore?.currentAssigned.uid] : profileImageDefault }}">
             </div>
             <div class="due-text">
                 {{ chore.currentDueDay.date | date: 'MMM d' }}
@@ -21,7 +27,7 @@
             <div class="upcoming">
                 <!-- refactor, maybe add separate array of actual order with uids in chore data from backend and bind to imageservice? -->
                 <div class="cycle-row">
-                    <ion-icon *ngIf="chore?.upcoming.length" name="arrow-round-back"></ion-icon>
+                    <ion-icon *ngIf="chore?.upcoming.length" name="arrow-round-back" md="ios-arrow-round-back"></ion-icon>
                     <img *ngFor="let user of chore?.upcoming" class="secondary profile-image-circle" src="{{ imageService.profileUrlMap[user.uid] ? imageService.profileUrlMap[user.uid] : profileImageDefault }}">
                 </div>
             </div>

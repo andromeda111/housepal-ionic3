@@ -16,7 +16,18 @@
             justify-content: space-between;
             flex-grow: 1;
             padding: 5px 10px;
-            background: linear-gradient(to top right, #2b618c, #3a85bf) !important;   
+
+            &.blue {
+                background: linear-gradient(to top right, #2b618c, #3a85bf) !important;   
+            }
+
+            &.green { 
+                background: linear-gradient(to top right, #076429, #11AF4A) !important;   
+            }
+
+            &.red {
+                background: linear-gradient(to top right, #99413E, #CA5551) !important;   
+            }
 
             .due-text {
                 font-size: 12px;
@@ -25,6 +36,17 @@
 
             .left-center {
                 display: flex;
+
+                .check {
+                    color: $white;
+                    height: 34px;
+                    width: 34px;
+                    font-size: 36px;
+                    border-radius: 50px;
+                    display: flex;
+                    align-items: center;
+                    box-shadow: inset 0px 0px 20px 0px rgba(255,255,255,0.85);
+                }
 
                 .primary {
                     width: 38px;
@@ -65,7 +87,7 @@
                     align-items: center;
 
                     ion-icon {
-                        margin: 0 5px 0 10px;
+                        margin-right: 8px;
                         font-size: 18px;
                     }
 

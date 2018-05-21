@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ImageService } from '../../services/image.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'chore-card',
@@ -7,11 +8,36 @@ import { ImageService } from '../../services/image.service';
 })
 export class ChoreCardComponent {
 
+    isMyChore = false;
+    done = false;
+    color: string;
+
     @Input() chore;
 
-    constructor(private imageService: ImageService) {}
+    constructor(private imageService: ImageService, private userService: UserService) { }
 
-    // sourceProfileUrl(uid) {
-    //     return this.imageService.profileUrlMap[uid] ? this.imageService.profileUrlMap[uid] : 'assets/imgs/profile_blank.png';
-    // }
+    ngAfterContentInit() {
+        this.isMyChore = this.chore && this.chore.currentAssigned.uid === this.userService.activeUser.uid
+            ? true
+            : false;
+
+        switch (this.chore.done) {
+            case true:
+                this.color = 'green';
+                break;
+            case false:
+                this.color = !this.chore.late ? 'blue' : 'red';
+            default:
+                this.color = 'blue';
+                break;
+        }
+    }
+
+    markDone(id) {
+        console.log('hit');
+        this.done = true;
+        this.color = 'green';
+    }
+
+
 }
