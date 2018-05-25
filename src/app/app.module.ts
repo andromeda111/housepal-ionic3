@@ -12,6 +12,9 @@ import { Globalization } from '@ionic-native/globalization';
 import { MyApp } from './app.component';
 // Pages
 import { ChoresPage } from '../pages/chores/chores';
+import { ChoresPageModule } from '../pages/chores/chores.module';
+import { EditChoresPage } from '../pages/chores/edit-chores/edit-chores';
+import { EditChoresPageModule } from '../pages/chores/edit-chores/edit-chores.module';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { LaundryPage } from '../pages/laundry/laundry';
@@ -31,13 +34,10 @@ import { HouseService } from '../services/house.service';
 import { ImageService } from '../services/image.service';
 import { LoadingService } from '../services/loading.service';
 import { UserService } from '../services/user.service';
-// Components
-import { ChoreCardComponent } from '../components/chore-card/chore-card.component'
 
 @NgModule({
     declarations: [
         MyApp,
-        ChoresPage,
         EditProfilePage,
         HouseSetupPage,
         LaundryPage,
@@ -46,22 +46,26 @@ import { ChoreCardComponent } from '../components/chore-card/chore-card.componen
         SideMenuPage,
         SigninPage,
         SignupPage,
-        TabsPage,
-        ChoreCardComponent
+        TabsPage
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(MyApp, {
             tabsHighlight: true,
-            tabsPlacement: 'top'
+            tabsPlacement: 'top',
+            tabsHideOnSubPages: true
         }),
-        FormsModule
+        FormsModule,
+        // Page Modules
+        ChoresPageModule,
+        EditChoresPageModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
         ChoresPage,
+        EditChoresPage,
         EditProfilePage,
         HouseSetupPage,
         LaundryPage,

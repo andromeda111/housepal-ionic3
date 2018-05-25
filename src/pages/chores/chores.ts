@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { HouseService } from '../../services/house.service';
 import { ChoreService } from '../../services/chore.service';
@@ -18,7 +18,10 @@ export class ChoresPage {
 
     profileUrlMap: any;
 
-    constructor(private userService: UserService, private houseService: HouseService, private choreService: ChoreService) { }
+    constructor(private navCtrl: NavController,
+                private userService: UserService,
+                private houseService: HouseService,
+                private choreService: ChoreService) { }
 
     ionViewWillEnter() {
         this.choreService.getAllChores()
@@ -34,7 +37,9 @@ export class ChoresPage {
                     return chore.currentAssigned.uid !== this.userService.activeUser.uid;
                 });
             });
+    }
 
-
+    editChore(chore) {
+        this.navCtrl.push('EditChoresPage', chore);
     }
 }

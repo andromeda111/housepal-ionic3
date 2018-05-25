@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { UserService } from '../../services/user.service';
 
@@ -13,6 +13,7 @@ export class ChoreCardComponent {
     color: string;
 
     @Input() chore;
+    @Output() edit = new EventEmitter<any>();
 
     constructor(private imageService: ImageService, private userService: UserService) { }
 
@@ -44,9 +45,7 @@ export class ChoreCardComponent {
         this.color = 'green';
     }
 
-    edit(id) {
-        console.log('edit');
+    clickEdit() {
+        this.edit.emit(this.chore);
     }
-
-
 }

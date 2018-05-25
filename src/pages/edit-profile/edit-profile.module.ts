@@ -9,5 +9,8 @@ import { EditProfilePage } from './edit-profile';
   imports: [
     IonicPageModule.forChild(EditProfilePage),
   ],
+  entryComponents: [
+    EditProfilePage
+  ]
 })
 export class EditProfilePageModule { }
