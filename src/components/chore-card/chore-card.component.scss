@@ -80,22 +80,17 @@
 
             .upcoming { 
                 display: flex;
-                align-items: flex-end;
+                align-items: center;
+                
+                ion-icon {
+                    margin-right: 8px;
+                    font-size: 18px;
+                }
 
-                .cycle-row {
-                    display: flex;
-                    align-items: center;
-
-                    ion-icon {
-                        margin-right: 8px;
-                        font-size: 18px;
-                    }
-
-                    .secondary {
-                        width: 22px;
-                        height: 22px;
-                        margin-right: 8px;
-                    }
+                .secondary {
+                    width: 22px;
+                    height: 22px;
+                    margin-right: 8px;
                 }
             }
         }
