@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { UserService } from '../../services/user.service';
+import { NavController } from 'ionic-angular';
 
 @Component({
     selector: 'chore-card',
@@ -14,7 +15,7 @@ export class ChoreCardComponent {
 
     @Input() chore;
 
-    constructor(private imageService: ImageService, private userService: UserService) { }
+    constructor(private imageService: ImageService, private userService: UserService, private nav: NavController) { }
 
     ngAfterContentInit() {
         this.isMyChore = this.chore && this.chore.currentAssigned.uid === this.userService.activeUser.uid
@@ -46,6 +47,7 @@ export class ChoreCardComponent {
 
     edit(id) {
         console.log('edit');
+        this.nav.push('EditChorePage');
     }
 
 

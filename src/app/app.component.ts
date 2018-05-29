@@ -7,7 +7,7 @@ import firebase from 'firebase';
 // Pages
 import { HouseSetupPage } from '../pages/house-setup/house-setup';
 import { SigninPage } from '../pages/user-setup/signin/signin';
-import { TabsPage } from '../pages/tabs/tabs';
+// import { TabsPage } from '../pages/tabs/tabs';
 // Services
 import { AuthService } from '../services/auth.service';
 import { HouseService } from '../services/house.service';
@@ -58,7 +58,7 @@ export class MyApp {
                     .do(() => {
                         console.log('verified');
                         this.initializeData();
-                        this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage;
+                        this.userService.userHouseID ? this.rootPage = 'TabsPage' : this.rootPage = HouseSetupPage;
                     })
                     .finally(() => loading.dismiss())
                     .subscribe();
@@ -70,12 +70,12 @@ export class MyApp {
         });
 
         // Set App Root Events
-        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = TabsPage);
+        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = 'TabsPage');
         this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = HouseSetupPage);
     }
 
     private initializeData() {
-        
+
         // Use this again later when we collect UTC_OFFSET or timezone
         // this.globalization.getDatePattern({formatLength:'short', selector:'date and time'}).then(res => {
         //     console.log(res);
