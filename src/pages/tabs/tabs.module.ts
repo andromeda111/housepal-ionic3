@@ -10,12 +10,6 @@ import { SideMenuPage } from '../side-menu/side-menu';
   ],
   imports: [
     IonicPageModule.forChild(TabsPage)
-  ],
-  exports: [
-    TabsPage
-  ],
-  entryComponents: [
-    SideMenuPage
   ]
 })
 export class TabsPageModule { }

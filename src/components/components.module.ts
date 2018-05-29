@@ -11,9 +11,6 @@ import { ChoreCardComponent } from './chore-card/chore-card.component';
     ],
     exports: [
         ChoreCardComponent
-    ],
-    entryComponents: [
-        ChoreCardComponent
     ]
 })
 export class ComponentsModule { }

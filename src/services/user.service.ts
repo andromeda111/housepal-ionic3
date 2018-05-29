@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 import { ErrorService } from './error.service';
 import { ImageService } from './image.service';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class UserService {

@@ -10,15 +10,6 @@ import { Camera } from '@ionic-native/camera';
 import { Globalization } from '@ionic-native/globalization';
 // App
 import { MyApp } from './app.component';
-// Pages
-import { EditProfilePage } from '../pages/edit-profile/edit-profile';
-import { HouseSetupPage } from '../pages/house-setup/house-setup';
-import { LaundryPage } from '../pages/laundry/laundry';
-import { ListPage } from '../pages/list/list';
-import { MessagesPage } from '../pages/messages/messages';
-import { SideMenuPage } from '../pages/side-menu/side-menu';
-import { SigninPage } from '../pages/user-setup/signin/signin';
-import { SignupPage } from '../pages/user-setup/signup/signup';
 // Services
 import { AlertService } from '../services/alert.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
@@ -32,14 +23,7 @@ import { UserService } from '../services/user.service';
 
 @NgModule({
     declarations: [
-        MyApp,
-        EditProfilePage,
-        HouseSetupPage,
-        LaundryPage,
-        ListPage,
-        MessagesPage,
-        SigninPage,
-        SignupPage
+        MyApp
     ],
     imports: [
         BrowserModule,
@@ -53,14 +37,7 @@ import { UserService } from '../services/user.service';
     ],
     bootstrap: [IonicApp],
     entryComponents: [
-        MyApp,
-        EditProfilePage,
-        HouseSetupPage,
-        LaundryPage,
-        ListPage,
-        MessagesPage,
-        SigninPage,
-        SignupPage
+        MyApp
     ],
     providers: [
         StatusBar,

@@ -10,12 +10,6 @@ import { ComponentsModule } from '../../components/components.module';
   imports: [
     IonicPageModule.forChild(ChoresPage),
     ComponentsModule
-  ],
-  exports: [
-    ChoresPage
-  ],
-  entryComponents: [
-    ChoresPage
   ]
 })
 export class ChoresPageModule { }
