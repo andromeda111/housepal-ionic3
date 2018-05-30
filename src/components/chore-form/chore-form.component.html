@@ -1,0 +1,51 @@
+      
+<form #choreForm="ngForm" (ngSubmit)="submitForm(choreForm)" class="list">
+    <ion-label fixed>Chore Name</ion-label>
+    <ion-input type="text" ngModel name="name" required></ion-input>
+
+    <div class="spacer" style="width: 290px; height: 10px;"></div>
+
+    <ion-label for="">Day(s) Due:</ion-label>
+    <div class="">
+    <input type="checkbox" id="Sunx" class="checkbox-hide" name="sun" ngModel>
+    <label for="Sunx" class="check-bubble">Sun</label>
+
+    <input type="checkbox" id="Mon" class="checkbox-hide" name="mon" ngModel>
+    <label for="Mon" class="check-bubble">Mon</label>
+
+    <input type="checkbox" id="Tue" class="checkbox-hide" name="tue" ngModel>
+    <label for="Tue" class="check-bubble">Tue</label>
+
+    <input type="checkbox" id="Wed" class="checkbox-hide" name="wed" ngModel>
+    <label for="Wed" class="check-bubble">Wed</label>
+
+    <input type="checkbox" id="Thu" class="checkbox-hide" name="thu" ngModel>
+    <label for="Thu" class="check-bubble">Thu</label>
+
+    <input type="checkbox" id="Fri" class="checkbox-hide" name="fri" ngModel>
+    <label for="Fri" class="check-bubble">Fri</label>
+
+    <input type="checkbox" id="Sat" class="checkbox-hide" name="sat" ngModel>
+    <label for="Sat" class="check-bubble">Sat</label>
+
+    </div>
+
+    <!-- <div class="spacer" style="width: 290px; height: 10px;"></div> -->
+<!-- 
+    <div>
+    <ion-label for="">Assign To:</ion-label>
+    <div class="checklist-row" ng-repeat="person in houseUsers">
+        <input type='checkbox' class="checkbox-hide" id="choreUser{{person.id}}" value="{{person.id}}" name="choreUser{{person.id}}" check-list='checked_housemates' cycle-list='cycleList' house-list="houseUsers">
+        <label for="choreUser{{person.id}}" class="check-bubble">{{person.name}}</label>
+    </div>
+    <div class="chore-cycle-order">Cycle Order:<br> <span ng-repeat="name in checked_housemates">{{name}} </span></div>
+
+    </div>
+
+    <div class="spacer" style="width: 290px; height: 10px;"></div>
+    <hr> -->
+    <button type="submit" class="button button-positive button-balanced">Submit</button>
+
+</form>
+
+  

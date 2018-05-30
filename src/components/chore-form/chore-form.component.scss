@@ -1,0 +1,25 @@
+/* Checkbox Hack */
+
+.check-bubble {
+    display: inline-block;
+    border: 1px solid #3A85BF;
+    padding: 10px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 45px;
+    font-size: 10px;
+    color: #3A85BF;
+    font-weight: bold;
+}
+
+.checkbox-hide {
+  display: none;
+}
+.checkbox-hide:checked + .check-bubble {
+  background-color: #3A85BF;
+  color: white;
+}
+
+.checklist-row {
+  display: inline-block;
+}
