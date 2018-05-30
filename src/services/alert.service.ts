@@ -3,6 +3,7 @@ import { AlertController, Events } from 'ionic-angular';
 import { HouseService } from './house.service';
 import { UserService } from './user.service';
 import { LoadingService } from './loading.service';
+import 'rxjs/add/operator/finally';
 
 @Injectable()
 export class AlertService {
@@ -110,7 +111,7 @@ export class AlertService {
                     text: 'Remove',
                     handler: (data) => {
                         console.log('Removing: ', roommate, data);
-                        if (data.name === roommate.name) {   
+                        if (data.name === roommate.name) {
                             const loading = this.loadingService.loadingSpinner();
                             loading.present();
                             this.houseService.removeRoommate(roommate)

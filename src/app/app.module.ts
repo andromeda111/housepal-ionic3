@@ -10,20 +10,6 @@ import { Camera } from '@ionic-native/camera';
 import { Globalization } from '@ionic-native/globalization';
 // App
 import { MyApp } from './app.component';
-// Pages
-import { ChoresPage } from '../pages/chores/chores';
-import { ChoresPageModule } from '../pages/chores/chores.module';
-import { EditChoresPage } from '../pages/chores/edit-chores/edit-chores';
-import { EditChoresPageModule } from '../pages/chores/edit-chores/edit-chores.module';
-import { EditProfilePage } from '../pages/edit-profile/edit-profile';
-import { HouseSetupPage } from '../pages/house-setup/house-setup';
-import { LaundryPage } from '../pages/laundry/laundry';
-import { ListPage } from '../pages/list/list';
-import { MessagesPage } from '../pages/messages/messages';
-import { SideMenuPage } from '../pages/side-menu/side-menu';
-import { SigninPage } from '../pages/user-setup/signin/signin';
-import { SignupPage } from '../pages/user-setup/signup/signup';
-import { TabsPage } from '../pages/tabs/tabs';
 // Services
 import { AlertService } from '../services/alert.service';
 import { AuthInterceptor } from '../services/auth-interceptor.service';
@@ -37,16 +23,7 @@ import { UserService } from '../services/user.service';
 
 @NgModule({
     declarations: [
-        MyApp,
-        EditProfilePage,
-        HouseSetupPage,
-        LaundryPage,
-        ListPage,
-        MessagesPage,
-        SideMenuPage,
-        SigninPage,
-        SignupPage,
-        TabsPage
+        MyApp
     ],
     imports: [
         BrowserModule,
@@ -56,25 +33,11 @@ import { UserService } from '../services/user.service';
             tabsPlacement: 'top',
             tabsHideOnSubPages: true
         }),
-        FormsModule,
-        // Page Modules
-        ChoresPageModule,
-        EditChoresPageModule
+        FormsModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
-        MyApp,
-        ChoresPage,
-        EditChoresPage,
-        EditProfilePage,
-        HouseSetupPage,
-        LaundryPage,
-        ListPage,
-        MessagesPage,
-        SideMenuPage,
-        SigninPage,
-        SignupPage,
-        TabsPage
+        MyApp
     ],
     providers: [
         StatusBar,

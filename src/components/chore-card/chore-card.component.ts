@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { UserService } from '../../services/user.service';
+import { NavController } from 'ionic-angular';
 
 @Component({
     selector: 'chore-card',
@@ -15,7 +16,7 @@ export class ChoreCardComponent {
     @Input() chore;
     @Output() edit = new EventEmitter<any>();
 
-    constructor(private imageService: ImageService, private userService: UserService) { }
+    constructor(private imageService: ImageService, private userService: UserService, private nav: NavController) { }
 
     ngAfterContentInit() {
         this.isMyChore = this.chore && this.chore.currentAssigned.uid === this.userService.activeUser.uid
@@ -45,7 +46,8 @@ export class ChoreCardComponent {
         this.color = 'green';
     }
 
-    clickEdit() {
-        this.edit.emit(this.chore);
+    clickEdit(id) {
+        console.log('edit');
+        this.nav.push('EditChorePage');
     }
 }

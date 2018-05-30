@@ -4,10 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Globalization } from '@ionic-native/globalization';
 import firebase from 'firebase';
-// Pages
-import { HouseSetupPage } from '../pages/house-setup/house-setup';
-import { SigninPage } from '../pages/user-setup/signin/signin';
-import { TabsPage } from '../pages/tabs/tabs';
+import 'rxjs/add/operator/finally';
 // Services
 import { AuthService } from '../services/auth.service';
 import { HouseService } from '../services/house.service';
@@ -20,7 +17,7 @@ import { AlertService } from '../services/alert.service';
 })
 export class MyApp {
 
-    rootPage: any = SigninPage;
+    rootPage: any = 'SigninPage';
 
     constructor(
         private platform: Platform,
@@ -58,24 +55,24 @@ export class MyApp {
                     .do(() => {
                         console.log('verified');
                         this.initializeData();
-                        this.userService.userHouseID ? this.rootPage = TabsPage : this.rootPage = HouseSetupPage;
+                        this.userService.userHouseID ? this.rootPage = 'TabsPage' : this.rootPage = 'HouseSetupPage';
                     })
                     .finally(() => loading.dismiss())
                     .subscribe();
             } else {
                 console.log('Logged Out');
                 this.authService.logout();
-                this.rootPage = SigninPage;
+                this.rootPage = 'SigninPage';
             }
         });
 
         // Set App Root Events
-        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = TabsPage);
-        this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = HouseSetupPage);
+        this.events.subscribe('appSetRoot:TabsPage', () => this.rootPage = 'TabsPage');
+        this.events.subscribe('appSetRoot:HouseSetupPage', () => this.rootPage = 'HouseSetupPage');
     }
 
     private initializeData() {
-        
+
         // Use this again later when we collect UTC_OFFSET or timezone
         // this.globalization.getDatePattern({formatLength:'short', selector:'date and time'}).then(res => {
         //     console.log(res);

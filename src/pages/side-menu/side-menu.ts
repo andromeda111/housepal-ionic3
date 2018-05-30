@@ -6,8 +6,6 @@ import { AuthService } from '../../services/auth.service';
 import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
-import { SigninPage } from '../user-setup/signin/signin';
-import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
 import { ImageService } from '../../services/image.service';
 
@@ -61,7 +59,7 @@ export class SideMenuPage implements OnDestroy {
     }
 
     editProfile() {
-        this.nav.push(EditProfilePage, { profileUrl: this.profileImageUrl });
+        this.nav.push('EditProfilePage', { profileUrl: this.profileImageUrl });
     }
 
     selectMenu(menu: string) {
@@ -89,6 +87,6 @@ export class SideMenuPage implements OnDestroy {
         this.activeMenu = 'Sign Out';
         this.authService.logout();
         this.menuCtrl.close();
-        this.nav.setRoot(SigninPage);
+        this.nav.setRoot('SigninPage');
     }
 }
