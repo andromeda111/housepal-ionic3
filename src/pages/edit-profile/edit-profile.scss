@@ -1,4 +1,7 @@
-page-edit-profile {
+.page-edit-profile {
+    &.content {
+        background-color: $white;
+    }
 
     .user-profile {
         display: block;
