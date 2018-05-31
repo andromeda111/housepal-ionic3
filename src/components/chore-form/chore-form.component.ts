@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { HouseService } from '../../services/house.service';
 
 @Component({
     selector: 'chore-form',
@@ -7,15 +8,44 @@ import { NgForm } from '@angular/forms';
 })
 export class ChoreFormComponent {
 
+    roommates = this.houseService.roommates;
+    choreForm: FormGroup;
+    days = [
+        { day: 'Mon',  selected: false },
+        { day: 'Tue',  selected: false },
+    ]
 
+    @Input() chore: any;
 
-    submitForm(form: NgForm) {
+    constructor(private houseService: HouseService, private formBuilder: FormBuilder) {}
+
+    ngOnInit() {
+
+        this.choreForm = this.formBuilder.group({
+            name: '',
+            daysDue: this.buildDaysDue()
+          });
+    }  
+    
+    get daysDue() {
+        return this.choreForm.get('daysDue');
+    };
+
+    buildDaysDue() {
+        const arr = this.days.map(day => {
+            return this.formBuilder.control(day.selected);
+          });
+        return this.formBuilder.array(arr);
+    } 
+
+    submitForm(value) {
         // const loading = this.loadingService.loadingSpinner();
-        // loading.present();
+        // loading.present(); 
         // this.authService.signin(form.value.email, form.value.password)
         //     // .finally(() => loading.dismiss())
-        //     .subscribe()
-        console.log('form', form);
-        
-    }
-}
+        //     .subscribe() 
+        console.log('form', value);
+            
+    }    
+}  
+             
