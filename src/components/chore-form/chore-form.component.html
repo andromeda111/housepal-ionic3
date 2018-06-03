@@ -5,49 +5,26 @@
         <ion-input type="text" formControlName="name" name="name" required></ion-input>
     </ion-item>
 
+    <ion-item class="chore-input-item"><ion-label>Day(s) Due:</ion-label></ion-item>    
     <div class="checklist-row">
-        <div *ngFor="let day of daysDue.controls; let i = index">
+        <div *ngFor="let day of daysDueFC.controls; let i = index">
             <input class="checkbox-hide" type="checkbox" id="{{ days[i].day }}" [formControl]="day" />
             <label for="{{ days[i].day }}" class="check-bubble">{{days[i].day}}</label>
         </div>
     </div>
 
-    <!-- <ion-item class="chore-input-item"><ion-label>Day(s) Due:</ion-label></ion-item>
-    <div class="checklist-row">
-        <input type="checkbox" id="Sun" class="checkbox-hide" name="sun" ngModel>
-        <label for="Sun" class="check-bubble">Sun</label>
-
-        <input type="checkbox" id="Mon" class="checkbox-hide" name="mon" ngModel>
-        <label for="Mon" class="check-bubble">Mon</label>
-
-        <input type="checkbox" id="Tue" class="checkbox-hide" name="tue" ngModel>
-        <label for="Tue" class="check-bubble">Tue</label>
-
-        <input type="checkbox" id="Wed" class="checkbox-hide" name="wed" ngModel>
-        <label for="Wed" class="check-bubble">Wed</label>
-
-        <input type="checkbox" id="Thu" class="checkbox-hide" name="thu" ngModel>
-        <label for="Thu" class="check-bubble">Thu</label>
-
-        <input type="checkbox" id="Fri" class="checkbox-hide" name="fri" ngModel>
-        <label for="Fri" class="check-bubble">Fri</label>
-
-        <input type="checkbox" id="Sat" class="checkbox-hide" name="sat" ngModel>
-        <label for="Sat" class="check-bubble">Sat</label>
-    </div>
-
     <ion-item class="chore-input-item"><ion-label>Assign To:</ion-label></ion-item>
     <div class="checklist-row center">
-        <div *ngFor="let user of roommates">
-            <input type='checkbox' class="checkbox-hide" id="{{ user.uid }}" value="{{ user.uid }}" name="{{ user.uid }}" check-list='checked_housemates' cycle-list='cycleList' house-list="houseUsers">
+        <div *ngFor="let user of fullCycleList; let i = index">
+            <input type='checkbox' class="checkbox-hide" id="{{ user.uid }}" (click)="setNewAssigned(assignedFC.controls[i].value, user)" [formControl]="assignedFC.controls[i]">
             <label for="{{ user.uid }}" class="check-bubble">{{ user.name }}</label>
         </div>
     </div>
     
     <div class="chore-cycle-order">
         <span>Cycle Order:</span> 
-        <div><span *ngFor="let name of checked_housemates">{{ name }}, </span></div>
-    </div> -->
+        <div><span *ngFor="let name of cycleNames; let last = last">{{ name }}{{ last ? '' : ', ' }}</span></div>
+    </div>
 
     <hr>
     

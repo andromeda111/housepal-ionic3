@@ -46,8 +46,8 @@ export class ChoreCardComponent {
         this.color = 'green';
     }
 
-    clickEdit(id) {
+    clickEdit(chore) {
         console.log('edit');
-        this.nav.push('EditChorePage');
+        this.edit.emit(chore);
     }
 }

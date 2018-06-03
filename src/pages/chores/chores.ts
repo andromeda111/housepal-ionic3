@@ -40,6 +40,8 @@ export class ChoresPage {
     }
 
     editChore(chore) {
-        this.navCtrl.push('EditChoresPage', chore);
+        console.log(chore);
+        
+        this.navCtrl.push('EditChorePage', chore);
     }
 }

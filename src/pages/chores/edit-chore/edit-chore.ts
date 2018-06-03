@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
@@ -8,7 +8,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditChorePage {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) { }
+    chore;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams) { 
+
+        this.chore = this.navParams.data;
+        
+    }
+
+    ngOnInit() {
+        console.log(this.chore);
+        
+    }
 
 
 }
