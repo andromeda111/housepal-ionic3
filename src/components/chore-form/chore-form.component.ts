@@ -58,6 +58,12 @@ export class ChoreFormComponent {
     }
   
     buildDaysDue() {
+        if (this.chore && this.chore.daysDue.length) {
+            this.chore.daysDue.forEach(dueIndex => {
+                this.days[dueIndex].selected = true;
+            });
+        }
+        
         const formValues = this.days.map(day => {
             return this.formBuilder.control(day.selected);
           });
@@ -73,6 +79,11 @@ export class ChoreFormComponent {
     }
 
     submitForm(value) {
+        const daysDue: number[] = value.daysDue.map((day, index) => day ? index : undefined).filter(value => value !== undefined);
+        const cycle = this.assignedUsers
+        console.log(daysDue);
+        console.log(cycle);
+        
         // const loading = this.loadingService.loadingSpinner();
         // loading.present(); 
         // this.authService.signin(form.value.email, form.value.password)
