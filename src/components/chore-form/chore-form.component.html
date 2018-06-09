@@ -15,15 +15,15 @@
 
     <ion-item class="chore-input-item"><ion-label>Assign To:</ion-label></ion-item>
     <div class="checklist-row center">
-        <div *ngFor="let user of fullCycleList; let i = index">
-            <input type='checkbox' class="checkbox-hide" id="{{ user.uid }}" (click)="setNewAssigned(assignedFC.controls[i].value, user)" [formControl]="assignedFC.controls[i]">
+        <div *ngFor="let user of allUsers; let i = index">
+            <input type='checkbox' class="checkbox-hide" id="{{ user.uid }}" (click)="setAssignedUsers(assignedFC.controls[i].value, user)" [formControl]="assignedFC.controls[i]">
             <label for="{{ user.uid }}" class="check-bubble">{{ user.name }}</label>
         </div>
     </div>
     
     <div class="chore-cycle-order">
         <span>Cycle Order:</span> 
-        <div><span *ngFor="let name of cycleNames; let last = last">{{ name }}{{ last ? '' : ', ' }}</span></div>
+        <div><span *ngFor="let user of assignedUsers; let last = last">{{ user.name }}{{ last ? '' : ', ' }}</span></div>
     </div>
 
     <hr>

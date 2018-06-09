@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ChoreFormComponent {
 
-    fullCycleList = [this.userService.activeUser].concat(this.houseService.roommates);
+    allUsers = [this.userService.activeUser].concat(this.houseService.roommates);
     choreForm: FormGroup;
     days = [
         { day: 'Sun',  selected: false },
@@ -20,23 +20,19 @@ export class ChoreFormComponent {
         { day: 'Fri',  selected: false },
         { day: 'Sat',  selected: false },
     ];
-
-    newAssigned = [];
-    cycleNames: string[] = [];
+    assignedUsers: any[] = [];
 
     @Input() chore: any;
 
     constructor(private houseService: HouseService, private userService: UserService, private formBuilder: FormBuilder) {}
 
     ngOnInit() {
-        this.newAssigned = this.chore.cycle;
-        console.log(this.fullCycleList);
-        
+        this.assignedUsers = this.chore.cycle;
 
         this.choreForm = this.formBuilder.group({
             name: '',
             daysDue: this.buildDaysDue(),
-            assigned: this.buildAssigned(this.chore.cycle)
+            assigned: this.buildAssigned(this.assignedUsers)
           });  
     }    
         
@@ -49,38 +45,30 @@ export class ChoreFormComponent {
     }; 
 
     buildAssigned(currentAssigned) {
-        let assigned = this.fullCycleList.map(user => {
-            const userExistsInCycle = currentAssigned.some(uid => user.uid === uid);
+        let assigned = this.allUsers.map(user => {
+            const userExistsInCycle = currentAssigned.some(userInCycle => user.uid === userInCycle.uid);
             return userExistsInCycle;
         });
 
-        // Note for next time.. Just return an object of uid and name to make this easier, more performant, and reduce code. For fucks sake.
-        this.cycleNames = currentAssigned.map(uid => {
-
-        })
-
-        const arr = assigned.map(selected => {
+        const formValues = assigned.map(selected => {
             return this.formBuilder.control(selected);
         });
          
-        return this.formBuilder.array(arr);
+        return this.formBuilder.array(formValues);
     }
   
     buildDaysDue() {
-        const arr = this.days.map(day => {
+        const formValues = this.days.map(day => {
             return this.formBuilder.control(day.selected);
           });
-        return this.formBuilder.array(arr);
+        return this.formBuilder.array(formValues);
     } 
  
-    setNewAssigned(selected, user) {
+    setAssignedUsers(selected, user) {
         if (selected) {
-            let idx = this.newAssigned.indexOf(user.uid);
-            this.newAssigned.splice(idx, 1);
-            this.cycleNames.splice(idx, 1);
+            this.assignedUsers = this.assignedUsers.filter(assigned => assigned.uid !== user.uid);
         } else {
-            this.newAssigned.push(user.uid);
-            this.cycleNames.push(user.name);         
+            this.assignedUsers.push(user);     
         }
     }
 
