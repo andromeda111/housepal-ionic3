@@ -6,8 +6,6 @@ import { AuthService } from '../../services/auth.service';
 import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
-import { SigninPage } from '../user-setup/signin/signin';
-import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
 import { ImageService } from '../../services/image.service';
 
@@ -23,7 +21,7 @@ export class SideMenuPage implements OnDestroy {
     roommates: any = [];
     removeForm: FormGroup;
     profileImageUrl = '';
-    profileImageDefault = '../../assets/imgs/profile_blank.png';
+    profileImageDefault = 'assets/imgs/profile_blank.png';
 
     private alive = true;
 
@@ -46,12 +44,12 @@ export class SideMenuPage implements OnDestroy {
                 } else if (result.length) {
                     this.house = result[0];
                     this.roommates = result[1];
-                    this.setUserProfileImage();
+                    this.profileImageUrl = this.imageService.profileUrlMap[this.userService.activeUser.uid];
                 }
             });
 
         this.events.subscribe('menu:action-initializeForm', () => this.initializeForm());
-        this.events.subscribe('menu:action-setRoommates', (roommates: any[]) => this.roommates = roommates);
+        this.events.subscribe('menu:action-setRoommates', () => this.roommates = this.houseService.roommates);
 
         this.initializeForm();
     }
@@ -60,14 +58,8 @@ export class SideMenuPage implements OnDestroy {
         this.alive = false;
     }
 
-    setUserProfileImage() {
-        this.imageService.getProfileImageUrl(this.userService.activeUser.uid).then(url => {
-            this.profileImageUrl = url;
-        });
-    }
-
     editProfile() {
-        this.nav.push(EditProfilePage, { profileUrl: this.profileImageUrl });
+        this.nav.push('EditProfilePage', { profileUrl: this.profileImageUrl });
     }
 
     selectMenu(menu: string) {
@@ -95,6 +87,6 @@ export class SideMenuPage implements OnDestroy {
         this.activeMenu = 'Sign Out';
         this.authService.logout();
         this.menuCtrl.close();
-        this.nav.setRoot(SigninPage);
+        this.nav.setRoot('SigninPage');
     }
 }

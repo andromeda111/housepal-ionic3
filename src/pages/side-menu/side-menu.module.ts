@@ -7,7 +7,7 @@ import { SideMenuPage } from './side-menu';
     SideMenuPage,
   ],
   imports: [
-    IonicPageModule.forChild(SideMenuPage),
-  ],
+    IonicPageModule.forChild(SideMenuPage)
+  ]
 })
-export class SideMenuPageModule {}
+export class SideMenuPageModule { }

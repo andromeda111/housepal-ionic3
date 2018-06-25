@@ -11,6 +11,16 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-    Chores
+<ion-content padding>
+    <div class="chore-list-container">
+        My Chores
+        <div *ngFor="let chore of myChores">
+            <chore-card [chore]="chore" (edit)="editChore($event)"></chore-card>
+        </div>
+        Other Chores
+        <div *ngFor="let chore of otherChores">
+            <chore-card [chore]="chore" (edit)="editChore($event)"></chore-card>
+        </div>
+
+    </div>
 </ion-content>
