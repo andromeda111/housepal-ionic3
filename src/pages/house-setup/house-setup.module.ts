@@ -6,4 +6,4 @@ import { HouseSetupPage } from './house-setup';
     declarations: [HouseSetupPage],
     imports: [IonicPageModule.forChild(HouseSetupPage)]
 })
-export class HouseSetupPageModule { }
+export class HouseSetupPageModule {}
