@@ -4,6 +4,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 import { AuthService } from '../../../services/auth.service';
+import { SignupPage } from '../signup/signup';
 import { LoadingService } from '../../../services/loading.service';
 
 @IonicPage()
@@ -24,7 +25,7 @@ export class SigninPage {
     }
 
     goToSignup() {
-        this.nav.setRoot('SignupPage', {}, { animate: true, direction: 'forward' });
+        this.nav.setRoot(SignupPage, {}, { animate: true, direction: 'forward' });
     }
 
 }

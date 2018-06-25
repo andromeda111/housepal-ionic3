@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChoresPage } from './chores';
-import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
-    ChoresPage
+    ChoresPage,
   ],
   imports: [
     IonicPageModule.forChild(ChoresPage),
-    ComponentsModule
-  ]
+  ],
 })
-export class ChoresPageModule { }
+export class ChoresPageModule {}

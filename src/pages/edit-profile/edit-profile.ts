@@ -26,7 +26,7 @@ export class EditProfilePage {
        Edit Profile Image
     ======================*/
     getPhoto(sourceType: string) {
-        this.imageService.getPhoto(sourceType, this.userService.activeUser.uid)
+        this.imageService.getPhoto(sourceType)
             .then(url => {
                 if (!url) {
                     return;

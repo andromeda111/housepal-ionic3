@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonicPage, NavController } from 'ionic-angular';
 import { AuthService } from '../../../services/auth.service';
+import { SigninPage } from '../signin/signin';
 import { LoadingService } from '../../../services/loading.service';
-import 'rxjs/add/operator/finally';
 
 @IonicPage()
 @Component({
@@ -23,6 +23,6 @@ export class SignupPage {
     }
 
     goToSignin() {
-        this.nav.setRoot('SigninPage', {}, { animate: true, direction: 'forward' });
+        this.nav.setRoot(SigninPage, {}, { animate: true, direction: 'forward' });
     }
 }

@@ -7,37 +7,25 @@ import { ErrorService } from './error.service';
 @Injectable()
 export class ImageService {
 
-    _profileUrlMap: any = {};
-
-    get profileUrlMap() {
-        return this._profileUrlMap;
-    }
-
-
     constructor(private camera: Camera,
+        private userService: UserService,
         private errorService: ErrorService) { }
-
-    setProfileUrlMap(uid: string, url: string) {
-        this._profileUrlMap[uid] = url;
-    }
 
     /*============================
         Profile Image Handlers
     =============================*/
     getProfileImageUrl(uid: string) {
         const imageRef = firebase.storage().ref().child(`userprofile/${uid}.jpg`);
-        imageRef.getDownloadURL().catch(() => {
+        return imageRef.getDownloadURL().catch(() => {
             // Ignore error for default url
-            return 'assets/imgs/profile_blank.png';
-        }).then(res => {
-            this.setProfileUrlMap(uid, res);
-        });
+            return '../../assets/imgs/profile_blank.png';
+        });;
     }
 
     /*============================
         Camera Photo and Upload
     =============================*/
-    getPhoto(sourceType: string, uid: string) {
+    getPhoto(sourceType: string) {
         const options: CameraOptions = {
             quality: 90,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -53,16 +41,16 @@ export class ImageService {
                 return;
             }
             const imageBase64 = 'data:image/jpeg;base64,' + imageData;
-            return this.upload(imageBase64, uid);
+            return this.upload(imageBase64);
         })
     }
 
-    upload(imageBase64, uid) {
-        const userImageRef = this.imageRefFactory(uid);
+    upload(imageBase64) {
+        const uid = this.userService.activeUser.uid;
+        const userImageRef = this.imageRefFactory(this.userService.activeUser.uid);
 
         return userImageRef.putString(imageBase64, 'data_url')
             .then(snapshot => {
-                this.setProfileUrlMap(uid, snapshot.downloadURL);
                 return snapshot.downloadURL;
             }).catch((err) => {
                 if (!err.error || !err.error.message) {
