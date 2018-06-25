@@ -15,7 +15,7 @@
         <div class="collapsable" [ngClass]="{'expanded': activeMenu === 'Roommates'}">
             <ul class="roommate-list">
                 <li *ngFor="let roommate of roommates" class="roommate-item">
-                    <img class="roommate-profile profile-image-circle" src="{{ roommate.profileImageUrl ? roommate.profileImageUrl : profileImageDefault }}"> {{ roommate.name }}
+                    <img class="roommate-profile profile-image-circle" src="{{ imageService.profileUrlMap[roommate.uid] ? imageService.profileUrlMap[roommate.uid] : profileImageDefault }}"> {{ roommate.name }}
                 </li>
                 <li *ngIf="!roommates.length" class="roommate-item no-items">
                     <p>There are no other users associated with this house yet.</p>

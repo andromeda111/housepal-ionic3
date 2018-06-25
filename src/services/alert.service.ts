@@ -3,6 +3,7 @@ import { AlertController, Events } from 'ionic-angular';
 import { HouseService } from './house.service';
 import { UserService } from './user.service';
 import { LoadingService } from './loading.service';
+import 'rxjs/add/operator/finally';
 
 @Injectable()
 export class AlertService {
@@ -110,14 +111,14 @@ export class AlertService {
                     text: 'Remove',
                     handler: (data) => {
                         console.log('Removing: ', roommate, data);
-                        if (data.name === roommate.name) {   
+                        if (data.name === roommate.name) {
                             const loading = this.loadingService.loadingSpinner();
                             loading.present();
                             this.houseService.removeRoommate(roommate)
                                 .finally(() => loading.dismiss())
                                 .subscribe((res: any) => {
                                     this.removeRoommateSuccess(roommate.name, houseName);
-                                    this.events.publish('menu:action-setRoommates', res || []);
+                                    this.events.publish('menu:action-setRoommates');
                                 });
                         } else {
                             this.alertNameMismatch();
@@ -151,6 +152,21 @@ export class AlertService {
         let alert = this.alertCtrl.create({
             title: 'Sorry!',
             message: 'The names did not match. Please try again.',
+            buttons: [
+                {
+                    text: 'Okay',
+                    role: 'cancel',
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
+    generic(data) {
+        let alert = this.alertCtrl.create({
+            title: 'Time Test',
+            message: 'Time obj:' + JSON.stringify(data) + `${data.utc_offset ? data.utc_offset : 'error'}`,
             buttons: [
                 {
                     text: 'Okay',

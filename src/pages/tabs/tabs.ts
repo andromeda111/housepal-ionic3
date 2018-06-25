@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, MenuController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
-import { MessagesPage } from '../messages/messages';
-import { ChoresPage } from '../chores/chores';
-import { ListPage } from '../list/list';
-import { LaundryPage } from '../laundry/laundry';
 import { UserService } from '../../services/user.service';
 import { HouseService } from '../../services/house.service';
 import { AlertService } from '../../services/alert.service';
@@ -17,19 +13,21 @@ import { AlertService } from '../../services/alert.service';
 })
 export class TabsPage {
 
-    tab1Root = LaundryPage;
-    tab2Root = ChoresPage;
-    tab3Root = ListPage;
+    tab1Root = 'LaundryPage';
+    tab2Root = 'ChoresPage';
+    tab3Root = 'ListPage';
 
     userName = '';
     menuData: any;
 
     constructor(private userService: UserService,
         private houseService: HouseService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private menuCtrl: MenuController) { }
 
     ionViewWillEnter() {
         this.userName = this.userService.activeUser.name;
+        this.menuCtrl.open();
         this.menuOpened();
     }
 

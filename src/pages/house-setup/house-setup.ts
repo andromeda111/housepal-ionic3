@@ -5,6 +5,7 @@ import { HouseService } from '../../services/house.service';
 import { TabsPage } from '../tabs/tabs';
 import { UserService } from '../../services/user.service';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
 import { LoadingService } from '../../services/loading.service';
 
 @IonicPage()

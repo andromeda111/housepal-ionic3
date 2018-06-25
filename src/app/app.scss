@@ -21,8 +21,12 @@
   }
 
 ion-content {
-    background-color: #F5F5F5;
+    background-color: #E1E2E1;
     font-family: 'Lato-Regular';
+
+    &.content {
+        background-color: #E1E2E1; 
+    }
 }
 
 // Alerts && Error Messages
@@ -51,7 +55,8 @@ ion-content {
     }
 
     .toolbar-background{
-        background: linear-gradient(to top, #3a85bf, #15a2bc) !important;   
+        background: linear-gradient(to top, #2b618c, #3a85bf) !important;   
+        
     }
     
     .toolbar-title {
@@ -62,11 +67,11 @@ ion-content {
 
 // Tabs Bar
 .tabbar {
-    background: #3a85bf !important;
+    background: #2b618c !important;
 
     .tab-button[aria-selected=true] {
         color: $white;
-        background: linear-gradient(to top, rgba(27,188,177,0.25), #3a85bf, transparent) !important;
+        background: linear-gradient(to top, rgba(63,131,188, 0.5), #2b618c, transparent) !important;
     }
     .tab-button-icon {
         color: map-get($colors, light) !important;
