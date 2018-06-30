@@ -15,11 +15,11 @@
     <div class="chore-list-container">
         My Chores
         <div *ngFor="let chore of myChores">
-            <chore-card [chore]="chore" (edit)="editChore($event)"></chore-card>
+            <chore-card [chore]="chore" (edit)="editChore($event)" (onDone)="markDone($event)"></chore-card>
         </div>
         Other Chores
         <div *ngFor="let chore of otherChores">
-            <chore-card [chore]="chore" (edit)="editChore($event)"></chore-card>
+            <chore-card [chore]="chore" (edit)="editChore($event)" (onDone)="markDone($event)"></chore-card>
         </div>
 
     </div>

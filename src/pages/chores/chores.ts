@@ -24,6 +24,25 @@ export class ChoresPage {
                 private choreService: ChoreService) { }
 
     ionViewWillEnter() {
+        this.getAllChores();
+    }
+
+    editChore(chore) {
+        console.log(chore);
+        
+        this.navCtrl.push('EditChorePage', chore);
+    }
+
+    markDone(id: number) {
+        this.choreService.markDone(id)
+            .subscribe((result: any) => {
+                console.log('done result', result);
+                this.getAllChores();
+            });
+    }
+
+
+    private getAllChores() {
         this.choreService.getAllChores()
             .subscribe((chores: any) => {
                 console.log(chores);
@@ -37,11 +56,5 @@ export class ChoresPage {
                     return chore.currentAssigned.uid !== this.userService.activeUser.uid;
                 });
             });
-    }
-
-    editChore(chore) {
-        console.log(chore);
-        
-        this.navCtrl.push('EditChorePage', chore);
     }
 }

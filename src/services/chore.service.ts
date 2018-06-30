@@ -16,4 +16,11 @@ export class ChoreService {
             });
     }
 
+    markDone(id: number) {
+        return this.http.put(`https://housepal-server.herokuapp.com/chores/done/${id}`, null)
+        .catch(err => {
+            this.errorService.handleError(err);
+            return Observable.of();
+        });
+    }
 }

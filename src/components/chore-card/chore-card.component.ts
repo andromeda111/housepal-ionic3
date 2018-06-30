@@ -15,6 +15,7 @@ export class ChoreCardComponent {
 
     @Input() chore;
     @Output() edit = new EventEmitter<any>();
+    @Output() onDone = new EventEmitter<number>();    
 
     constructor(private imageService: ImageService, private userService: UserService, private nav: NavController) { }
 
@@ -44,6 +45,7 @@ export class ChoreCardComponent {
         console.log('hit');
         this.done = true;
         this.color = 'green';
+        this.onDone.emit(id);
     }
 
     clickEdit(chore) {
