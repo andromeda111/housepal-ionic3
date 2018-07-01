@@ -114,8 +114,8 @@ export class ChoreFormComponent {
             daysDue: daysDue,
             cycle: cycle,
             currentAssigned: cycle[0],
-            currentDueDay: {}, // Need to calculate { date: yyyy-mm-dd, daysDueIndex: number },,
-            upcoming: cycle[1] // If present, defaults to undefined.
+            currentDueDay: {}, // Need to calculate { date: yyyy-mm-dd, daysDueIndex: number },
+            upcoming: cycle[1] || cycle[0] // If present, defaults to first in cycle.
           }
 
         console.log('processed chore:', readyChoreData);
