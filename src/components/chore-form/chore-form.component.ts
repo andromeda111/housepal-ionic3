@@ -3,6 +3,7 @@ import { NgForm, FormBuilder, FormGroup, FormArray, FormControl } from '@angular
 import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
 import moment from 'moment';
+import { ChoreService } from '../../services/chore.service';
 
 @Component({
     selector: 'chore-form',
@@ -25,7 +26,10 @@ export class ChoreFormComponent {
 
     @Input() chore: any;
 
-    constructor(private houseService: HouseService, private userService: UserService, private formBuilder: FormBuilder) { }
+    constructor(private houseService: HouseService,
+                private userService: UserService,
+                private formBuilder: FormBuilder,
+                private choreService: ChoreService) { }
 
     ngOnInit() {
         this.assignedUsers = this.chore.cycle;
@@ -84,47 +88,44 @@ export class ChoreFormComponent {
         const cycle = this.assignedUsers.map((user, index) => ({ index, uid: user.uid, name: user.name }));
         const title = form.name;
         const choreData = { title, daysDue, cycle };
+        let currentDayDue: any;
 
+        // Find the next available day (return index of daysDue array) that the chore can be assigned to in this week, if any exists...
+        const nextAvailableDayIndex = daysDue.find(day => {
+            const dayInDaysDueArray = moment().day(day).format('YYYY-MM-DD') // This is the day of the current week of those daysDue values
+            
+            // Is the day we're checking After today -- then return true
+            if (moment(dayInDaysDueArray).isAfter(moment(), 'day')) {
+                return true;
+            }
+        })
 
-        // let actualDue;
-        // let actualIdx = 0
-        //   if (moment(moment().add(1, 'day')).isAfter(moment(moment().add(1, 'day')).day(daysDue[0], 'day')) && daysDue.length > 1) {
-        //     let laterDay = daysDue.filter((day, idx) => {
-        //         return moment(moment().add(1, 'day')).isBefore(moment(moment().add(1, 'day')).day(day, 'day'))
-        //       })
-        //     if (laterDay.length > 0) {
-        //       actualIdx = daysDue.indexOf(laterDay[0])
-        //       actualDue = moment().add(1, 'day').day(laterDay[0], 'day')
-        //     } else {
-        //       actualDue = moment().add(1, 'weeks').weekday(daysDue[0]);
-        //     }
-        //   } else if (moment(moment().add(1, 'day')).isSame(moment(moment().add(1, 'day')).day(daysDue[0], 'day')) && daysDue.length > 1) {
-        //     actualIdx = 1
-        //     actualDue = moment().add(1, 'day').day(daysDue[1], 'day')
-        //   } else if (moment(moment().add(1, 'day')).isAfter(moment(moment().add(1, 'day')).day(daysDue[0], 'day')) && daysDue.length == 1) {
-        //     actualDue = moment().add(1, 'weeks').weekday(daysDue[0]);
-        //   } else if (moment(moment().add(1, 'day')).isSame(moment(moment().add(1, 'day')).day(daysDue[0], 'day')) && daysDue.length == 1) {
-        //     actualDue = moment().add(1, 'weeks').weekday(daysDue[0]);
-        //   } else {
-        //     actualDue = moment().add(1, 'day').day(daysDue[0], 'day')
-        //   }
+        if (nextAvailableDayIndex !== undefined) {
+            currentDayDue = {
+                date: moment().day(nextAvailableDayIndex).format('YYYY-MM-DD'),
+                daysDueIndex: daysDue.indexOf(nextAvailableDayIndex)
+            }
+        } else {
+            currentDayDue = {
+                date: moment().day(daysDue[0]).add(1, 'weeks').format('YYYY-MM-DD'),
+                daysDueIndex: 0
+            }
+        }
 
         const readyChoreData = {
             title: title,
             daysDue: daysDue,
             cycle: cycle,
             currentAssigned: cycle[0],
-            currentDueDay: {}, // Need to calculate { date: yyyy-mm-dd, daysDueIndex: number },
-            upcoming: cycle[1] || cycle[0] // If present, defaults to first in cycle.
-          }
+            currentDueDay: currentDayDue,
+            upcoming: cycle[1] || cycle[0]
+        }
 
         console.log('processed chore:', readyChoreData);
 
-        // const loading = this.loadingService.loadingSpinner();
-        // loading.present(); 
-        // this.authService.signin(form.value.email, form.value.password)
-        //     // .finally(() => loading.dismiss())
-        //     .subscribe() 
-
+        this.choreService.editChore(this.chore.id, readyChoreData)
+            .subscribe(() => {
+                console.log('finished editing chore');   
+            })
     }
 }

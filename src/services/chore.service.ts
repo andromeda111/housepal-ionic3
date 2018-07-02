@@ -23,4 +23,12 @@ export class ChoreService {
             return Observable.of();
         });
     }
+
+    editChore(id: number, choreData: any) {
+        return this.http.put(`https://housepal-server.herokuapp.com/chores/edit/${id}`, choreData)
+        .catch(err => {
+            this.errorService.handleError(err);
+            return Observable.of();
+        });
+    }
 }
