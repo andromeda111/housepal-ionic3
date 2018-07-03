@@ -25,7 +25,7 @@ export class ChoreService {
     }
 
     editChore(id: number, choreData: any) {
-        return this.http.put(`https://housepal-server.herokuapp.com/chores/edit/${id}`, choreData)
+        return this.http.put(`https://housepal-server.herokuapp.com/chores/edit`, choreData)
         .catch(err => {
             this.errorService.handleError(err);
             return Observable.of();

@@ -113,9 +113,10 @@ export class ChoreFormComponent {
         }
 
         const readyChoreData = {
+            id: this.chore.id,
             title: title,
-            daysDue: daysDue,
-            cycle: cycle,
+            daysDue: JSON.stringify(daysDue),
+            cycle: JSON.stringify(cycle),
             currentAssigned: cycle[0],
             currentDueDay: currentDayDue,
             upcoming: cycle[1] || cycle[0]
