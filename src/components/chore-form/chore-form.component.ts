@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { HouseService } from '../../services/house.service';
 import { UserService } from '../../services/user.service';
+import moment from 'moment';
 
 @Component({
     selector: 'chore-form',
@@ -78,10 +79,10 @@ export class ChoreFormComponent {
         }
     }
 
-    submitForm(value) {
-        const daysDue: number[] = value.daysDue.map((day, index) => day ? index : undefined).filter(value => value !== undefined);
-        const cycle = this.assignedUsers
-        const title = value.name;
+    submitForm(form) {
+        const daysDue: number[] = form.daysDue.map((day, index) => day ? index : undefined).filter(value => value !== undefined);
+        const cycle = this.assignedUsers.map((user, index) => ({ index, uid: user.uid, name: user.name }));
+        const title = form.name;
         const choreData = { title, daysDue, cycle };
 
 
@@ -108,14 +109,16 @@ export class ChoreFormComponent {
         //     actualDue = moment().add(1, 'day').day(daysDue[0], 'day')
         //   }
 
-        // editChore = {
-        //     chore: editChore.chore,
-        //     daysDue: {daysDue: daysDue},
-        //     cycle: {cycleList: $scope.cycleList},
-        //     currentAssigned: 0,
-        //     currentDueDay: {currentDueDay: actualDue.format("YYYY-MM-DD"), currentDueIdx: actualIdx}
-        //   }
-        console.log('processed chore:', choreData);
+        const readyChoreData = {
+            title: title,
+            daysDue: daysDue,
+            cycle: cycle,
+            currentAssigned: cycle[0],
+            currentDueDay: {}, // Need to calculate { date: yyyy-mm-dd, daysDueIndex: number },,
+            upcoming: cycle[1] // If present, defaults to undefined.
+          }
+
+        console.log('processed chore:', readyChoreData);
 
         // const loading = this.loadingService.loadingSpinner();
         // loading.present(); 
